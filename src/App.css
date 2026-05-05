@@ -1,0 +1,1559 @@
+.nr-page {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nr-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 76%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.nr-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+
+.nr-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  color: var(--text-h);
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, var(--border));
+  background: radial-gradient(
+      60% 80% at 30% 30%,
+      color-mix(in oklab, var(--accent) 50%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--accent-bg) 80%, transparent),
+      transparent
+    );
+  box-shadow: var(--shadow);
+}
+
+.nr-name {
+  font-family: var(--heading);
+  color: var(--text-h);
+  letter-spacing: -0.5px;
+  font-weight: 650;
+}
+
+.nr-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nr-navLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.nr-navLink {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.nr-navLink:hover {
+  background: color-mix(in oklab, var(--accent-bg) 60%, transparent);
+  color: var(--text-h);
+}
+
+.nr-hero {
+  padding: 72px 28px 44px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-hero::before {
+  content: '';
+  position: absolute;
+  inset: -120px -120px auto -120px;
+  height: 420px;
+  background: radial-gradient(
+    60% 60% at 30% 35%,
+    color-mix(in oklab, var(--accent) 22%, transparent),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.nr-heroGrid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 38px;
+  position: relative;
+}
+
+.nr-heroCopy {
+  text-align: left;
+  max-width: 680px;
+}
+
+.nr-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: color-mix(in oklab, var(--text-h) 70%, var(--text));
+  margin: 0 0 14px;
+}
+
+.nr-subtitle {
+  margin: 14px 0 0;
+  max-width: 52ch;
+  color: var(--text);
+}
+
+.nr-ctaRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+.nr-primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 650;
+  color: var(--text-h);
+  border: 1px solid color-mix(in oklab, var(--accent) 50%, var(--border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent-bg) 90%, transparent),
+    color-mix(in oklab, var(--accent-bg) 50%, transparent)
+  );
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: transform 140ms ease, box-shadow 140ms ease,
+    border-color 140ms ease, filter 140ms ease;
+}
+
+.nr-primaryBtn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 72%, var(--border));
+  filter: saturate(1.08);
+}
+
+.nr-primaryBtn::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 16px;
+  background: radial-gradient(
+    60% 60% at 30% 30%,
+    color-mix(in oklab, var(--accent) 22%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.nr-primaryBtn:hover::after {
+  opacity: 1;
+}
+
+.nr-h2Small {
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+
+.nr-primaryBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.nr-ctaHint {
+  margin: 0;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--text) 80%, transparent);
+}
+
+.nr-heroVisual {
+  position: relative;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+
+.nr-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(35px);
+  opacity: 0.7;
+}
+
+.nr-glowA {
+  width: 280px;
+  height: 220px;
+  background: color-mix(in oklab, var(--accent) 28%, transparent);
+  top: 30px;
+  left: 10px;
+}
+
+.nr-glowB {
+  width: 260px;
+  height: 220px;
+  background: color-mix(in oklab, #2dd4bf 22%, transparent);
+  bottom: 10px;
+  right: -10px;
+}
+
+.nr-mockCard {
+  width: min(420px, 100%);
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 88%, var(--accent-bg));
+  background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--bg) 88%, transparent),
+      color-mix(in oklab, var(--bg) 70%, transparent)
+    ),
+    radial-gradient(
+      80% 80% at 30% 20%,
+      color-mix(in oklab, var(--accent-bg) 85%, transparent),
+      transparent 60%
+    );
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.nr-mockTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nr-dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.nr-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--text) 25%, transparent);
+}
+
+.nr-pill {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: color-mix(in oklab, var(--text-h) 75%, var(--text));
+  background: color-mix(in oklab, var(--social-bg) 85%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.nr-mockBody {
+  padding: 16px 14px 14px;
+}
+
+.nr-mockGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.nr-swatch {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+}
+
+.nr-swatch1 {
+  background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+}
+.nr-swatch2 {
+  background: linear-gradient(180deg, #ecfeff, #cffafe);
+}
+.nr-swatch3 {
+  background: linear-gradient(180deg, #fff7ed, #ffedd5);
+}
+.nr-swatch4 {
+  background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .nr-swatch1 {
+    background: linear-gradient(180deg, #2a2340, #1c1631);
+  }
+  .nr-swatch2 {
+    background: linear-gradient(180deg, #10323a, #0b232a);
+  }
+  .nr-swatch3 {
+    background: linear-gradient(180deg, #3a2610, #2a1b0b);
+  }
+  .nr-swatch4 {
+    background: linear-gradient(180deg, #1f2937, #111827);
+  }
+}
+
+.nr-mockLines {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.nr-line {
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--text) 18%, transparent);
+}
+
+.nr-line1 {
+  width: 92%;
+}
+.nr-line2 {
+  width: 76%;
+}
+.nr-line3 {
+  width: 64%;
+}
+
+.nr-mockFooter {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.nr-miniKpi {
+  border-radius: 14px;
+  padding: 10px 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 75%, transparent);
+}
+
+.nr-miniLabel {
+  font-size: 12px;
+  color: color-mix(in oklab, var(--text) 78%, transparent);
+}
+
+.nr-miniValue {
+  margin-top: 2px;
+  font-family: var(--heading);
+  font-weight: 650;
+  color: var(--text-h);
+}
+
+.nr-demo {
+  padding: 54px 28px 30px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-demo::before {
+  content: '';
+  position: absolute;
+  inset: auto -120px -200px -120px;
+  height: 460px;
+  background: radial-gradient(
+    60% 60% at 70% 55%,
+    color-mix(in oklab, #2dd4bf 16%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.nr-trust {
+  padding: 46px 28px 52px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-trust::before {
+  content: '';
+  position: absolute;
+  inset: -120px -120px auto -120px;
+  height: 320px;
+  background: radial-gradient(
+    60% 60% at 65% 35%,
+    color-mix(in oklab, #2dd4bf 14%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.nr-trustTop {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nr-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nr-badge {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 76%, transparent);
+  color: color-mix(in oklab, var(--text-h) 80%, var(--text));
+}
+
+.nr-logoRow {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  opacity: 0.9;
+}
+
+.nr-logoPill {
+  border-radius: 14px;
+  padding: 12px 10px;
+  text-align: center;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--text-h) 70%, var(--text));
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+}
+
+.nr-testimonialGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.nr-testimonialCard {
+  text-align: left;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.nr-testimonialCard:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+.nr-stars {
+  display: inline-flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.nr-stars span {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--accent), #2dd4bf);
+  opacity: 0.9;
+}
+
+.nr-quote {
+  color: var(--text-h);
+  line-height: 1.35;
+  font-size: 15px;
+}
+
+.nr-person {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nr-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: radial-gradient(
+      60% 60% at 30% 30%,
+      color-mix(in oklab, var(--accent) 22%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--social-bg) 85%, transparent),
+      color-mix(in oklab, var(--bg) 92%, transparent)
+    );
+}
+
+.nr-personName {
+  font-weight: 800;
+  color: var(--text-h);
+  font-size: 14px;
+}
+
+.nr-personRole {
+  font-size: 13px;
+  color: color-mix(in oklab, var(--text) 88%, transparent);
+}
+
+.nr-demoHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.nr-demoShell {
+  position: relative;
+}
+
+.nr-stepper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 16px;
+}
+
+.nr-stepPill {
+  appearance: none;
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  transition: transform 120ms ease, border-color 120ms ease,
+    background 120ms ease;
+}
+
+.nr-stepPill:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+.nr-stepPill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.nr-stepPill.is-active {
+  border-color: color-mix(in oklab, var(--accent) 70%, var(--border));
+  background: color-mix(in oklab, var(--accent-bg) 65%, transparent);
+}
+
+.nr-stepPill.is-done {
+  border-color: color-mix(in oklab, #22c55e 40%, var(--border));
+}
+
+.nr-stepIdx {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.7px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--social-bg) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  color: var(--text-h);
+}
+
+.nr-stepLabel {
+  font-weight: 750;
+  color: var(--text-h);
+  font-size: 13px;
+}
+
+.nr-stepBar {
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), #2dd4bf);
+  transition: width 420ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.nr-stepPanel {
+  animation: nr-pop 200ms ease both;
+}
+
+.nr-panelTitle {
+  font-family: var(--heading);
+  color: var(--text-h);
+  font-weight: 750;
+  letter-spacing: -0.3px;
+  margin-bottom: 14px;
+}
+
+.nr-panelActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.nr-secondaryBtn {
+  appearance: none;
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  color: var(--text-h);
+  font-weight: 750;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease,
+    background 120ms ease;
+}
+
+.nr-secondaryBtn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+.nr-secondaryBtn:disabled {
+  cursor: default;
+  transform: none;
+  opacity: 0.75;
+}
+
+.nr-nextBtn {
+  appearance: none;
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent-bg) 92%, transparent),
+    color-mix(in oklab, var(--accent-bg) 60%, transparent)
+  );
+  color: var(--text-h);
+  font-weight: 750;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease;
+  flex: 1;
+}
+
+.nr-nextBtn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 75%, var(--border));
+}
+
+.nr-nextBtn:disabled {
+  cursor: default;
+  transform: none;
+  opacity: 0.7;
+}
+
+.nr-demoBadge {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 75%, transparent);
+  color: color-mix(in oklab, var(--text-h) 80%, var(--text));
+  white-space: nowrap;
+}
+
+.nr-demoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 16px;
+  position: relative;
+}
+
+.nr-demoCard {
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.nr-demoForm {
+  padding: 18px;
+}
+
+.nr-formRow {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.nr-label {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text-h);
+}
+
+.nr-help {
+  font-size: 13px;
+  color: color-mix(in oklab, var(--text) 82%, transparent);
+}
+
+.nr-inputWrap {
+  position: relative;
+}
+
+.nr-inputPrefix {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  color: color-mix(in oklab, var(--text-h) 70%, var(--text));
+  pointer-events: none;
+}
+
+.nr-input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 14px;
+  padding: 12px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  color: var(--text-h);
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease,
+    transform 120ms ease;
+}
+
+.nr-input:focus {
+  border-color: color-mix(in oklab, var(--accent) 70%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-bg) 85%, transparent);
+}
+
+.nr-inputWrap .nr-input {
+  padding-left: 30px;
+}
+
+.nr-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text) 50%),
+    linear-gradient(135deg, var(--text) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 38px;
+}
+
+.nr-needGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.nr-need {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 68%, transparent);
+  user-select: none;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease,
+    background 120ms ease;
+}
+
+.nr-need:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--border));
+}
+
+.nr-need input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.nr-genBtn {
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent-bg) 92%, transparent),
+    color-mix(in oklab, var(--accent-bg) 60%, transparent)
+  );
+  color: var(--text-h);
+  font-weight: 750;
+  padding: 13px 14px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 160ms ease, box-shadow 160ms ease,
+    border-color 160ms ease, filter 160ms ease;
+  box-shadow: var(--shadow);
+}
+
+.nr-genBtn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 75%, var(--border));
+  filter: saturate(1.08);
+}
+
+.nr-genBtn::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 18px;
+  background: radial-gradient(
+    60% 60% at 30% 30%,
+    color-mix(in oklab, var(--accent) 18%, transparent),
+    transparent 72%
+  );
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.nr-genBtn:hover::after {
+  opacity: 1;
+}
+
+.nr-genBtn:disabled {
+  cursor: default;
+  transform: none;
+  filter: saturate(0.9);
+  opacity: 0.85;
+}
+
+.nr-genBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.nr-micro {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: color-mix(in oklab, var(--text) 80%, transparent);
+}
+
+.nr-demoResults {
+  padding: 18px;
+}
+
+.nr-resultsInner {
+  min-height: 340px;
+  transition: transform 240ms ease, opacity 240ms ease;
+}
+
+.nr-resultsInner.is-ready {
+  animation: nr-pop 240ms ease both;
+}
+
+@keyframes nr-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nr-resultsTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.nr-resultsKicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.7px;
+  color: color-mix(in oklab, var(--text) 85%, transparent);
+}
+
+.nr-resultsTitle {
+  margin-top: 6px;
+  font-family: var(--heading);
+  font-weight: 750;
+  letter-spacing: -0.6px;
+  color: var(--text-h);
+  font-size: 22px;
+}
+
+.nr-status {
+  white-space: nowrap;
+  font-weight: 750;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 80%, transparent);
+  color: var(--text-h);
+}
+
+.nr-status.ok {
+  border-color: color-mix(in oklab, #22c55e 45%, var(--border));
+  background: color-mix(in oklab, #22c55e 10%, transparent);
+}
+
+.nr-status.bad {
+  border-color: color-mix(in oklab, #ef4444 45%, var(--border));
+  background: color-mix(in oklab, #ef4444 10%, transparent);
+}
+
+.nr-resultsSummary {
+  margin: 12px 0 0;
+  color: var(--text);
+}
+
+.nr-items {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.nr-productGrid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.nr-productCard {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  transition: transform 140ms ease, border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.nr-productCard:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+  box-shadow: var(--shadow);
+}
+
+.nr-catRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.nr-catPill {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 78%, transparent);
+  color: color-mix(in oklab, var(--text-h) 78%, var(--text));
+}
+
+.nr-miniStatus {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 78%, transparent);
+  color: var(--text-h);
+}
+
+.nr-miniStatus.ok {
+  border-color: color-mix(in oklab, #22c55e 45%, var(--border));
+  background: color-mix(in oklab, #22c55e 10%, transparent);
+}
+
+.nr-miniStatus.bad {
+  border-color: color-mix(in oklab, #ef4444 45%, var(--border));
+  background: color-mix(in oklab, #ef4444 10%, transparent);
+}
+
+.nr-productImg {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: radial-gradient(
+      60% 60% at 30% 25%,
+      color-mix(in oklab, var(--accent) 20%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--social-bg) 85%, transparent),
+      color-mix(in oklab, var(--bg) 92%, transparent)
+    );
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-productGlyph {
+  position: absolute;
+  inset: 0;
+  opacity: 0.65;
+  background: radial-gradient(
+    50% 50% at 60% 40%,
+    color-mix(in oklab, #2dd4bf 22%, transparent),
+    transparent 70%
+  );
+}
+
+.nr-productBody {
+  min-width: 0;
+}
+
+.nr-summaryCard {
+  grid-column: 1 / -1;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+}
+
+.nr-summaryTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nr-summaryTitle {
+  font-family: var(--heading);
+  font-weight: 750;
+  letter-spacing: -0.3px;
+  color: var(--text-h);
+}
+
+.nr-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 12px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+}
+
+.nr-itemName {
+  color: var(--text-h);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.nr-itemNote {
+  margin-top: 5px;
+  font-size: 13px;
+  color: color-mix(in oklab, var(--text) 85%, transparent);
+}
+
+.nr-itemPrice {
+  font-family: var(--mono);
+  color: var(--text-h);
+  padding-top: 2px;
+  white-space: nowrap;
+}
+
+.nr-totals {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  gap: 10px;
+}
+
+.nr-totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text);
+}
+
+.nr-totalRow strong {
+  color: var(--text-h);
+}
+
+.nr-meterTrack {
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 80%, transparent);
+  overflow: hidden;
+}
+
+.nr-meterFill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  background: linear-gradient(90deg, var(--accent), #2dd4bf);
+}
+
+.nr-meterFill.bad {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+}
+
+.nr-meterMeta {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: color-mix(in oklab, var(--text) 85%, transparent);
+}
+
+.nr-skeleton {
+  display: grid;
+  gap: 12px;
+  opacity: 0.8;
+}
+
+.nr-skeleton.is-on {
+  animation: nr-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes nr-pulse {
+  0% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.65;
+  }
+}
+
+.nr-skelTitle,
+.nr-skelRow,
+.nr-skelTotal {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--text) 18%, transparent);
+}
+
+.nr-skelTitle {
+  height: 14px;
+  width: 52%;
+}
+
+.nr-skelRow {
+  height: 12px;
+  width: 100%;
+}
+
+.nr-skelTotal {
+  height: 12px;
+  width: 74%;
+}
+
+.nr-examples,
+.nr-why,
+.nr-pricing {
+  padding: 54px 28px 64px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nr-exampleGrid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.nr-exampleCard {
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-align: left;
+}
+
+.nr-exampleImg {
+  height: 132px;
+  background: radial-gradient(
+      60% 60% at 20% 30%,
+      color-mix(in oklab, var(--accent) 18%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 60% at 80% 50%,
+      color-mix(in oklab, #2dd4bf 14%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--social-bg) 75%, transparent),
+      color-mix(in oklab, var(--bg) 92%, transparent)
+    );
+  border-bottom: 1px solid var(--border);
+}
+
+.nr-exampleBody {
+  padding: 16px;
+}
+
+.nr-exampleTitle {
+  font-family: var(--heading);
+  font-weight: 750;
+  color: var(--text-h);
+  letter-spacing: -0.3px;
+}
+
+.nr-exampleMeta {
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: color-mix(in oklab, var(--text) 88%, transparent);
+}
+
+.nr-exampleText {
+  margin-top: 10px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.nr-textLink {
+  display: inline-flex;
+  margin-top: 12px;
+  text-decoration: none;
+  color: var(--text-h);
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: color-mix(in oklab, var(--accent-bg) 55%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+}
+
+.nr-textLink:hover {
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
+}
+
+.nr-whyGrid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.nr-whyCard {
+  text-align: left;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.nr-whyTitle {
+  font-family: var(--heading);
+  font-weight: 750;
+  color: var(--text-h);
+  letter-spacing: -0.3px;
+}
+
+.nr-whyBody {
+  margin-top: 10px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.nr-priceGrid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.nr-priceCard {
+  text-align: left;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.nr-priceCard.is-featured {
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--border));
+  background: radial-gradient(
+      80% 80% at 20% 20%,
+      color-mix(in oklab, var(--accent-bg) 70%, transparent),
+      transparent 60%
+    ),
+    color-mix(in oklab, var(--bg) 86%, transparent);
+}
+
+.nr-priceTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.nr-priceName {
+  font-family: var(--heading);
+  font-weight: 800;
+  color: var(--text-h);
+}
+
+.nr-priceValue {
+  font-family: var(--heading);
+  font-weight: 850;
+  color: var(--text-h);
+  letter-spacing: -0.4px;
+}
+
+.nr-priceUnit {
+  margin-left: 4px;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--text) 88%, transparent);
+  font-weight: 700;
+}
+
+.nr-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.nr-bullets li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.nr-bullets li::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  background: linear-gradient(180deg, var(--accent), #2dd4bf);
+}
+
+.nr-priceBtn {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nr-steps {
+  padding: 52px 28px 70px;
+}
+
+.nr-sectionHead {
+  text-align: left;
+  max-width: 720px;
+}
+
+.nr-sectionSub {
+  margin: 10px 0 0;
+  color: var(--text);
+}
+
+.nr-stepGrid {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.nr-stepCard {
+  text-align: left;
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  background: color-mix(in oklab, var(--bg) 84%, transparent);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-stepCard::before {
+  content: '';
+  position: absolute;
+  inset: -80px auto auto -80px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    55% 55% at 50% 50%,
+    color-mix(in oklab, var(--accent) 16%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.nr-stepNum {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--accent-bg) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent-border) 70%, transparent);
+  color: color-mix(in oklab, var(--text-h) 85%, var(--text));
+}
+
+.nr-stepTitle {
+  margin: 14px 0 8px;
+  font-family: var(--heading);
+  font-weight: 650;
+  color: var(--text-h);
+  font-size: 18px;
+}
+
+.nr-stepBody {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.nr-footer {
+  border-top: 1px solid var(--border);
+  padding: 18px 28px;
+  color: color-mix(in oklab, var(--text) 82%, transparent);
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .nr-header {
+    padding: 16px 18px;
+  }
+
+  .nr-hero {
+    padding: 52px 18px 36px;
+  }
+
+  .nr-heroGrid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .nr-heroCopy {
+    text-align: left;
+  }
+
+  .nr-heroVisual {
+    min-height: 320px;
+  }
+
+  .nr-demo {
+    padding: 44px 18px 22px;
+  }
+
+  .nr-demoHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nr-demoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-trust {
+    padding: 40px 18px 46px;
+  }
+
+  .nr-trustTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nr-badges {
+    justify-content: flex-start;
+  }
+
+  .nr-logoRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nr-testimonialGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-exampleGrid,
+  .nr-whyGrid,
+  .nr-priceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-productGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-examples,
+  .nr-why,
+  .nr-pricing {
+    padding: 44px 18px 52px;
+  }
+
+  .nr-steps {
+    padding: 44px 18px 56px;
+  }
+
+  .nr-stepGrid {
+    grid-template-columns: 1fr;
+  }
+}
