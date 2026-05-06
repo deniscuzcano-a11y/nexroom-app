@@ -1,11 +1,13 @@
+import React from 'react';
+
 interface ImagePlaceholderProps {
-  type: 'minimal' | 'modern' | 'cozy' | 'hero' | 'scandinavian' | 'japandi' | 'luxury' | 'bedroom' | 'livingroom' | 'office'
-  className?: string
-  showIcon?: boolean
+  type: 'minimal' | 'modern' | 'cozy' | 'hero' | 'scandinavian' | 'japandi' | 'luxury' | 'bedroom' | 'livingroom' | 'office';
+  className?: string;
+  showIcon?: boolean;
 }
 
 export function ImagePlaceholder({ type, className = '', showIcon = true }: ImagePlaceholderProps) {
-  const styleConfigs = {
+  const styleConfigs: Record<string, { gradient: string; icon: string; color: string }> = {
     minimal: {
       gradient: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)',
       icon: '▢',
@@ -56,9 +58,9 @@ export function ImagePlaceholder({ type, className = '', showIcon = true }: Imag
       icon: '💼',
       color: '#1e40af'
     }
-  }
+  };
 
-  const config = styleConfigs[type] || styleConfigs.minimal
+  const config = styleConfigs[type] || styleConfigs.minimal;
 
   return (
     <div
@@ -68,7 +70,11 @@ export function ImagePlaceholder({ type, className = '', showIcon = true }: Imag
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        width: '100%',
+        height: '100%',
+        minHeight: '200px',
+        borderRadius: '1rem'
       }}
       role="img"
       aria-label={`${type} room interior design preview`}
@@ -90,8 +96,6 @@ export function ImagePlaceholder({ type, className = '', showIcon = true }: Imag
           {config.icon}
         </div>
       )}
-
-      {/* Subtle pattern overlay for depth */}
       <div
         style={{
           position: 'absolute',
@@ -103,5 +107,5 @@ export function ImagePlaceholder({ type, className = '', showIcon = true }: Imag
         aria-hidden="true"
       />
     </div>
-  )
+  );
 }
