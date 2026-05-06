@@ -1,9 +1,22 @@
 import './App.css'
 
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
+import { LanguageSwitcher } from './components/LanguageSwitcher'
+import { ImagePlaceholder } from './components/ImagePlaceholder'
+import { StyleSelector } from './components/StyleSelector'
+import { RoomTypeSelector } from './components/RoomTypeSelector'
+import { ColorPaletteSelector } from './components/ColorPaletteSelector'
+import { MoodSelector } from './components/MoodSelector'
+import { RoomSizeSelector } from './components/RoomSizeSelector'
 
-type StyleKey = 'minimal' | 'modern' | 'cozy'
+type StyleKey = 'modern' | 'scandinavian' | 'japandi' | 'minimalist' | 'luxury' | 'cozy'
 type NeedKey = 'bed' | 'desk' | 'lamp' | 'storage'
+type RoomTypeKey = 'bedroom' | 'livingroom' | 'gaming' | 'office' | 'studio'
+type RoomSizeKey = 'small' | 'medium' | 'large' | 'xl'
+type ColorPaletteKey = 'neutral' | 'warm' | 'cool' | 'bold'
+type MoodKey = 'productive' | 'relaxing' | 'social' | 'creative' | 'minimal'
 type DemoStep = 1 | 2 | 3
 
 type SetupItem = {
@@ -59,12 +72,20 @@ function tierForBudget(budget: number) {
 
 function styleTone(style: StyleKey) {
   switch (style) {
-    case 'minimal':
+    case 'minimalist':
       return { adjective: 'Minimal', vibe: 'clean lines, calm palette' }
     case 'modern':
       return { adjective: 'Modern', vibe: 'bold accents, sleek forms' }
     case 'cozy':
       return { adjective: 'Cozy', vibe: 'warm textures, soft light' }
+    case 'scandinavian':
+      return { adjective: 'Scandinavian', vibe: 'light woods, functional design' }
+    case 'japandi':
+      return { adjective: 'Japandi', vibe: 'minimalist, natural materials' }
+    case 'luxury':
+      return { adjective: 'Luxury', vibe: 'premium materials, elegant details' }
+    default:
+      return { adjective: 'Modern', vibe: 'bold accents, sleek forms' }
   }
 }
 
@@ -72,10 +93,19 @@ function generateSetup(params: {
   budget: number
   style: StyleKey
   needs: NeedKey[]
+  roomType: RoomTypeKey
+  roomSize: RoomSizeKey
+  colorPalette: ColorPaletteKey
+  moods: MoodKey[]
+  t: (key: string) => string
 }): GeneratedSetup {
   const budget = clamp(Math.round(params.budget || 0), 150, 12000)
   const style = params.style
   const needs = params.needs.length ? params.needs : (['bed', 'lamp'] as NeedKey[])
+  const roomType = params.roomType
+  const roomSize = params.roomSize
+  const colorPalette = params.colorPalette
+  const moods = params.moods
 
   const tier = tierForBudget(budget)
   const tone = styleTone(style)
@@ -83,7 +113,11 @@ function generateSetup(params: {
   const seed =
     budget * 31 +
     style.charCodeAt(0) * 997 +
-    needs.reduce((acc, n) => acc + n.charCodeAt(0) * 101, 0)
+    needs.reduce((acc, n) => acc + n.charCodeAt(0) * 101, 0) +
+    roomType.charCodeAt(0) * 103 +
+    roomSize.charCodeAt(0) * 107 +
+    colorPalette.charCodeAt(0) * 109 +
+    moods.reduce((acc, m) => acc + m.charCodeAt(0) * 113, 0)
   const r = createRng(seed)
 
   const catalog: Record<
@@ -231,12 +265,12 @@ function generateSetup(params: {
     const note = entry.notes ? pick(entry.notes, r) : undefined
     const category =
       need === 'bed'
-        ? 'Bed'
+        ? params.t('demo.steps.3.furnitureCategories.bed')
         : need === 'desk'
-          ? 'Desk'
+          ? params.t('demo.steps.3.furnitureCategories.desk')
           : need === 'lamp'
-            ? 'Lamp'
-            : 'Storage'
+            ? params.t('demo.steps.3.furnitureCategories.lamp')
+            : params.t('demo.steps.3.furnitureCategories.storage')
     return { key: need, name, category, price, note }
   })
 
@@ -245,8 +279,8 @@ function generateSetup(params: {
 
   const summary =
     status === 'within'
-      ? `Optimized for ${tone.vibe}. This setup stays under budget with room for small upgrades.`
-      : `Great ${tone.vibe} picks—but you're over budget. Try removing one need or lowering tier items.`
+      ? `${params.t('demo.steps.3.optimizedFor')} ${tone.vibe}. ${params.t('demo.steps.3.roomForUpgrades')}.`
+      : `${params.t('demo.steps.3.greatPicks')} ${tone.vibe} ${params.t('demo.steps.3.butOverBudget')}. ${params.t('demo.steps.3.tryRemovingNeed')}.`
 
   return {
     budget,
@@ -260,15 +294,20 @@ function generateSetup(params: {
 }
 
 function App() {
+  const { t } = useTranslation()
   const [demoStep, setDemoStep] = useState<DemoStep>(1)
+  const [roomType, setRoomType] = useState<RoomTypeKey>('bedroom')
   const [budget, setBudget] = useState<number>(1200)
   const [style, setStyle] = useState<StyleKey>('modern')
+  const [roomSize, setRoomSize] = useState<RoomSizeKey>('medium')
+  const [colorPalette, setColorPalette] = useState<ColorPaletteKey>('neutral')
   const [needs, setNeeds] = useState<Record<NeedKey, boolean>>({
     bed: true,
     desk: true,
     lamp: true,
     storage: false,
   })
+  const [moods, setMoods] = useState<MoodKey[]>(['relaxing'])
 
   const selectedNeeds = useMemo(
     () => (Object.keys(needs) as NeedKey[]).filter((k) => needs[k]),
@@ -289,6 +328,11 @@ function App() {
       budget,
       style,
       needs: selectedNeeds,
+      roomType,
+      roomSize,
+      colorPalette,
+      moods,
+      t,
     })
     setSetup(result)
     setIsGenerating(false)
@@ -307,89 +351,116 @@ function App() {
 
         <nav className="nr-nav" aria-label="Primary">
           <a className="nr-navLink" href="#demo">
-            Demo
+            {t('nav.demo')}
           </a>
           <a className="nr-navLink" href="#how-it-works">
-            How it works
+            {t('nav.howItWorks')}
           </a>
           <a className="nr-navLink" href="#pricing">
-            Pricing
+            {t('nav.pricing')}
           </a>
         </nav>
+
+        <LanguageSwitcher />
       </header>
 
       <main>
-        <section className="nr-hero" aria-labelledby="hero-title">
-          <div className="nr-heroGrid">
-            <div className="nr-heroCopy">
-              <p className="nr-eyebrow">AI interior planning, simplified</p>
-              <h1 id="hero-title">Design a bedroom you’ll love—instantly.</h1>
-              <p className="nr-subtitle">
-                Pick a budget, choose a style, and let NEXROOM generate a shoppable
-                setup in seconds—optimized for your space and your wallet.
-              </p>
+<motion.section
+        className="nr-hero"
+        aria-labelledby="hero-title"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="nr-heroGrid">
+          <motion.div
+            className="nr-heroCopy"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <p className="nr-eyebrow">{t('hero.eyebrow')}</p>
+            <h1 id="hero-title">{t('hero.title')}</h1>
+            <p className="nr-subtitle">
+              {t('hero.subtitle')}
+            </p>
 
-              <div className="nr-ctaRow" id="demo">
-                <a className="nr-primaryBtn" href="#demo">
-                  Start free demo
-                </a>
-                <p className="nr-ctaHint">No signup. Takes ~60 seconds.</p>
-              </div>
+            <div className="nr-ctaRow" id="demo">
+              <motion.a
+                className="nr-primaryBtn"
+                href="#demo"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {t('hero.cta')}
+              </motion.a>
+              <p className="nr-ctaHint">{t('hero.ctaHint')}</p>
             </div>
+          </motion.div>
 
-            <div className="nr-heroVisual" aria-hidden="true">
-              <div className="nr-glow nr-glowA" />
-              <div className="nr-glow nr-glowB" />
+          <motion.div
+            className="nr-heroVisual"
+            aria-hidden="true"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="nr-glow nr-glowA" />
+            <div className="nr-glow nr-glowB" />
 
-              <div className="nr-mockCard">
-                <div className="nr-mockTop">
-                  <div className="nr-dots" aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                  <div className="nr-pill">Bedroom • Scandinavian • €1200</div>
+            <motion.div
+              className="nr-mockCard"
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className="nr-mockTop">
+                <div className="nr-dots" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="nr-pill">Bedroom • Scandinavian • €1200</div>
+              </div>
+
+              <div className="nr-mockBody">
+                <div className="nr-mockGrid">
+                  <div className="nr-swatch nr-swatch1" />
+                  <div className="nr-swatch nr-swatch2" />
+                  <div className="nr-swatch nr-swatch3" />
+                  <div className="nr-swatch nr-swatch4" />
                 </div>
 
-                <div className="nr-mockBody">
-                  <div className="nr-mockGrid">
-                    <div className="nr-swatch nr-swatch1" />
-                    <div className="nr-swatch nr-swatch2" />
-                    <div className="nr-swatch nr-swatch3" />
-                    <div className="nr-swatch nr-swatch4" />
-                  </div>
+                <div className="nr-mockLines">
+                  <div className="nr-line nr-line1" />
+                  <div className="nr-line nr-line2" />
+                  <div className="nr-line nr-line3" />
+                </div>
 
-                  <div className="nr-mockLines">
-                    <div className="nr-line nr-line1" />
-                    <div className="nr-line nr-line2" />
-                    <div className="nr-line nr-line3" />
+                <div className="nr-mockFooter">
+                  <div className="nr-miniKpi">
+                    <div className="nr-miniLabel">Budget</div>
+                    <div className="nr-miniValue">€1,200</div>
                   </div>
-
-                  <div className="nr-mockFooter">
-                    <div className="nr-miniKpi">
-                      <div className="nr-miniLabel">Budget</div>
-                      <div className="nr-miniValue">€1,200</div>
-                    </div>
-                    <div className="nr-miniKpi">
-                      <div className="nr-miniLabel">Est.</div>
-                      <div className="nr-miniValue">€1,148</div>
-                    </div>
-                    <div className="nr-miniKpi">
-                      <div className="nr-miniLabel">Match</div>
-                      <div className="nr-miniValue">92%</div>
-                    </div>
+                  <div className="nr-miniKpi">
+                    <div className="nr-miniLabel">Est.</div>
+                    <div className="nr-miniValue">€1,148</div>
+                  </div>
+                  <div className="nr-miniKpi">
+                    <div className="nr-miniLabel">Match</div>
+                    <div className="nr-miniValue">92%</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
 
         <section className="nr-trust" aria-labelledby="trust-title">
           <div className="nr-trustTop">
             <div>
               <h2 id="trust-title" className="nr-h2Small">
-                Used by 1,000+ users
+                {t('trust.title', { count: 1000 })}
               </h2>
               <p className="nr-sectionSub">
                 Designers, students, and busy builders use NEXROOM to go from “ideas”
@@ -406,9 +477,15 @@ function App() {
           <div className="nr-logoRow" aria-label="Customer logos">
             {(['ArcHome', 'NordNest', 'StudioNine', 'Roomly', 'Craft & Co'] as const).map(
               (name) => (
-                <div key={name} className="nr-logoPill" aria-hidden="true">
+                <motion.div
+                  key={name}
+                  className="nr-logoPill"
+                  aria-hidden="true"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
                   {name}
-                </div>
+                </motion.div>
               ),
             )}
           </div>
@@ -435,8 +512,16 @@ function App() {
                   role: 'Indie builder',
                 },
               ] as const
-            ).map((t) => (
-              <div key={t.name} className="nr-testimonialCard">
+            ).map((t, index) => (
+              <motion.div
+                key={t.name}
+                className="nr-testimonialCard"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
                 <div className="nr-stars" aria-hidden="true">
                   <span />
                   <span />
@@ -452,7 +537,7 @@ function App() {
                     <div className="nr-personRole">{t.role}</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -460,14 +545,13 @@ function App() {
         <section className="nr-demo" id="demo" aria-labelledby="demo-title">
           <div className="nr-demoHead">
             <div>
-              <h2 id="demo-title">Interactive AI demo</h2>
+              <h2 id="demo-title">{t('demo.title')}</h2>
               <p className="nr-sectionSub">
-                A guided, 3‑step flow—like a real product. Get an itemized setup
-                with prices and budget tracking.
+                {t('demo.subtitle')}
               </p>
             </div>
             <div className="nr-demoBadge" aria-hidden="true">
-              Product preview
+              {t('demo.badge')}
             </div>
           </div>
 
@@ -475,9 +559,9 @@ function App() {
             <div className="nr-stepper" role="tablist" aria-label="Demo steps">
               {(
                 [
-                  [1, 'Budget & style'],
-                  [2, 'Needs'],
-                  [3, 'Results'],
+                  [1, t('demo.steps.1.title')],
+                  [2, t('demo.steps.2.title')],
+                  [3, t('demo.steps.3.title')],
                 ] as const
               ).map(([idx, label]) => (
                 <button
@@ -506,12 +590,49 @@ function App() {
             <div className="nr-demoGrid">
               <div className="nr-demoCard nr-demoForm" aria-label="Demo inputs">
                 {demoStep === 1 && (
-                  <div className="nr-stepPanel">
-                    <div className="nr-panelTitle">Step 1 — Budget & style</div>
+                  <motion.div
+                    className="nr-stepPanel"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                  >
+                    <div className="nr-panelTitle">{t('demo.steps.1.title')}</div>
+
+                    <div className="nr-formRow">
+                      <div className="nr-label">{t('demo.steps.1.roomType')}</div>
+                      <RoomTypeSelector
+                        selectedRoom={roomType}
+                        onRoomChange={(room) => setRoomType(room as RoomTypeKey)}
+                      />
+                    </div>
+
+                    <div className="nr-formRow">
+                      <div className="nr-label">{t('demo.steps.1.styleLabel')}</div>
+                      <StyleSelector
+                        selectedStyle={style}
+                        onStyleChange={(newStyle) => setStyle(newStyle as StyleKey)}
+                      />
+                    </div>
+
+                    <div className="nr-formRow">
+                      <div className="nr-label">{t('demo.steps.1.roomSize')}</div>
+                      <RoomSizeSelector
+                        selectedSize={roomSize}
+                        onSizeChange={(size) => setRoomSize(size as RoomSizeKey)}
+                      />
+                    </div>
+
+                    <div className="nr-formRow">
+                      <div className="nr-label">{t('demo.steps.1.colorPalette')}</div>
+                      <ColorPaletteSelector
+                        selectedPalette={colorPalette}
+                        onPaletteChange={(palette) => setColorPalette(palette as ColorPaletteKey)}
+                      />
+                    </div>
 
                     <div className="nr-formRow">
                       <label className="nr-label" htmlFor="nr-budget">
-                        Budget (€)
+                        {t('demo.steps.1.budgetLabel')}
                       </label>
                       <div className="nr-inputWrap">
                         <span className="nr-inputPrefix" aria-hidden="true">
@@ -531,24 +652,8 @@ function App() {
                         />
                       </div>
                       <div className="nr-help" id="nr-budget-help">
-                        Tip: try €600 vs €2500 to see tier changes.
+                        {t('demo.steps.1.budgetHelp')}
                       </div>
-                    </div>
-
-                    <div className="nr-formRow">
-                      <label className="nr-label" htmlFor="nr-style">
-                        Style
-                      </label>
-                      <select
-                        id="nr-style"
-                        className="nr-input nr-select"
-                        value={style}
-                        onChange={(e) => setStyle(e.target.value as StyleKey)}
-                      >
-                        <option value="minimal">Minimal</option>
-                        <option value="modern">Modern</option>
-                        <option value="cozy">Cozy</option>
-                      </select>
                     </div>
 
                     <div className="nr-panelActions">
@@ -556,12 +661,15 @@ function App() {
                         type="button"
                         className="nr-secondaryBtn"
                         onClick={() => {
+                          setRoomType('bedroom')
                           setBudget(1200)
                           setStyle('modern')
+                          setRoomSize('medium')
+                          setColorPalette('neutral')
                           setDemoStep(2)
                         }}
                       >
-                        Use recommended
+                        {t('demo.steps.1.recommended')}
                       </button>
                       <button
                         type="button"
@@ -569,18 +677,23 @@ function App() {
                         onClick={() => setDemoStep(2)}
                         disabled={!canContinueToNeeds}
                       >
-                        Continue
+                        {t('demo.continue')}
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
 
                 {demoStep === 2 && (
-                  <div className="nr-stepPanel">
-                    <div className="nr-panelTitle">Step 2 — Select needs</div>
+                  <motion.div
+                    className="nr-stepPanel"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                  >
+                    <div className="nr-panelTitle">{t('demo.steps.2.title')}</div>
 
                     <div className="nr-formRow">
-                      <div className="nr-label">Needs</div>
+                      <div className="nr-label">{t('demo.steps.2.needsLabel')}</div>
                       <div className="nr-needGrid" role="group" aria-label="Needs">
                         {(
                           [
@@ -606,8 +719,16 @@ function App() {
                         ))}
                       </div>
                       <div className="nr-help">
-                        Pick what matters most. We’ll optimize within your budget.
+                        {t('demo.steps.2.needsHelp')}
                       </div>
+                    </div>
+
+                    <div className="nr-formRow">
+                      <div className="nr-label">{t('demo.steps.2.moodLabel')}</div>
+                      <MoodSelector
+                        selectedMoods={moods}
+                        onMoodsChange={(newMoods) => setMoods(newMoods as MoodKey[])}
+                      />
                     </div>
 
                     <button
@@ -616,7 +737,7 @@ function App() {
                       onClick={onGenerate}
                       disabled={isGenerating || !canGenerate}
                     >
-                      {isGenerating ? 'Generating…' : 'Generate setup'}
+                      {isGenerating ? 'Generating…' : t('demo.steps.2.generate')}
                     </button>
 
                     <div className="nr-panelActions">
@@ -625,7 +746,7 @@ function App() {
                         className="nr-secondaryBtn"
                         onClick={() => setDemoStep(1)}
                       >
-                        Back
+                        {t('demo.back')}
                       </button>
                       <button
                         type="button"
@@ -634,21 +755,26 @@ function App() {
                         disabled={!setup}
                         title={!setup ? 'Generate a setup first' : undefined}
                       >
-                        View results
+                        {t('demo.viewResults')}
                       </button>
                     </div>
 
                     <p className="nr-micro">
-                      Everything runs locally in your browser—no backend.
+                      {t('demo.micro')}
                     </p>
-                  </div>
+                  </motion.div>
                 )}
 
                 {demoStep === 3 && (
-                  <div className="nr-stepPanel">
-                    <div className="nr-panelTitle">Step 3 — Results</div>
+                  <motion.div
+                    className="nr-stepPanel"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                  >
+                    <div className="nr-panelTitle">{t('demo.steps.3.title')}</div>
                     <p className="nr-help">
-                      Review the itemized setup. Adjust inputs anytime.
+                      {t('demo.steps.3.help')}
                     </p>
                     <div className="nr-panelActions">
                       <button
@@ -656,7 +782,7 @@ function App() {
                         className="nr-secondaryBtn"
                         onClick={() => setDemoStep(2)}
                       >
-                        Back
+                        {t('demo.back')}
                       </button>
                       <button
                         type="button"
@@ -664,10 +790,10 @@ function App() {
                         onClick={onGenerate}
                         disabled={isGenerating}
                       >
-                        {isGenerating ? 'Refreshing…' : 'Regenerate'}
+                        {isGenerating ? t('demo.steps.3.refreshing') : t('demo.steps.3.regenerate')}
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
 
@@ -690,7 +816,7 @@ function App() {
                         <div>
                           <div className="nr-resultsKicker">Generated setup</div>
                           <div className="nr-resultsTitle">
-                            {styleTone(setup.style).adjective} bedroom
+                            {styleTone(setup.style as StyleKey).adjective} bedroom
                           </div>
                         </div>
 
@@ -700,8 +826,8 @@ function App() {
                           }`}
                         >
                           {setup.status === 'within'
-                            ? 'Within budget'
-                            : 'Over budget'}
+                            ? t('demo.steps.3.withinBudget')
+                            : t('demo.steps.3.overBudget')}
                         </div>
                       </div>
 
@@ -722,8 +848,8 @@ function App() {
                                   }`}
                                 >
                                   {setup.status === 'within'
-                                    ? 'Within budget'
-                                    : 'Over budget'}
+                                    ? t('demo.steps.3.withinBudget')
+                                    : t('demo.steps.3.overBudget')}
                                 </span>
                               </div>
                               <div className="nr-itemName">{it.name}</div>
@@ -797,72 +923,54 @@ function App() {
 
         <section className="nr-examples" aria-labelledby="examples-title">
           <div className="nr-sectionHead">
-            <h2 id="examples-title">Example setups</h2>
+            <h2 id="examples-title">{t('examples.title')}</h2>
             <p className="nr-sectionSub">
               A few curated previews—so you know what “good” looks like.
             </p>
           </div>
 
           <div className="nr-exampleGrid">
-            {(
-              [
-                {
-                  title: 'Minimal calm',
-                  meta: '€650 • essentials only',
-                  body: 'A clean starter setup that stays focused and affordable.',
-                },
-                {
-                  title: 'Modern focus',
-                  meta: '€1,200 • work + sleep',
-                  body: 'Balanced picks with a tidy workstation and premium lighting.',
-                },
-                {
-                  title: 'Cozy retreat',
-                  meta: '€2,400 • comfort upgrades',
-                  body: 'Warm textures, higher-quality materials, and smarter storage.',
-                },
-              ] as const
-            ).map((c) => (
-              <div key={c.title} className="nr-exampleCard">
-                <div className="nr-exampleImg" aria-hidden="true" />
+            {(t('examples.items', { returnObjects: true }) as any[]).map((item: any, index: number) => (
+              <motion.div
+                key={item.title}
+                className="nr-exampleCard"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <ImagePlaceholder
+                  type={item.style as any}
+                  className="nr-exampleImg"
+                />
                 <div className="nr-exampleBody">
-                  <div className="nr-exampleTitle">{c.title}</div>
-                  <div className="nr-exampleMeta">{c.meta}</div>
-                  <p className="nr-exampleText">{c.body}</p>
-                  <a className="nr-textLink" href="#demo">
-                    Try this in the demo →
-                  </a>
+                  <div className="nr-exampleTitle">{item.title}</div>
+                  <div className="nr-exampleMeta">{item.meta}</div>
+                  <p className="nr-exampleText">{item.body}</p>
+                  <motion.a
+                    className="nr-textLink"
+                    href="#demo"
+                    whileHover={{ x: 5 }}
+                  >
+                    {t('examples.tryInDemo')}
+                  </motion.a>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
 
         <section className="nr-why" aria-labelledby="why-title">
           <div className="nr-sectionHead">
-            <h2 id="why-title">Why NEXROOM</h2>
+            <h2 id="why-title">{t('why.title')}</h2>
             <p className="nr-sectionSub">
-              Built for speed, taste, and budget reality—without the overwhelm.
+              {t('why.subtitle')}
             </p>
           </div>
 
           <div className="nr-whyGrid">
-            {(
-              [
-                {
-                  title: 'Budget-aware by default',
-                  body: 'Every recommendation is price‑tagged, with trade‑offs explained.',
-                },
-                {
-                  title: 'Style that stays consistent',
-                  body: 'We keep materials, colors, and shapes coherent across the setup.',
-                },
-                {
-                  title: 'Fast iteration',
-                  body: 'Adjust needs and regenerate instantly until it feels right.',
-                },
-              ] as const
-            ).map((f) => (
+            {(t('why.features', { returnObjects: true }) as any[]).map((f: any) => (
               <div key={f.title} className="nr-whyCard">
                 <div className="nr-whyTitle">{f.title}</div>
                 <p className="nr-whyBody">{f.body}</p>
@@ -877,107 +985,65 @@ function App() {
           aria-labelledby="how-title"
         >
           <div className="nr-sectionHead">
-            <h2 id="how-title">How it works</h2>
+            <h2 id="how-title">{t('howItWorks.title')}</h2>
             <p className="nr-sectionSub">
-              From idea to a shoppable plan—in three simple steps.
+              {t('howItWorks.subtitle')}
             </p>
           </div>
 
           <ol className="nr-stepGrid">
-            <li className="nr-stepCard">
-              <div className="nr-stepNum">01</div>
-              <h3 className="nr-stepTitle">Tell us your space</h3>
-              <p className="nr-stepBody">
-                Add room size, must-haves, and your style vibe. Upload a quick
-                photo if you want.
-              </p>
-            </li>
-            <li className="nr-stepCard">
-              <div className="nr-stepNum">02</div>
-              <h3 className="nr-stepTitle">Set a budget</h3>
-              <p className="nr-stepBody">
-                Choose a target spend and priorities. NEXROOM balances comfort,
-                aesthetics, and price.
-              </p>
-            </li>
-            <li className="nr-stepCard">
-              <div className="nr-stepNum">03</div>
-              <h3 className="nr-stepTitle">Get your plan</h3>
-              <p className="nr-stepBody">
-                Review the layout, color palette, and furniture picks. Tweak
-                options until it feels perfect.
-              </p>
-            </li>
+            {(t('howItWorks.steps', { returnObjects: true }) as any[]).map((step: any, index: number) => (
+              <li key={step.title} className="nr-stepCard">
+                <div className="nr-stepNum">0{index + 1}</div>
+                <h3 className="nr-stepTitle">{step.title}</h3>
+                <p className="nr-stepBody">{step.body}</p>
+              </li>
+            ))}
           </ol>
         </section>
 
         <section className="nr-pricing" id="pricing" aria-labelledby="pricing-title">
           <div className="nr-sectionHead">
-            <h2 id="pricing-title">Pricing</h2>
+            <h2 id="pricing-title">{t('pricing.title')}</h2>
             <p className="nr-sectionSub">
-              Start free. Upgrade when you want saved setups and deeper planning.
+              {t('pricing.subtitle')}
             </p>
           </div>
 
           <div className="nr-priceGrid">
-            <div className="nr-priceCard">
-              <div className="nr-priceTop">
-                <div className="nr-priceName">Free</div>
-                <div className="nr-priceValue">{eur(0)}</div>
-              </div>
-              <ul className="nr-bullets">
-                <li>Interactive demo</li>
-                <li>Itemized pricing</li>
-                <li>Unlimited regenerations</li>
-              </ul>
-              <a className="nr-genBtn nr-priceBtn" href="#demo">
-                Start free demo
-              </a>
-            </div>
-
-            <div className="nr-priceCard is-featured">
-              <div className="nr-priceTop">
-                <div className="nr-priceName">Pro</div>
-                <div className="nr-priceValue">
-                  {eur(9)}
-                  <span className="nr-priceUnit">/mo</span>
+            {(t('pricing.plans', { returnObjects: true }) as any[]).map((plan: any, index: number) => (
+              <div key={plan.name} className={`nr-priceCard ${index === 1 ? 'is-featured' : ''}`}>
+                <div className="nr-priceTop">
+                  <div className="nr-priceName">{plan.name}</div>
+                  <div className="nr-priceValue">
+                    {plan.price === '0' ? eur(0) : eur(plan.price)}
+                    {plan.unit && <span className="nr-priceUnit">{plan.unit}</span>}
+                  </div>
                 </div>
+                <ul className="nr-bullets">
+                  {plan.features.map((feature: string) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+                {index === 1 ? (
+                  <button
+                    type="button"
+                    className="nr-genBtn nr-priceBtn"
+                    onClick={() => {
+                      setDemoStep(1)
+                      const el = document.getElementById('demo')
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }}
+                  >
+                    {plan.cta}
+                  </button>
+                ) : (
+                  <a className="nr-genBtn nr-priceBtn" href="#demo">
+                    {plan.cta}
+                  </a>
+                )}
               </div>
-              <ul className="nr-bullets">
-                <li>Save & compare setups</li>
-                <li>Room layout suggestions</li>
-                <li>Smarter budget optimization</li>
-              </ul>
-              <button
-                type="button"
-                className="nr-genBtn nr-priceBtn"
-                onClick={() => {
-                  setDemoStep(1)
-                  const el = document.getElementById('demo')
-                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }}
-              >
-                Try Pro flow
-              </button>
-            </div>
-
-            <div className="nr-priceCard">
-              <div className="nr-priceTop">
-                <div className="nr-priceName">Premium</div>
-                <div className="nr-priceValue">
-                  {eur(19)}
-                  <span className="nr-priceUnit">/mo</span>
-                </div>
-              </div>
-              <ul className="nr-bullets">
-                <li>Multiple rooms & saved history</li>
-                <li>Shareable links</li>
-                <li>Priority presets</li>
-              </ul>
-              <a className="nr-secondaryBtn nr-priceBtn" href="#demo">
-                Start with Premium
-              </a>
-            </div>
+            ))}
           </div>
         </section>
       </main>

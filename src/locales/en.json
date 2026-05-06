@@ -1,0 +1,196 @@
+{
+  "nav": {
+    "demo": "Demo",
+    "howItWorks": "How it works",
+    "pricing": "Pricing"
+  },
+  "hero": {
+    "eyebrow": "AI interior planning, simplified",
+    "title": "Design a bedroom you'll love—instantly.",
+    "subtitle": "Pick a budget, choose a style, and let NEXROOM generate a shoppable setup in seconds—optimized for your space and your wallet.",
+    "cta": "Start free demo",
+    "ctaHint": "No signup. Takes ~60 seconds."
+  },
+  "trust": {
+    "title": "Used by {{count}} users",
+    "subtitle": "Designers, students, and busy builders use NEXROOM to go from 'ideas' to 'done' faster.",
+    "badges": ["Privacy-first", "Budget-aware", "Fast iterations"],
+    "logos": ["ArcHome", "NordNest", "StudioNine", "Roomly", "Craft & Co"]
+  },
+  "testimonials": [
+    {
+      "quote": "I went from 'blank room' to a cohesive setup in minutes. The budget bar is surprisingly accurate.",
+      "name": "Mina K.",
+      "role": "First apartment"
+    },
+    {
+      "quote": "The style consistency is the killer feature. Everything matches without me hunting through 20 tabs.",
+      "name": "Alex R.",
+      "role": "Remote worker"
+    },
+    {
+      "quote": "Perfect for quick iterations. Change one need, regenerate, done. Feels like a real product.",
+      "name": "Sam P.",
+      "role": "Indie builder"
+    }
+  ],
+  "demo": {
+    "title": "Interactive AI demo",
+    "subtitle": "A guided, 3-step flow—like a real product. Get an itemized setup with prices and budget tracking.",
+    "badge": "Product preview",
+    "steps": {
+      "1": {
+        "title": "Budget & style",
+        "budgetLabel": "Budget (€)",
+        "budgetHelp": "Tip: try €600 vs €2500 to see tier changes.",
+        "styleLabel": "Style",
+        "roomType": "Room type",
+        "roomSize": "Room size",
+        "colorPalette": "Color palette",
+        "recommended": "Use recommended",
+        "styles": {
+          "modern": "Modern",
+          "scandinavian": "Scandinavian",
+          "japandi": "Japandi",
+          "minimalist": "Minimalist",
+          "luxury": "Luxury",
+          "cozy": "Cozy"
+        },
+        "roomTypes": {
+          "bedroom": "Bedroom",
+          "livingroom": "Living room",
+          "gaming": "Gaming room",
+          "office": "Home office",
+          "studio": "Studio apartment"
+        },
+        "roomSizes": {
+          "small": "Small",
+          "medium": "Medium",
+          "large": "Large",
+          "xl": "Extra large"
+        },
+        "colorPalettes": {
+          "neutral": "Neutral",
+          "warm": "Warm",
+          "cool": "Cool",
+          "bold": "Bold"
+        }
+      },
+      "2": {
+        "title": "Needs",
+        "needsLabel": "Needs",
+        "needsHelp": "Pick what matters most. We'll optimize within your budget.",
+        "moodLabel": "Mood & atmosphere",
+        "generate": "Generate setup",
+        "moods": {
+          "productive": "Productive",
+          "relaxing": "Relaxing",
+          "social": "Social",
+          "creative": "Creative",
+          "minimal": "Minimal"
+        }
+      },
+      "3": {
+        "title": "Results",
+        "help": "Review the itemized setup. Adjust inputs anytime.",
+        "regenerate": "Regenerate",
+        "refreshing": "Refreshing..."
+      }
+    },
+    "back": "Back",
+    "continue": "Continue",
+    "viewResults": "View results",
+    "micro": "Everything runs locally in your browser—no backend."
+  },
+  "examples": {
+    "title": "Example setups",
+    "subtitle": "A few curated previews—so you know what 'good' looks like.",
+    "items": [
+      {
+        "title": "Minimal calm",
+        "meta": "€650 • essentials only",
+        "body": "A clean starter setup that stays focused and affordable."
+      },
+      {
+        "title": "Modern focus",
+        "meta": "€1,200 • work + sleep",
+        "body": "Balanced picks with a tidy workstation and premium lighting."
+      },
+      {
+        "title": "Cozy retreat",
+        "meta": "€2,400 • comfort upgrades",
+        "body": "Warm textures, higher-quality materials, and smarter storage."
+      }
+    ],
+    "tryInDemo": "Try this in the demo →"
+  },
+  "why": {
+    "title": "Why NEXROOM",
+    "subtitle": "Built for speed, taste, and budget reality—without the overwhelm.",
+    "features": [
+      {
+        "title": "Budget-aware by default",
+        "body": "Every recommendation is price-tagged, with trade-offs explained."
+      },
+      {
+        "title": "Style that stays consistent",
+        "body": "We keep materials, colors, and shapes coherent across the setup."
+      },
+      {
+        "title": "Fast iteration",
+        "body": "Adjust needs and regenerate instantly until it feels right."
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "From idea to a shoppable plan—in three simple steps.",
+    "steps": [
+      {
+        "title": "Tell us your space",
+        "body": "Add room size, must-haves, and your style vibe. Upload a quick photo if you want."
+      },
+      {
+        "title": "Set a budget",
+        "body": "Choose a target spend and priorities. NEXROOM balances comfort, aesthetics, and price."
+      },
+      {
+        "title": "Get your plan",
+        "body": "Review the layout, color palette, and furniture picks. Tweak options until it feels perfect."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Start free. Upgrade when you want saved setups and deeper planning.",
+    "plans": [
+      {
+        "name": "Free",
+        "price": "0",
+        "features": ["Interactive demo", "Itemized pricing", "Unlimited regenerations"],
+        "cta": "Start free demo"
+      },
+      {
+        "name": "Pro",
+        "price": "9",
+        "unit": "/mo",
+        "features": ["Save & compare setups", "Room layout suggestions", "Smarter budget optimization"],
+        "cta": "Try Pro flow"
+      },
+      {
+        "name": "Premium",
+        "price": "19",
+        "unit": "/mo",
+        "features": ["Multiple rooms & saved history", "Shareable links", "Priority presets"],
+        "cta": "Start with Premium"
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "© {{year}} NEXROOM"
+  },
+  "language": {
+    "switch": "Switch to Spanish",
+    "current": "English"
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "common": {
+    "get_started": "Empezar ahora",
+    "loading": "Generando tu espacio...",
+    "budget": "Presupuesto",
+    "save": "Guardar diseño",
+    "fast_iteration": "Iteración rápida"
+  },
+  "nav": {
+    "demo": "Demo",
+    "howItWorks": "Cómo funciona",
+    "pricing": "Precios"
+  },
+  "hero": {
+    "eyebrow": "Planificación de interiores con IA, simplificada",
+    "title": "Diseña un dormitorio que amarás—instantáneamente.",
+    "subtitle": "Elige un presupuesto, selecciona un estilo, y deja que NEXROOM genere una configuración comprable en segundos—optimizada para tu espacio y tu bolsillo.",
+    "cta": "Comenzar demo gratis",
+    "ctaHint": "Sin registro. Toma ~60 segundos."
+  },
+  "landing": {
+    "stats": "Usado por más de 1,000 usuarios",
+    "description": "Diseñadores y creadores usan NEXROOM para pasar de ideas a realidades más rápido.",
+    "badges": {
+      "privacy": "Privacidad primero",
+      "budget": "Control de presupuesto",
+      "iterations": "Iteraciones rápidas"
+    }
+  },
+  "trust": {
+    "title": "Usado por {{count}} usuarios",
+    "subtitle": "Diseñadores, estudiantes y constructores ocupados usan NEXROOM para pasar de 'ideas' a 'hecho' más rápido.",
+    "badges": ["Privacidad primero", "Consciente del presupuesto", "Iteraciones rápidas"],
+    "logos": ["ArcHome", "NordNest", "StudioNine", "Roomly", "Craft & Co"]
+  },
+  "testimonials": {
+    "mina": {
+      "text": "Pasé de una 'habitación en blanco' a un setup cohesivo en minutos. La barra de presupuesto es sorprendentemente precisa.",
+      "role": "Primer apartamento"
+    },
+    "alex": {
+      "text": "La consistencia de estilo es la característica estrella. Todo combina sin tener que buscar en 20 pestañas.",
+      "role": "Trabajador remoto"
+    },
+    "sam": {
+      "text": "Perfecto para iteraciones rápidas. Cambias una necesidad, regeneras y listo. Se siente como un producto real.",
+      "role": "Creador independiente"
+    }
+  },
+  "demo": {
+    "title": "Demo interactiva de IA",
+    "subtitle": "Un flujo guiado de 3 pasos—como un producto real. Obtén una configuración detallada con precios y seguimiento de presupuesto.",
+    "badge": "Vista previa del producto",
+    "steps": {
+      "1": {
+        "title": "Presupuesto y estilo",
+        "budgetLabel": "Presupuesto (€)",
+        "budgetHelp": "Consejo: prueba €600 vs €2500 para ver cambios de nivel.",
+        "styleLabel": "Estilo",
+        "roomType": "Tipo de habitación",
+        "roomSize": "Tamaño de habitación",
+        "colorPalette": "Paleta de colores",
+        "recommended": "Usar recomendado",
+        "styles": {
+          "modern": "Moderno",
+          "scandinavian": "Escandinavo",
+          "japandi": "Japandi",
+          "minimalist": "Minimalista",
+          "luxury": "Lujo",
+          "cozy": "Acogedor"
+        },
+        "roomTypes": {
+          "bedroom": "Dormitorio",
+          "livingroom": "Sala de estar",
+          "gaming": "Sala de juegos",
+          "office": "Oficina en casa",
+          "studio": "Estudio"
+        },
+        "roomSizes": {
+          "small": "Pequeño",
+          "medium": "Mediano",
+          "large": "Grande",
+          "xl": "Extra grande"
+        },
+        "colorPalettes": {
+          "neutral": "Neutro",
+          "warm": "Cálido",
+          "cool": "Frío",
+          "bold": "Audaz"
+        }
+      },
+      "2": {
+        "title": "Necesidades",
+        "needsLabel": "Necesidades",
+        "needsHelp": "Elige lo que más importa. Optimizaremos dentro de tu presupuesto.",
+        "moodLabel": "Ambiente y estado de ánimo",
+        "generate": "Generar configuración",
+        "moods": {
+          "productive": "Productivo",
+          "relaxing": "Relajante",
+          "social": "Social",
+          "creative": "Creativo",
+          "minimal": "Minimalista"
+        }
+      },
+      "3": {
+        "title": "Resultados",
+        "help": "Revisa la configuración detallada. Ajusta entradas en cualquier momento.",
+        "regenerate": "Regenerar",
+        "refreshing": "Actualizando...",
+        "budgetSummary": "Resumen del presupuesto",
+        "totalSpent": "Total gastado",
+        "remaining": "Restante",
+        "overBudget": "Fuera de presupuesto",
+        "withinBudget": "Dentro del presupuesto",
+        "roomPreview": "Vista previa de la habitación",
+        "furnitureRecommendations": "Recomendaciones de muebles",
+        "aiRecommendation": "Recomendación de IA",
+        "optimizedFor": "Optimizado para",
+        "roomForUpgrades": "espacio para mejoras pequeñas",
+        "tryRemovingNeed": "Prueba eliminando una necesidad o bajando artículos de nivel",
+        "greatPicks": "Excelentes selecciones",
+        "butOverBudget": "pero estás fuera de presupuesto",
+        "furnitureCategories": {
+          "bed": "Cama",
+          "desk": "Escritorio",
+          "chair": "Silla",
+          "storage": "Almacenamiento",
+          "lamp": "Lámpara",
+          "decor": "Decoración"
+        }
+      }
+    },
+    "back": "Atrás",
+    "continue": "Continuar",
+    "viewResults": "Ver resultados",
+    "micro": "Todo se ejecuta localmente en tu navegador—sin backend."
+  },
+  "generator": {
+    "steps": {
+      "title": "Cuéntanos sobre tu espacio",
+      "room_type": "Tipo de habitación",
+      "style": "Estilo de diseño"
+    },
+    "camera": {
+      "title": "Escaneo IA en vivo",
+      "button": "Activar Cámara Inteligente",
+      "scanning": "Analizando dimensiones y luz...",
+      "hint": "Apunta a las esquinas para una precisión total"
+    },
+    "rooms": {
+      "bedroom": "Dormitorio",
+      "bedroom_desc": "Descanso y espacio personal",
+      "living": "Sala de estar",
+      "living_desc": "Relax y entretenimiento",
+      "gaming": "Sala de juegos",
+      "gaming_desc": "Setup de alto rendimiento",
+      "office": "Oficina en casa",
+      "office_desc": "Productividad y enfoque",
+      "studio": "Estudio",
+      "studio_desc": "Espacio polivalente"
+    },
+    "styles": {
+      "modern": "Moderno",
+      "modern_desc": "Líneas limpias y acentos fuertes",
+      "scandinavian": "Escandinavo",
+      "scandinavian_desc": "Maderas claras y diseño funcional"
+    },
+    "results": {
+      "analysis": "Análisis de la IA",
+      "over_budget": "Por encima del presupuesto",
+      "within_budget": "Dentro del presupuesto"
+    }
+  },
+  "examples": {
+    "title": "Configuraciones de ejemplo",
+    "subtitle": "Una selección de previsualizaciones para que veas lo que es posible.",
+    "items": [
+      {
+        "title": "Calma minimalista",
+        "meta": "€650 • solo esenciales",
+        "body": "Una configuración inicial limpia que se mantiene enfocada y asequible."
+      },
+      {
+        "title": "Enfoque moderno",
+        "meta": "€1,200 • trabajo + sueño",
+        "body": "Selecciones balanceadas con una estación de trabajo ordenada e iluminación premium."
+      },
+      {
+        "title": "Retiro acogedor",
+        "meta": "€2,400 • mejoras de confort",
+        "body": "Texturas cálidas, materiales de mayor calidad y almacenamiento más inteligente."
+      }
+    ],
+    "tryInDemo": "Prueba esto en el demo →"
+  },
+  "why": {
+    "title": "Por qué NEXROOM",
+    "subtitle": "Construido para velocidad, gusto y realidad presupuestaria—sin el agobio.",
+    "features": [
+      {
+        "title": "Consciente del presupuesto por defecto",
+        "body": "Cada recomendación tiene precio, con compensaciones explicadas."
+      },
+      {
+        "title": "Estilo que se mantiene consistente",
+        "body": "Mantenemos materiales, colores y formas coherentes en toda la configuración."
+      },
+      {
+        "title": "Iteración rápida",
+        "body": "Ajusta necesidades y regenera instantáneamente hasta que se sienta bien."
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "subtitle": "De idea a plan comprable—en tres pasos simples.",
+    "steps": [
+      {
+        "title": "Cuéntanos tu espacio",
+        "body": "Agrega tamaño de habitación, imprescindibles y tu vibra de estilo. Sube una foto rápida si quieres."
+      },
+      {
+        "title": "Establece un presupuesto",
+        "body": "Elige un gasto objetivo y prioridades. NEXROOM balancea confort, estética y precio."
+      },
+      {
+        "title": "Obtén tu plan",
+        "body": "Revisa el diseño, paleta de colores y selecciones de muebles. Ajusta opciones hasta que se sienta perfecto."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Precios",
+    "subtitle": "Comienza gratis. Actualiza cuando quieras configuraciones guardadas y planificación más profunda.",
+    "plans": [
+      {
+        "name": "Gratis",
+        "price": "0",
+        "features": ["Demo interactiva", "Precios detallados", "Regeneraciones ilimitadas"],
+        "cta": "Comenzar demo gratis"
+      },
+      {
+        "name": "Pro",
+        "price": "9",
+        "unit": "/mes",
+        "features": ["Guardar y comparar configuraciones", "Sugerencias de diseño de habitación", "Optimización de presupuesto más inteligente"],
+        "cta": "Probar flujo Pro"
+      },
+      {
+        "name": "Premium",
+        "price": "19",
+        "unit": "/mes",
+        "features": ["Múltiples habitaciones e historial guardado", "Enlaces compartibles", "Preajustes prioritarios"],
+        "cta": "Comenzar con Premium"
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "© {{year}} NEXROOM"
+  },
+  "language": {
+    "switch": "Cambiar a inglés",
+    "current": "Español"
+  }
+}
