@@ -8,7 +8,7 @@ interface ImagePlaceholderProps {
 
 export function ImagePlaceholder({ type, className = '', showIcon = true }: ImagePlaceholderProps) {
   const styleConfigs: Record<string, { gradient: string; icon: string; color: string }> = {
-    minimal: { gradient: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)', icon: '▢', color: '#64748b' },
+    minimal: { gradient: 'linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%)', icon: '▢', color: '#64748b' },
     modern: { gradient: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)', icon: '◈', color: '#0f172a' },
     cozy: { gradient: 'linear-gradient(135deg, #fef7ed 0%, #fdba74 100%)', icon: '◉', color: '#9a3412' },
     hero: { gradient: 'linear-gradient(135deg, #f3e8ff 0%, #d8b4fe 100%)', icon: '✦', color: '#7c3aed' },
@@ -25,10 +25,17 @@ export function ImagePlaceholder({ type, className = '', showIcon = true }: Imag
   return (
     <div 
       className={`w-full h-full flex items-center justify-center rounded-xl ${className}`} 
-      style={{ background: config.gradient, minHeight: '200px', display: 'flex' }}
+      style={{ 
+        background: config.gradient, 
+        minHeight: '200px', 
+        position: 'relative',
+        display: 'flex'
+      }}
     >
       {showIcon && (
-        <span style={{ fontSize: '3rem', opacity: 0.5, color: config.color }}>{config.icon}</span>
+        <span style={{ fontSize: '3rem', opacity: 0.5, color: config.color }}>
+          {config.icon}
+        </span>
       )}
     </div>
   );
