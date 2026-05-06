@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Camera, Scan, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -148,7 +148,7 @@ export function CameraScanner({ onScanComplete, className = '' }: CameraScannerP
                       whileTap={{ scale: 0.98 }}
                     >
                       <Scan size={16} />
-                      Iniciar escaneo
+                      {t('generator.camera.button')}
                     </motion.button>
                     <motion.button
                       type="button"
@@ -163,7 +163,7 @@ export function CameraScanner({ onScanComplete, className = '' }: CameraScannerP
                 ) : (
                   <div className="nr-scanningStatus">
                     <div className="nr-spinner" />
-                    Analizando...
+                    {t('generator.camera.scanning')}
                   </div>
                 )}
               </div>
