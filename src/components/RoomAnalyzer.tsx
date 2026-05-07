@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import { Camera, UploadCloud, Image as ImageIcon, Sparkles, StopCircle } from 'lucide-react'
 import type {
   NeedKey,
@@ -45,17 +46,8 @@ function getSizeLabel(width: number, height: number) {
   return 'Extra large'
 }
 
-function parseImageTone(avgR: number, avgG: number, avgB: number) {
-  if (avgR > avgG && avgR > avgB) {
-    return ['warm ochre', 'terra cotta', 'soft beige']
-  }
-  if (avgB > avgR && avgB > avgG) {
-    return ['cool slate', 'mist blue', 'soft gray']
-  }
-  return ['natural linen', 'olive green', 'creamy white']
-}
-
 async function analyzeRoomPhoto(
+  t: TFunction,
   src: string,
   roomType: RoomTypeKey,
   roomSize: RoomSizeKey,
@@ -79,16 +71,16 @@ async function analyzeRoomPhoto(
         resolve({
           imageSrc: src,
           detectedRoom: roomType,
-          estimatedSize: roomSize === 'small' ? 'Small' : roomSize === 'medium' ? 'Medium' : roomSize === 'large' ? 'Large' : 'Extra large',
-          lightingQuality: 'Balanced light',
-          styleCues: `${style} geometry with warm contrast`,
-          dominantColors: ['soft beige', 'charcoal', 'spruce'],
-          missingFurniture: ['storage', 'lamp'],
-          clutterLevel: 'Moderate',
-          budgetFit: 'Budget-friendly',
+          estimatedSize: roomSize === 'small' ? t('demo.analysis.sizes.small') : roomSize === 'medium' ? t('demo.analysis.sizes.medium') : roomSize === 'large' ? t('demo.analysis.sizes.large') : t('demo.analysis.sizes.xl'),
+          lightingQuality: t('demo.analysis.lightLevels.softNatural'),
+          styleCues: t(`demo.analysis.styleCuesValues.${style}`),
+          dominantColors: [t('demo.analysis.colors.softBeige'), t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
+          missingFurniture: [t('demo.analysis.missingFurniture.storage'), t('demo.analysis.missingFurniture.lamp')],
+          clutterLevel: t('demo.analysis.clutterLevels.moderate'),
+          budgetFit: t('demo.analysis.budgetFits.balanced'),
           confidence: 82,
-          summary: 'Smart room scan completed.',
-          nextAction: 'Try another angle to refine the lighting read.',
+          summary: t('demo.analysis.summaryDefault'),
+          nextAction: t('demo.analysis.nextActions.default'),
           recommendations: [],
         })
         return
@@ -112,77 +104,98 @@ async function analyzeRoomPhoto(
         brightness += value
         count += 1
       }
-      const avgR = Math.round(rTotal / count)
-      const avgG = Math.round(gTotal / count)
-      const avgB = Math.round(bTotal / count)
       const avgBrightness = Math.round(brightness / count)
-      const brightnessLabel =
+      const brightnessKey =
         avgBrightness > 190
-          ? 'Bright and open'
+          ? 'brightOpen'
           : avgBrightness > 130
-          ? 'Soft natural light'
+          ? 'softNatural'
           : avgBrightness > 90
-          ? 'Moody lighting'
-          : 'Cozy low light'
-      const palette = parseImageTone(avgR, avgG, avgB)
-      const colorSet = [palette[0], palette[1], palette[2]]
-      const seed = width + height + avgBrightness + budget + selectedNeeds.length * 43
-      const rng = createRng(seed)
-      const possibleClutter = ['lightly layered', 'well-organized', 'airy but underfurnished', 'slightly cluttered']
-      const clutterLevel = choose(possibleClutter, rng)
-      const missingFurniture = selectedNeeds.length > 0 ? [] : ['storage', 'lamp']
-      const inferredMissing = ['storage', 'lamp', 'decor'].filter((item) => !selectedNeeds.includes(item as NeedKey))
-      const missing = missingFurniture.length ? missingFurniture : inferredMissing.slice(0, 2)
-      const budgetFit = budget < 600 ? 'Tight but practical' : budget < 1400 ? 'Well-balanced' : 'Premium enough for upgrades'
-      const confidence = clamp(72 + Math.round((avgBrightness / 255) * 18) + Math.floor(rng() * 10), 74, 98)
-      const nextAction = budget < 600
-        ? 'Raise your budget or choose fewer high-impact pieces.'
-        : 'Focus on lighting and texture for a stronger finish.'
-      const styleCues =
-        style === 'minimalist'
-          ? 'Clean silhouettes, layered neutrals'
-          : style === 'luxury'
-          ? 'Rich finishes, sculptural accents'
-          : style === 'cozy'
-          ? 'Soft textiles, warm textures'
-          : style === 'scandinavian'
-          ? 'Light woods, calm balance'
-          : style === 'japandi'
-          ? 'Natural materials, serene simplicity'
-          : 'Polished modern lines'
+          ? 'moody'
+          : 'cozyLow'
+      const brightnessLabel = t(`demo.analysis.lightLevels.${brightnessKey}`)
+      const styleCues = t(`demo.analysis.styleCuesValues.${style}`)
+      const possibleClutter = ['lightlyLayered', 'wellOrganized', 'airyUnderfurnished', 'slightlyCluttered'] as const
+      const clutterKey = choose(possibleClutter, createRng(width + height + avgBrightness))
+      const clutterLevel = t(`demo.analysis.clutterLevels.${clutterKey}`)
+      const missingFurniture = selectedNeeds.length > 0 ? [] : ['storage', 'lamp'] as const
+      const inferredMissing = ['storage', 'lamp'] as const
+      const missing = missingFurniture.length
+        ? missingFurniture.map((item) => t(`demo.analysis.missingFurniture.${item}`))
+        : inferredMissing.filter((item) => !selectedNeeds.includes(item)).slice(0, 2).map((item) => t(`demo.analysis.missingFurniture.${item}`))
+      const budgetFitKey = budget < 600 ? 'tight' : budget < 1400 ? 'balanced' : 'premium'
+      const budgetFit = t(`demo.analysis.budgetFits.${budgetFitKey}`)
+      const nextAction = budgetFitKey === 'tight'
+        ? t('demo.analysis.nextActions.raiseBudget')
+        : t('demo.analysis.nextActions.focusLighting')
+      const confidence = clamp(74 + Math.round((avgBrightness / 255) * 18) + Math.floor(createRng(avgBrightness + width + height)() * 8), 76, 98)
+      const summary = t('demo.analysis.summary', {
+        roomType: t(`demo.steps.1.roomTypes.${roomType}`),
+        lighting: brightnessLabel,
+        style: styleCues,
+        clutter: clutterLevel,
+        missing: missing.join(', '),
+      })
+      const scoreBase = clamp(Math.round((avgBrightness / 255) * 20 + 80), 80, 96)
       const recommendations = [
         {
-          title: `${style === 'luxury' ? 'Premium' : 'Designer'} ${roomType === 'office' ? 'desk setup' : 'storage solution'}`,
+          title: roomType === 'office'
+            ? t('demo.analysis.recommendationTitles.deskSetup')
+            : t('demo.analysis.recommendationTitles.storageSolution'),
           price: Math.round((budget / 5) / 5) * 5,
-          reason: `Fits the ${styleCues} in your ${clutterLevel} layout and keeps the visual flow clean.`, 
-          status: 'Smart fit' as const,
+          reason: t('demo.analysis.recommendationReasons.smartFit', {
+            style: styleCues.toLowerCase(),
+            clutter: clutterLevel.toLowerCase(),
+          }),
+          status: 'smartFit' as const,
+          match: clamp(scoreBase + 6, 82, 98),
+          imageType: roomType === 'office' ? 'desk' as const : 'storage' as const,
         },
         {
-          title: `${style === 'cozy' ? 'Warm ambient lamp' : 'Sculptural floor lamp'}`,
+          title: style === 'cozy'
+            ? t('demo.analysis.recommendationTitles.warmLamp')
+            : t('demo.analysis.recommendationTitles.sculpturalLamp'),
           price: Math.round((budget / 12) / 5) * 5,
-          reason: `Adds the right level of light for ${brightnessLabel.toLowerCase()} spaces.`, 
-          status: 'Budget friendly' as const,
+          reason: t('demo.analysis.recommendationReasons.budgetFriendly', {
+            light: brightnessLabel.toLowerCase(),
+          }),
+          status: 'budgetFriendly' as const,
+          match: clamp(scoreBase + 2, 78, 92),
+          imageType: 'lamp' as const,
         },
         {
-          title: `${style === 'minimalist' ? 'Low-profile shelf' : 'Modular storage unit'}`,
+          title: style === 'minimalist'
+            ? t('demo.analysis.recommendationTitles.lowShelf')
+            : t('demo.analysis.recommendationTitles.modularStorage'),
           price: Math.round((budget / 8) / 5) * 5,
-          reason: `Helps keep the ${clutterLevel} area tidy while matching the palette.`, 
-          status: 'Style match' as const,
+          reason: t('demo.analysis.recommendationReasons.styleMatch', {
+            palette: styleCues.toLowerCase(),
+          }),
+          status: 'styleMatch' as const,
+          match: clamp(scoreBase + 4, 80, 94),
+          imageType: 'storage' as const,
         },
       ]
 
       resolve({
         imageSrc: src,
-        detectedRoom: roomType,
-        estimatedSize: getSizeLabel(width, height),
+        detectedRoom: t(`demo.steps.1.roomTypes.${roomType}`),
+        estimatedSize:
+          getSizeLabel(width, height) === 'Small'
+            ? t('demo.analysis.sizes.small')
+            : getSizeLabel(width, height) === 'Medium'
+            ? t('demo.analysis.sizes.medium')
+            : getSizeLabel(width, height) === 'Large'
+            ? t('demo.analysis.sizes.large')
+            : t('demo.analysis.sizes.xl'),
         lightingQuality: brightnessLabel,
         styleCues,
-        dominantColors: colorSet,
+        dominantColors: [t('demo.analysis.colors.softBeige'), t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
         missingFurniture: missing,
         clutterLevel,
         budgetFit,
         confidence,
-        summary: `Your photo shows a ${roomType} with ${brightnessLabel.toLowerCase()} and ${styleCues.toLowerCase()}. The space feels ${clutterLevel} and would benefit from ${missing.join(' and ')}.`,
+        summary,
         nextAction,
         recommendations,
       })
@@ -190,17 +203,17 @@ async function analyzeRoomPhoto(
     image.onerror = () => {
       resolve({
         imageSrc: src,
-        detectedRoom: roomType,
-        estimatedSize: roomSize === 'small' ? 'Small' : roomSize === 'medium' ? 'Medium' : roomSize === 'large' ? 'Large' : 'Extra large',
-        lightingQuality: 'Balanced light',
-        styleCues: `${style} geometry with warm contrast`,
-        dominantColors: ['soft beige', 'charcoal', 'spruce'],
-        missingFurniture: ['storage', 'lamp'],
-        clutterLevel: 'Moderate',
-        budgetFit: 'Budget-friendly',
+        detectedRoom: t(`demo.steps.1.roomTypes.${roomType}`),
+        estimatedSize: roomSize === 'small' ? t('demo.analysis.sizes.small') : roomSize === 'medium' ? t('demo.analysis.sizes.medium') : roomSize === 'large' ? t('demo.analysis.sizes.large') : t('demo.analysis.sizes.xl'),
+        lightingQuality: t('demo.analysis.lightLevels.softNatural'),
+        styleCues: t(`demo.analysis.styleCuesValues.${style}`),
+        dominantColors: [t('demo.analysis.colors.softBeige'), t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
+        missingFurniture: [t('demo.analysis.missingFurniture.storage'), t('demo.analysis.missingFurniture.lamp')],
+        clutterLevel: t('demo.analysis.clutterLevels.moderate'),
+        budgetFit: t('demo.analysis.budgetFits.balanced'),
         confidence: 78,
-        summary: 'Room scan completed with default analysis.',
-        nextAction: 'Try a clearer photo with more room detail.',
+        summary: t('demo.analysis.summaryDefault'),
+        nextAction: t('demo.analysis.nextActions.default'),
         recommendations: [],
       })
     }
@@ -300,7 +313,7 @@ export function RoomAnalyzer({
   const analyzePhoto = async (src: string) => {
     setIsAnalyzing(true)
     setAnalysis(null)
-    const result = await analyzeRoomPhoto(src, roomType, roomSize, style, budget, selectedNeeds)
+    const result = await analyzeRoomPhoto(t, src, roomType, roomSize, style, budget, selectedNeeds)
     setAnalysis(result)
     setIsAnalyzing(false)
   }
@@ -398,7 +411,7 @@ export function RoomAnalyzer({
             <p>{analysis.summary}</p>
             <div className="nr-summaryNotes">
               <div>
-                <strong>{t('demo.analysis.missingFurniture')}:</strong> {analysis.missingFurniture.join(', ')}
+                <strong>{t('demo.analysis.missingFurnitureLabel')}:</strong> {analysis.missingFurniture.join(', ')}
               </div>
               <div>
                 <strong>{t('demo.analysis.nextAction')}:</strong> {analysis.nextAction}

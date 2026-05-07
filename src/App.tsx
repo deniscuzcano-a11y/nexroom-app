@@ -855,9 +855,12 @@ function App() {
                     <>
                       <div className="nr-resultsTop">
                         <div>
-                          <div className="nr-resultsKicker">Generated setup</div>
+                          <div className="nr-resultsKicker">{t('demo.steps.3.generatedSetup')}</div>
                           <div className="nr-resultsTitle">
-                            {styleTone(setup.style as StyleKey).adjective} bedroom
+                            {t('demo.steps.3.resultHeading', {
+                              style: styleTone(setup.style as StyleKey).adjective,
+                              room: t(`demo.steps.1.roomTypes.${roomType}`),
+                            })}
                           </div>
                         </div>
 
@@ -883,11 +886,17 @@ function App() {
                             {analysis.recommendations.map((suggestion) => (
                               <div key={suggestion.title} className="nr-suggestionCard">
                                 <div className="nr-suggestionHead">
-                                  <div className="nr-resultBadge">{suggestion.status}</div>
-                                  <strong>{suggestion.title}</strong>
+                                  <div className={`nr-suggestionPreview nr-suggestionPreview--${suggestion.imageType}`} aria-hidden="true" />
+                                  <div>
+                                    <div className="nr-resultBadge">{t(`demo.analysis.status.${suggestion.status}`)}</div>
+                                    <strong>{suggestion.title}</strong>
+                                  </div>
                                 </div>
                                 <p className="nr-suggestionReason">{suggestion.reason}</p>
-                                <div className="nr-itemPrice">{eur(suggestion.price)}</div>
+                                <div className="nr-suggestionMeta">
+                                  <span>{t('demo.analysis.match', { percent: suggestion.match })}</span>
+                                  <span>{t('demo.analysis.priceLabel')}: {eur(suggestion.price)}</span>
+                                </div>
                               </div>
                             ))}
                           </div>

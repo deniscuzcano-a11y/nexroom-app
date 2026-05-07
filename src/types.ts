@@ -23,6 +23,8 @@ export interface RoomAnalysis {
     title: string
     price: number
     reason: string
-    status: 'Budget friendly' | 'Smart fit' | 'Style match'
+    status: 'budgetFriendly' | 'smartFit' | 'styleMatch'
+    match: number
+    imageType: 'desk' | 'lamp' | 'storage'
   }>
 }

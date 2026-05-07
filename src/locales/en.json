@@ -93,8 +93,12 @@
       "3": {
         "title": "Results",
         "help": "Review the itemized setup. Adjust inputs anytime.",
+        "generatedSetup": "Generated setup",
+        "resultHeading": "{{style}} {{room}}",
         "regenerate": "Regenerate",
-        "refreshing": "Refreshing..."
+        "refreshing": "Refreshing...",
+        "withinBudget": "Within budget",
+        "overBudget": "Over budget"
       }
     },
     "back": "Back",
@@ -118,12 +122,76 @@
       "lighting": "Lighting quality",
       "styleCues": "Style cues",
       "dominantColors": "Dominant colors",
-      "missingFurniture": "Furniture gaps",
+      "missingFurnitureLabel": "Furniture gaps",
       "clutter": "Clutter level",
       "budgetFit": "Budget fit",
       "confidence": "Confidence",
       "nextAction": "Recommended next action",
-      "recommendations": "Smart furniture recommendations"
+      "recommendations": "Smart furniture recommendations",
+      "sizes": {
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "xl": "Extra large"
+      },
+      "lightLevels": {
+        "brightOpen": "Bright and open",
+        "softNatural": "Soft natural light",
+        "moody": "Moody lighting",
+        "cozyLow": "Cozy low light"
+      },
+      "styleCuesValues": {
+        "modern": "Clean modern geometry",
+        "scandinavian": "Light, balanced warmth",
+        "japandi": "Natural, serene materials",
+        "minimalist": "Subtle, pared-back silhouettes",
+        "luxury": "Rich finishes and sculptural accents",
+        "cozy": "Layered textures and soft comfort"
+      },
+      "missingFurniture": {
+        "storage": "storage",
+        "lamp": "a lamp",
+        "decor": "decor"
+      },
+      "clutterLevels": {
+        "lightlyLayered": "Lightly layered",
+        "wellOrganized": "Well-organized",
+        "airyUnderfurnished": "Airy but underfurnished",
+        "slightlyCluttered": "Slightly cluttered",
+        "moderate": "Moderate"
+      },
+      "budgetFits": {
+        "tight": "Tight but practical",
+        "balanced": "Well-balanced",
+        "premium": "Premium upgrade ready"
+      },
+      "nextActions": {
+        "raiseBudget": "Raise your budget or choose fewer high-impact pieces.",
+        "focusLighting": "Focus on lighting and texture for a stronger finish.",
+        "default": "Try a clearer photo with more room detail."
+      },
+      "summary": "Your photo shows a {{roomType}} with {{lighting}} and {{style}}. The space feels {{clutter}} and would benefit from {{missing}}.",
+      "summaryDefault": "Room scan completed with default analysis.",
+      "recommendationTitles": {
+        "deskSetup": "Desk setup",
+        "storageSolution": "Storage solution",
+        "warmLamp": "Warm ambient lamp",
+        "sculpturalLamp": "Sculptural floor lamp",
+        "lowShelf": "Low-profile shelf",
+        "modularStorage": "Modular storage unit"
+      },
+      "recommendationReasons": {
+        "smartFit": "Fits the {{style}} in your {{clutter}} layout and keeps the visual flow clean.",
+        "budgetFriendly": "Adds the right level of light for {{light}} spaces.",
+        "styleMatch": "Helps keep the space tidy while matching the {{palette}} palette."
+      },
+      "status": {
+        "smartFit": "Smart fit",
+        "budgetFriendly": "Budget friendly",
+        "styleMatch": "Style match"
+      },
+      "match": "Match: {{percent}}%",
+      "priceLabel": "Price"
     }
   },
   "examples": {

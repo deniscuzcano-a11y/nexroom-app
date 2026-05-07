@@ -106,6 +106,8 @@
       "3": {
         "title": "Resultados",
         "help": "Revisa la configuración detallada. Ajusta entradas en cualquier momento.",
+        "generatedSetup": "Configuración generada",
+        "resultHeading": "{{style}} {{room}}",
         "regenerate": "Regenerar",
         "refreshing": "Actualizando...",
         "budgetSummary": "Resumen del presupuesto",
@@ -152,12 +154,76 @@
       "lighting": "Calidad de luz",
       "styleCues": "Pistas de estilo",
       "dominantColors": "Colores dominantes",
-      "missingFurniture": "Piezas faltantes",
+      "missingFurnitureLabel": "Piezas faltantes",
       "clutter": "Nivel de desorden",
       "budgetFit": "Ajuste de presupuesto",
       "confidence": "Confianza",
       "nextAction": "Siguiente acción recomendada",
-      "recommendations": "Recomendaciones de muebles inteligentes"
+      "recommendations": "Recomendaciones de muebles inteligentes",
+      "sizes": {
+        "small": "Pequeño",
+        "medium": "Mediano",
+        "large": "Grande",
+        "xl": "Extra grande"
+      },
+      "lightLevels": {
+        "brightOpen": "Luminoso y abierto",
+        "softNatural": "Luz natural suave",
+        "moody": "Iluminación con ambiente",
+        "cozyLow": "Luz cálida y acogedora"
+      },
+      "styleCuesValues": {
+        "modern": "Geometría moderna y limpia",
+        "scandinavian": "Calidez ligera y equilibrada",
+        "japandi": "Materiales naturales y serenos",
+        "minimalist": "Silhuetas discretas y depuradas",
+        "luxury": "Acabados ricos y acentos escultóricos",
+        "cozy": "Texturas en capas y suave confort"
+      },
+      "missingFurniture": {
+        "storage": "almacenamiento",
+        "lamp": "una lámpara",
+        "decor": "decoración"
+      },
+      "clutterLevels": {
+        "lightlyLayered": "Ligera capa",
+        "wellOrganized": "Bien organizado",
+        "airyUnderfurnished": "Aireado pero con falta de muebles",
+        "slightlyCluttered": "Ligeramente desordenado",
+        "moderate": "Moderado"
+      },
+      "budgetFits": {
+        "tight": "Ajustado pero práctico",
+        "balanced": "Bien equilibrado",
+        "premium": "Listo para mejoras premium"
+      },
+      "nextActions": {
+        "raiseBudget": "Aumenta tu presupuesto o elige menos piezas de alto impacto.",
+        "focusLighting": "Concéntrate en la iluminación y la textura para un acabado más fuerte.",
+        "default": "Prueba con una foto más clara y con más detalle de la habitación."
+      },
+      "summary": "Tu foto muestra un {{roomType}} con {{lighting}} y {{style}}. El espacio se siente {{clutter}} y se beneficiaría de {{missing}}.",
+      "summaryDefault": "Escaneo de habitación completado con análisis predeterminado.",
+      "recommendationTitles": {
+        "deskSetup": "Configuración de escritorio",
+        "storageSolution": "Solución de almacenamiento",
+        "warmLamp": "Lámpara ambiental cálida",
+        "sculpturalLamp": "Lámpara de pie escultórica",
+        "lowShelf": "Estantería baja",
+        "modularStorage": "Unidad de almacenamiento modular"
+      },
+      "recommendationReasons": {
+        "smartFit": "Se adapta al {{style}} y al espacio {{clutter}}, manteniendo el flujo visual limpio.",
+        "budgetFriendly": "Agrega el nivel adecuado de luz para espacios {{light}}.",
+        "styleMatch": "Ayuda a mantener el espacio ordenado mientras coincide con la paleta {{palette}}."
+      },
+      "status": {
+        "smartFit": "Ajuste inteligente",
+        "budgetFriendly": "Ahorro inteligente",
+        "styleMatch": "Match de estilo"
+      },
+      "match": "Coincidencia: {{percent}}%",
+      "priceLabel": "Precio"
     }
   },
   "generator": {
