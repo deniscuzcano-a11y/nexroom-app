@@ -134,7 +134,31 @@
     "back": "Atrás",
     "continue": "Continuar",
     "viewResults": "Ver resultados",
-    "micro": "Todo se ejecuta localmente en tu navegador—sin backend."
+    "micro": "Todo se ejecuta localmente en tu navegador—sin backend.",
+    "analysis": {
+      "sectionTitle": "Escaneo inteligente de habitación",
+      "sectionHint": "Sube una foto o usa la cámara para que NEXROOM lea tu espacio y estilo.",
+      "cameraLabel": "Usar cámara",
+      "uploadLabel": "Subir foto",
+      "captureLabel": "Capturar habitación",
+      "stopLabel": "Detener cámara",
+      "analyzeLabel": "Analizar habitación",
+      "analyzing": "Analizando los detalles...",
+      "noPhoto": "Agrega una foto de la habitación para desbloquear recomendaciones inteligentes.",
+      "previewAlt": "Vista previa de la habitación",
+      "resultTitle": "Análisis de la habitación",
+      "detectedRoom": "Habitación detectada",
+      "estimatedSize": "Tamaño aproximado",
+      "lighting": "Calidad de luz",
+      "styleCues": "Pistas de estilo",
+      "dominantColors": "Colores dominantes",
+      "missingFurniture": "Piezas faltantes",
+      "clutter": "Nivel de desorden",
+      "budgetFit": "Ajuste de presupuesto",
+      "confidence": "Confianza",
+      "nextAction": "Siguiente acción recomendada",
+      "recommendations": "Recomendaciones de muebles inteligentes"
+    }
   },
   "generator": {
     "steps": {

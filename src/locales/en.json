@@ -100,7 +100,31 @@
     "back": "Back",
     "continue": "Continue",
     "viewResults": "View results",
-    "micro": "Everything runs locally in your browser—no backend."
+    "micro": "Everything runs locally in your browser—no backend.",
+    "analysis": {
+      "sectionTitle": "Smart room scan",
+      "sectionHint": "Upload a photo or use your camera to let NEXROOM read your room layout and style.",
+      "cameraLabel": "Use camera",
+      "uploadLabel": "Upload photo",
+      "captureLabel": "Capture room",
+      "stopLabel": "Stop camera",
+      "analyzeLabel": "Analyze room",
+      "analyzing": "Analyzing room details…",
+      "noPhoto": "Add a room photo to unlock intelligent recommendations.",
+      "previewAlt": "Room preview image",
+      "resultTitle": "Room insight",
+      "detectedRoom": "Detected room",
+      "estimatedSize": "Approximate size",
+      "lighting": "Lighting quality",
+      "styleCues": "Style cues",
+      "dominantColors": "Dominant colors",
+      "missingFurniture": "Furniture gaps",
+      "clutter": "Clutter level",
+      "budgetFit": "Budget fit",
+      "confidence": "Confidence",
+      "nextAction": "Recommended next action",
+      "recommendations": "Smart furniture recommendations"
+    }
   },
   "examples": {
     "title": "Example setups",

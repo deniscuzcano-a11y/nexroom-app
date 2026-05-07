@@ -5,19 +5,22 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { ImagePlaceholder } from './components/ImagePlaceholder'
+import { RoomAnalyzer } from './components/RoomAnalyzer'
 import { StyleSelector } from './components/StyleSelector'
 import { RoomTypeSelector } from './components/RoomTypeSelector'
 import { ColorPaletteSelector } from './components/ColorPaletteSelector'
 import { MoodSelector } from './components/MoodSelector'
 import { RoomSizeSelector } from './components/RoomSizeSelector'
-
-type StyleKey = 'modern' | 'scandinavian' | 'japandi' | 'minimalist' | 'luxury' | 'cozy'
-type NeedKey = 'bed' | 'desk' | 'lamp' | 'storage'
-type RoomTypeKey = 'bedroom' | 'livingroom' | 'gaming' | 'office' | 'studio'
-type RoomSizeKey = 'small' | 'medium' | 'large' | 'xl'
-type ColorPaletteKey = 'neutral' | 'warm' | 'cool' | 'bold'
-type MoodKey = 'productive' | 'relaxing' | 'social' | 'creative' | 'minimal'
-type DemoStep = 1 | 2 | 3
+import type {
+  ColorPaletteKey,
+  DemoStep,
+  MoodKey,
+  NeedKey,
+  RoomAnalysis,
+  RoomSizeKey,
+  RoomTypeKey,
+  StyleKey,
+} from './types'
 
 type SetupItem = {
   key: NeedKey
@@ -98,6 +101,7 @@ function generateSetup(params: {
   colorPalette: ColorPaletteKey
   moods: MoodKey[]
   t: (key: string) => string
+  analysis?: RoomAnalysis | null
 }): GeneratedSetup {
   const budget = clamp(Math.round(params.budget || 0), 150, 12000)
   const style = params.style
@@ -109,6 +113,15 @@ function generateSetup(params: {
 
   const tier = tierForBudget(budget)
   const tone = styleTone(style)
+  const analysis = params.analysis
+  const analysisReason = (need: NeedKey) => {
+    const lighting = analysis ? analysis.lightingQuality.toLowerCase() : 'the room light'
+    const colors = analysis?.dominantColors?.slice(0, 2).join(' and ') || 'your palette'
+    const missing = analysis?.missingFurniture?.includes(need)
+      ? 'Urgent addition for this layout'
+      : 'A strong fit for the flow'
+    return `${missing}, optimized for ${lighting} and ${colors}.`
+  }
 
   const seed =
     budget * 31 +
@@ -262,7 +275,6 @@ function generateSetup(params: {
     const name = pick(entry.names, r)
     const priceRaw = entry.min + (entry.max - entry.min) * (0.35 + r() * 0.65)
     const price = Math.round(priceRaw / 5) * 5
-    const note = entry.notes ? pick(entry.notes, r) : undefined
     const category =
       need === 'bed'
         ? params.t('demo.steps.3.furnitureCategories.bed')
@@ -271,14 +283,19 @@ function generateSetup(params: {
           : need === 'lamp'
             ? params.t('demo.steps.3.furnitureCategories.lamp')
             : params.t('demo.steps.3.furnitureCategories.storage')
+    const note = analysis ? analysisReason(need) : entry.notes ? pick(entry.notes, r) : undefined
     return { key: need, name, category, price, note }
   })
 
   const total = items.reduce((acc, it) => acc + it.price, 0)
   const status: GeneratedSetup['status'] = total <= budget ? 'within' : 'over'
 
-  const summary =
-    status === 'within'
+  const summary = analysis
+    ? `${analysis.summary} ${status === 'within'
+        ? `${params.t('demo.steps.3.optimizedFor')} ${tone.vibe}. ${params.t('demo.steps.3.roomForUpgrades')}.`
+        : `${params.t('demo.steps.3.greatPicks')} ${tone.vibe} ${params.t('demo.steps.3.butOverBudget')}. ${params.t('demo.steps.3.tryRemovingNeed')}.`
+      }`
+    : status === 'within'
       ? `${params.t('demo.steps.3.optimizedFor')} ${tone.vibe}. ${params.t('demo.steps.3.roomForUpgrades')}.`
       : `${params.t('demo.steps.3.greatPicks')} ${tone.vibe} ${params.t('demo.steps.3.butOverBudget')}. ${params.t('demo.steps.3.tryRemovingNeed')}.`
 
@@ -314,6 +331,7 @@ function App() {
     [needs],
   )
 
+  const [analysis, setAnalysis] = useState<RoomAnalysis | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [setup, setSetup] = useState<GeneratedSetup | null>(null)
 
@@ -333,6 +351,7 @@ function App() {
       colorPalette,
       moods,
       t,
+      analysis,
     })
     setSetup(result)
     setIsGenerating(false)
@@ -598,6 +617,15 @@ function App() {
                   >
                     <div className="nr-panelTitle">{t('demo.steps.1.title')}</div>
 
+                    <RoomAnalyzer
+                      style={style}
+                      roomType={roomType}
+                      roomSize={roomSize}
+                      budget={budget}
+                      selectedNeeds={selectedNeeds}
+                      onAnalysisChange={setAnalysis}
+                    />
+
                     <div className="nr-formRow">
                       <div className="nr-label">{t('demo.steps.1.roomType')}</div>
                       <RoomTypeSelector
@@ -799,6 +827,19 @@ function App() {
 
               <div className="nr-demoCard nr-demoResults" aria-label="Generated setup">
                 <div className={`nr-resultsInner ${setup ? 'is-ready' : ''}`}>
+                  {analysis && (
+                    <div className="nr-analysisBanner">
+                      <div className="nr-analysisMeta">
+                        <div className="nr-summaryTitle">{t('demo.analysis.resultTitle')}</div>
+                        <p className="nr-analysisText">{analysis.summary}</p>
+                      </div>
+                      <div className="nr-analysisMetrics">
+                        <span>{t('demo.analysis.detectedRoom')}: {analysis.detectedRoom}</span>
+                        <span>{t('demo.analysis.lighting')}: {analysis.lightingQuality}</span>
+                        <span>{t('demo.analysis.budgetFit')}: {analysis.budgetFit}</span>
+                      </div>
+                    </div>
+                  )}
                   {!setup && (
                     <div className={`nr-skeleton ${isGenerating ? 'is-on' : ''}`}>
                       <div className="nr-skelTitle" />
@@ -832,6 +873,26 @@ function App() {
                       </div>
 
                       <p className="nr-resultsSummary">{setup.summary}</p>
+
+                      {analysis && (
+                        <div className="nr-suggestionSection">
+                          <div className="nr-sectionHead">
+                            <div className="nr-summaryTitle">{t('demo.analysis.recommendations')}</div>
+                          </div>
+                          <div className="nr-suggestionGrid">
+                            {analysis.recommendations.map((suggestion) => (
+                              <div key={suggestion.title} className="nr-suggestionCard">
+                                <div className="nr-suggestionHead">
+                                  <div className="nr-resultBadge">{suggestion.status}</div>
+                                  <strong>{suggestion.title}</strong>
+                                </div>
+                                <p className="nr-suggestionReason">{suggestion.reason}</p>
+                                <div className="nr-itemPrice">{eur(suggestion.price)}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
                       <div className="nr-productGrid">
                         {setup.items.map((it) => (
