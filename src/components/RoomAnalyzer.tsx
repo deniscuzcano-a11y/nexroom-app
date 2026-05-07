@@ -1,7 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { ComponentType } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
-import { Camera, UploadCloud, Image as ImageIcon, Sparkles, StopCircle } from 'lucide-react'
+import {
+  Camera,
+  CheckCircle2,
+  LampDesk,
+  LayoutTemplate,
+  ScanSearch,
+  Sparkles,
+  StopCircle,
+  UploadCloud,
+  WandSparkles,
+} from 'lucide-react'
+import { RoomSceneMockup } from './RoomSceneMockup'
 import type {
   NeedKey,
   RoomAnalysis,
@@ -18,6 +30,28 @@ interface RoomAnalyzerProps {
   selectedNeeds: NeedKey[]
   onAnalysisChange: (analysis: RoomAnalysis | null) => void
 }
+
+type ScanStep = {
+  key:
+    | 'upload'
+    | 'analyzing'
+    | 'style'
+    | 'lighting'
+    | 'emptySpaces'
+    | 'recommendations'
+    | 'transformation'
+  Icon: ComponentType<{ size?: number; strokeWidth?: number }>
+}
+
+const scanStepConfig: ScanStep[] = [
+  { key: 'upload', Icon: UploadCloud },
+  { key: 'analyzing', Icon: ScanSearch },
+  { key: 'style', Icon: Sparkles },
+  { key: 'lighting', Icon: LampDesk },
+  { key: 'emptySpaces', Icon: LayoutTemplate },
+  { key: 'recommendations', Icon: WandSparkles },
+  { key: 'transformation', Icon: CheckCircle2 },
+]
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
@@ -105,6 +139,9 @@ async function analyzeRoomPhoto(
         count += 1
       }
       const avgBrightness = Math.round(brightness / count)
+      const avgRed = Math.round(rTotal / count)
+      const avgGreen = Math.round(gTotal / count)
+      const avgBlue = Math.round(bTotal / count)
       const brightnessKey =
         avgBrightness > 190
           ? 'brightOpen'
@@ -129,6 +166,11 @@ async function analyzeRoomPhoto(
         ? t('demo.analysis.nextActions.raiseBudget')
         : t('demo.analysis.nextActions.focusLighting')
       const confidence = clamp(74 + Math.round((avgBrightness / 255) * 18) + Math.floor(createRng(avgBrightness + width + height)() * 8), 76, 98)
+      const colorMood = avgRed > avgBlue && avgRed > avgGreen
+        ? t('demo.analysis.colors.softBeige')
+        : avgBlue > avgRed
+          ? t('demo.analysis.colors.spruce')
+          : t('demo.analysis.colors.charcoal')
       const summary = t('demo.analysis.summary', {
         roomType: t(`demo.steps.1.roomTypes.${roomType}`),
         lighting: brightnessLabel,
@@ -190,7 +232,7 @@ async function analyzeRoomPhoto(
             : t('demo.analysis.sizes.xl'),
         lightingQuality: brightnessLabel,
         styleCues,
-        dominantColors: [t('demo.analysis.colors.softBeige'), t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
+        dominantColors: [colorMood, t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
         missingFurniture: missing,
         clutterLevel,
         budgetFit,
@@ -236,6 +278,7 @@ export function RoomAnalyzer({
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [imageSrc, setImageSrc] = useState<string | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [scanStage, setScanStage] = useState(0)
   const [analysis, setAnalysis] = useState<RoomAnalysis | null>(null)
 
   useEffect(() => {
@@ -245,12 +288,21 @@ export function RoomAnalyzer({
   }, [stream])
 
   useEffect(() => {
-    if (analysis) {
-      onAnalysisChange(analysis)
-    }
+    onAnalysisChange(analysis)
   }, [analysis, onAnalysisChange])
 
   const analysisReady = Boolean(analysis)
+  const activeStage = analysisReady ? scanStepConfig.length - 1 : imageSrc || stream ? scanStage : 0
+  const progressPercent = analysisReady
+    ? 100
+    : isAnalyzing
+      ? Math.max(18, Math.round((activeStage / (scanStepConfig.length - 1)) * 100))
+      : imageSrc || stream
+        ? 18
+        : 0
+  const previewLabels = analysis
+    ? [analysis.styleCues, analysis.lightingQuality, t('demo.visual.tags.recommendedLayout')]
+    : [t('demo.visual.tags.modernStyle'), t('demo.visual.tags.warmLighting')]
 
   const details = useMemo(() => {
     if (!analysis) return null
@@ -313,9 +365,24 @@ export function RoomAnalyzer({
   const analyzePhoto = async (src: string) => {
     setIsAnalyzing(true)
     setAnalysis(null)
-    const result = await analyzeRoomPhoto(t, src, roomType, roomSize, style, budget, selectedNeeds)
-    setAnalysis(result)
-    setIsAnalyzing(false)
+    setScanStage(1)
+    let nextStage = 1
+    const stageTimer = window.setInterval(() => {
+      nextStage = Math.min(nextStage + 1, scanStepConfig.length - 2)
+      setScanStage(nextStage)
+    }, 280)
+
+    try {
+      const [result] = await Promise.all([
+        analyzeRoomPhoto(t, src, roomType, roomSize, style, budget, selectedNeeds),
+        new Promise((resolve) => window.setTimeout(resolve, 1500)),
+      ])
+      setScanStage(scanStepConfig.length - 1)
+      setAnalysis(result)
+    } finally {
+      window.clearInterval(stageTimer)
+      setIsAnalyzing(false)
+    }
   }
 
   return (
@@ -327,25 +394,48 @@ export function RoomAnalyzer({
         </div>
         <div className="nr-analyzerStatus">
           {analysisReady ? (
-            <span className="nr-status ok">{analysis?.budgetFit}</span>
+            <span className="nr-status ok">{analysis?.confidence}% {t('demo.analysis.confidence')}</span>
           ) : (
-            <span className="nr-status">{t('demo.analysis.noPhoto')}</span>
+            <span className="nr-status">{isAnalyzing ? t('demo.analysis.analyzing') : t('demo.analysis.readyLabel')}</span>
           )}
         </div>
       </div>
 
+      <div className="nr-scanProgressHeader">
+        <div>
+          <span>{t('demo.analysis.progressLabel')}</span>
+          <strong>{progressPercent}%</strong>
+        </div>
+        <div className="nr-aiProgressTrack">
+          <span style={{ width: `${progressPercent}%` }} />
+        </div>
+      </div>
+
       <div className="nr-analyzerContent">
-        <div className="nr-analyzerPreview">
+        <div className={`nr-analyzerPreview ${isAnalyzing ? 'is-scanning' : ''}`}>
           {stream ? (
             <video ref={videoRef} className="nr-analyzerVideo" muted playsInline />
           ) : imageSrc ? (
             <img src={imageSrc} alt={t('demo.analysis.previewAlt')} className="nr-analyzerImage" />
           ) : (
             <div className="nr-analyzerPlaceholder">
-              <div className="nr-analyzerPlaceholderIcon">
-                <ImageIcon size={28} />
-              </div>
+              <RoomSceneMockup mode="before" showScan compact />
               <p>{t('demo.analysis.noPhoto')}</p>
+            </div>
+          )}
+
+          <div className="nr-analyzerOverlay">
+            {previewLabels.map((label) => (
+              <span key={label}>{label}</span>
+            ))}
+          </div>
+
+          {(isAnalyzing || analysisReady || stream) && (
+            <div className="nr-liveScanLayer" aria-hidden="true">
+              <div className="nr-liveScanLine" />
+              <span className="nr-liveScanPin nr-liveScanPin--one" />
+              <span className="nr-liveScanPin nr-liveScanPin--two" />
+              <span className="nr-liveScanPin nr-liveScanPin--three" />
             </div>
           )}
         </div>
@@ -389,11 +479,53 @@ export function RoomAnalyzer({
               {isAnalyzing ? t('demo.analysis.analyzing') : t('demo.analysis.analyzeLabel')}
             </button>
           ) : null}
+
+          <div className="nr-scanFlow" aria-label={t('demo.analysis.scanFlowLabel')}>
+            {scanStepConfig.map((step, index) => {
+              const Icon = step.Icon
+              const isComplete = analysisReady ? index < scanStepConfig.length - 1 : index < activeStage
+              const isActive = analysisReady
+                ? index === scanStepConfig.length - 1
+                : index === activeStage
+
+              return (
+                <div
+                  key={step.key}
+                  className={`nr-scanStep ${isComplete ? 'is-complete' : ''} ${isActive ? 'is-active' : ''}`}
+                >
+                  <span className="nr-scanStepIcon">
+                    <Icon size={15} strokeWidth={2.2} />
+                  </span>
+                  <span>{t(`demo.analysis.scanSteps.${step.key}`)}</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
 
       {analysis && (
         <div className="nr-analysisDeck">
+          <div className="nr-transformationCard">
+            <div className="nr-transformationHeader">
+              <div>
+                <div className="nr-resultsKicker">{t('demo.analysis.transformationKicker')}</div>
+                <strong>{t('demo.analysis.transformationTitle')}</strong>
+              </div>
+              <span className="nr-status ok">{analysis.budgetFit}</span>
+            </div>
+            <div className="nr-transformationGrid">
+              <div>
+                <span className="nr-analysisLabel">{t('demo.visual.before')}</span>
+                <RoomSceneMockup mode="before" compact />
+              </div>
+              <div>
+                <span className="nr-analysisLabel">{t('demo.visual.after')}</span>
+                <RoomSceneMockup mode="after" compact labels={previewLabels} />
+              </div>
+            </div>
+          </div>
+
           <div className="nr-analysisDetails">
             {details?.map((item) => (
               <div key={item.label} className="nr-analysisStat">
@@ -417,6 +549,19 @@ export function RoomAnalyzer({
                 <strong>{t('demo.analysis.nextAction')}:</strong> {analysis.nextAction}
               </div>
             </div>
+          </div>
+
+          <div className="nr-recommendationRail">
+            {analysis.recommendations.map((item) => (
+              <div key={item.title} className="nr-recommendationMini">
+                <div className={`nr-suggestionPreview nr-suggestionPreview--${item.imageType}`} aria-hidden="true" />
+                <div>
+                  <span>{t(`demo.analysis.status.${item.status}`)}</span>
+                  <strong>{item.title}</strong>
+                  <small>{t('demo.analysis.match', { percent: item.match })}</small>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

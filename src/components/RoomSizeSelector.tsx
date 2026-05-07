@@ -20,26 +20,26 @@ export function RoomSizeSelector({ selectedSize, onSizeChange }: RoomSizeSelecto
     {
       key: 'small',
       name: t('demo.steps.1.roomSizes.small'),
-      dimensions: '8-12m²',
-      description: 'Compact spaces, efficient use'
+      dimensions: t('demo.steps.1.roomSizeDimensions.small'),
+      description: t('demo.steps.1.roomSizeDescriptions.small'),
     },
     {
       key: 'medium',
       name: t('demo.steps.1.roomSizes.medium'),
-      dimensions: '12-20m²',
-      description: 'Balanced comfort and space'
+      dimensions: t('demo.steps.1.roomSizeDimensions.medium'),
+      description: t('demo.steps.1.roomSizeDescriptions.medium'),
     },
     {
       key: 'large',
       name: t('demo.steps.1.roomSizes.large'),
-      dimensions: '20-35m²',
-      description: 'Room for larger furniture'
+      dimensions: t('demo.steps.1.roomSizeDimensions.large'),
+      description: t('demo.steps.1.roomSizeDescriptions.large'),
     },
     {
       key: 'xl',
       name: t('demo.steps.1.roomSizes.xl'),
-      dimensions: '35m²+',
-      description: 'Spacious and luxurious'
+      dimensions: t('demo.steps.1.roomSizeDimensions.xl'),
+      description: t('demo.steps.1.roomSizeDescriptions.xl'),
     }
   ]
 

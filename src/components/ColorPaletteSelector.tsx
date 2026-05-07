@@ -21,25 +21,25 @@ export function ColorPaletteSelector({ selectedPalette, onPaletteChange }: Color
       key: 'neutral',
       name: t('demo.steps.1.colorPalettes.neutral'),
       colors: ['#f8fafc', '#e2e8f0', '#cbd5e1', '#94a3b8'],
-      description: 'Calm and sophisticated'
+      description: t('demo.steps.1.colorPaletteDescriptions.neutral'),
     },
     {
       key: 'warm',
       name: t('demo.steps.1.colorPalettes.warm'),
       colors: ['#fef7ed', '#fed7aa', '#fdba74', '#fb923c'],
-      description: 'Cozy and inviting'
+      description: t('demo.steps.1.colorPaletteDescriptions.warm'),
     },
     {
       key: 'cool',
       name: t('demo.steps.1.colorPalettes.cool'),
       colors: ['#f0f9ff', '#bae6fd', '#7dd3fc', '#38bdf8'],
-      description: 'Fresh and modern'
+      description: t('demo.steps.1.colorPaletteDescriptions.cool'),
     },
     {
       key: 'bold',
       name: t('demo.steps.1.colorPalettes.bold'),
       colors: ['#fef2f2', '#fecaca', '#fca5a5', '#f87171'],
-      description: 'Energetic and vibrant'
+      description: t('demo.steps.1.colorPaletteDescriptions.bold'),
     }
   ]
 

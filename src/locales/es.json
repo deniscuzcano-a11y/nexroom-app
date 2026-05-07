@@ -16,7 +16,16 @@
     "title": "Diseña un dormitorio que amarás—instantáneamente.",
     "subtitle": "Elige un presupuesto, selecciona un estilo, y deja que NEXROOM genere una configuración comprable en segundos—optimizada para tu espacio y tu bolsillo.",
     "cta": "Comenzar demo gratis",
-    "ctaHint": "Sin registro. Toma ~60 segundos."
+    "ctaHint": "Sin registro. Toma ~60 segundos.",
+    "visual": {
+      "liveLabel": "Planner IA en vivo",
+      "confidence": "94% de match",
+      "title": "Vista previa inteligente",
+      "subtitle": "El análisis mock detecta estilo, luz, zonas vacías y ajuste de presupuesto antes de generar un layout comprable.",
+      "budget": "Presupuesto",
+      "match": "Coincidencia de estilo",
+      "estimate": "Estimación"
+    }
   },
   "landing": {
     "stats": "Usado por más de 1,000 usuarios",
@@ -33,20 +42,23 @@
     "badges": ["Privacidad primero", "Consciente del presupuesto", "Iteraciones rápidas"],
     "logos": ["ArcHome", "NordNest", "StudioNine", "Roomly", "Craft & Co"]
   },
-  "testimonials": {
-    "mina": {
-      "text": "Pasé de una 'habitación en blanco' a un setup cohesivo en minutos. La barra de presupuesto es sorprendentemente precisa.",
+  "testimonials": [
+    {
+      "quote": "Pasé de una 'habitación en blanco' a un setup cohesivo en minutos. La barra de presupuesto es sorprendentemente precisa.",
+      "name": "Mina K.",
       "role": "Primer apartamento"
     },
-    "alex": {
-      "text": "La consistencia de estilo es la característica estrella. Todo combina sin tener que buscar en 20 pestañas.",
+    {
+      "quote": "La consistencia de estilo es la característica estrella. Todo combina sin tener que buscar en 20 pestañas.",
+      "name": "Alex R.",
       "role": "Trabajador remoto"
     },
-    "sam": {
-      "text": "Perfecto para iteraciones rápidas. Cambias una necesidad, regeneras y listo. Se siente como un producto real.",
+    {
+      "quote": "Perfecto para iteraciones rápidas. Cambias una necesidad, regeneras y listo. Se siente como un producto real.",
+      "name": "Sam P.",
       "role": "Creador independiente"
     }
-  },
+  ],
   "demo": {
     "title": "Demo interactiva de IA",
     "subtitle": "Un flujo guiado de 3 pasos—como un producto real. Obtén una configuración detallada con precios y seguimiento de presupuesto.",
@@ -76,17 +88,50 @@
           "office": "Oficina en casa",
           "studio": "Estudio"
         },
+        "roomTypeDescriptions": {
+          "bedroom": "Descanso y espacio personal",
+          "livingroom": "Relax y entretenimiento",
+          "gaming": "Gaming y setup multimedia",
+          "office": "Trabajo y concentración",
+          "studio": "Espacio flexible"
+        },
         "roomSizes": {
           "small": "Pequeño",
           "medium": "Mediano",
           "large": "Grande",
           "xl": "Extra grande"
         },
+        "roomSizeDimensions": {
+          "small": "8-12m²",
+          "medium": "12-20m²",
+          "large": "20-35m²",
+          "xl": "35m²+"
+        },
+        "roomSizeDescriptions": {
+          "small": "Compacto y eficiente",
+          "medium": "Confort equilibrado",
+          "large": "Espacio para piezas grandes",
+          "xl": "Amplio y premium"
+        },
         "colorPalettes": {
           "neutral": "Neutro",
           "warm": "Cálido",
           "cool": "Frío",
           "bold": "Audaz"
+        },
+        "colorPaletteDescriptions": {
+          "neutral": "Calma refinada",
+          "warm": "Acogedor e invitante",
+          "cool": "Fresco y ligero",
+          "bold": "Acentos expresivos"
+        },
+        "styleDescriptions": {
+          "modern": "Líneas limpias y acentos fuertes",
+          "scandinavian": "Maderas claras y diseño funcional",
+          "japandi": "Materiales naturales y formas serenas",
+          "minimalist": "Puro, abierto y depurado",
+          "luxury": "Acabados ricos y detalles elegantes",
+          "cozy": "Texturas cálidas y confort suave"
         }
       },
       "2": {
@@ -95,12 +140,21 @@
         "needsHelp": "Elige lo que más importa. Optimizaremos dentro de tu presupuesto.",
         "moodLabel": "Ambiente y estado de ánimo",
         "generate": "Generar configuración",
+        "generating": "Generando...",
+        "generateFirst": "Genera una configuración primero",
         "moods": {
           "productive": "Productivo",
           "relaxing": "Relajante",
           "social": "Social",
           "creative": "Creativo",
           "minimal": "Minimalista"
+        },
+        "moodDescriptions": {
+          "productive": "Ambiente enfocado para trabajar",
+          "relaxing": "Tranquilo y calmado",
+          "social": "Ideal para recibir gente",
+          "creative": "Inspirador y artístico",
+          "minimal": "Limpio y despejado"
         }
       },
       "3": {
@@ -111,8 +165,11 @@
         "regenerate": "Regenerar",
         "refreshing": "Actualizando...",
         "budgetSummary": "Resumen del presupuesto",
+        "budgetLabel": "Presupuesto",
         "totalSpent": "Total gastado",
         "remaining": "Restante",
+        "remainingAmount": "{{amount}} restantes",
+        "overAmount": "{{amount}} por encima",
         "overBudget": "Fuera de presupuesto",
         "withinBudget": "Dentro del presupuesto",
         "roomPreview": "Vista previa de la habitación",
@@ -146,6 +203,8 @@
       "stopLabel": "Detener cámara",
       "analyzeLabel": "Analizar habitación",
       "analyzing": "Analizando los detalles...",
+      "readyLabel": "Listo para escanear",
+      "progressLabel": "Progreso del análisis IA",
       "noPhoto": "Agrega una foto de la habitación para desbloquear recomendaciones inteligentes.",
       "previewAlt": "Vista previa de la habitación",
       "resultTitle": "Análisis de la habitación",
@@ -180,6 +239,11 @@
         "luxury": "Acabados ricos y acentos escultóricos",
         "cozy": "Texturas en capas y suave confort"
       },
+      "colors": {
+        "softBeige": "beige suave",
+        "charcoal": "carbón",
+        "spruce": "verde abeto"
+      },
       "missingFurniture": {
         "storage": "almacenamiento",
         "lamp": "una lámpara",
@@ -204,6 +268,18 @@
       },
       "summary": "Tu foto muestra un {{roomType}} con {{lighting}} y {{style}}. El espacio se siente {{clutter}} y se beneficiaría de {{missing}}.",
       "summaryDefault": "Escaneo de habitación completado con análisis predeterminado.",
+      "scanFlowLabel": "Flujo de escaneo IA de habitación",
+      "scanSteps": {
+        "upload": "Subir imagen",
+        "analyzing": "Analizar habitación",
+        "style": "Detectar estilo",
+        "lighting": "Detectar iluminación",
+        "emptySpaces": "Detectar zonas vacías",
+        "recommendations": "Generar recomendaciones",
+        "transformation": "Transformación final"
+      },
+      "transformationKicker": "Mockup antes / después",
+      "transformationTitle": "Transformación recomendada",
       "recommendationTitles": {
         "deskSetup": "Configuración de escritorio",
         "storageSolution": "Solución de almacenamiento",
@@ -224,6 +300,98 @@
       },
       "match": "Coincidencia: {{percent}}%",
       "priceLabel": "Precio"
+    },
+    "visual": {
+      "kicker": "Demo visual IA",
+      "title": "Vista previa de distribución para {{room}}",
+      "before": "Antes",
+      "after": "Después",
+      "tags": {
+        "modernStyle": "Estilo moderno",
+        "warmLighting": "Iluminación cálida",
+        "recommendedLayout": "Distribución recomendada"
+      },
+      "analysisState": "Estado IA",
+      "stateGenerating": "Generando habitación completa",
+      "stateReady": "Análisis completado",
+      "stateMock": "Escaneo de prueba listo",
+      "estimatedSpend": "Gasto estimado",
+      "suggestedProducts": "Productos sugeridos",
+      "generateFullRoom": "Generar habitación completa",
+      "mockProducts": {
+        "desk": "Escritorio flotante",
+        "lamp": "Lámpara de pie cálida",
+        "storage": "Mueble bajo de almacenaje"
+      },
+      "insights": {
+        "layout": "Zonas de distribución mapeadas",
+        "lighting": "Temperatura de luz detectada",
+        "budget": "Ajuste de presupuesto estimado"
+      }
+    },
+    "styleTone": {
+      "modern": { "adjective": "Moderno", "vibe": "acentos fuertes y formas limpias" },
+      "scandinavian": { "adjective": "Escandinavo", "vibe": "maderas claras y calidez funcional" },
+      "japandi": { "adjective": "Japandi", "vibe": "materiales naturales y equilibrio sereno" },
+      "minimalist": { "adjective": "Minimalista", "vibe": "líneas limpias y paleta abierta" },
+      "luxury": { "adjective": "Lujo", "vibe": "materiales premium y detalles elegantes" },
+      "cozy": { "adjective": "Acogedor", "vibe": "texturas cálidas y luz suave" }
+    },
+    "catalog": {
+      "analysisFallback": {
+        "light": "la luz de la habitación",
+        "palette": "tu paleta",
+        "and": " y ",
+        "urgent": "Añadido prioritario para este layout",
+        "flow": "Encaja muy bien con el flujo",
+        "reason": "{{missing}}, optimizado para {{lighting}} y {{colors}}."
+      },
+      "bed": {
+        "low": ["Cama plataforma {{style}}", "Cama de lamas {{style}}", "Estructura compacta {{style}}"],
+        "mid": ["Cama tapizada {{style}}", "Cama efecto roble {{style}}", "Cama con almacenaje {{style}}"],
+        "high": ["Cama premium con cabecero {{style}}", "Cama protagonista de madera {{style}}", "Cama estilo hotel {{style}}"]
+      },
+      "desk": {
+        "low": ["Escritorio de trabajo {{style}}", "Estación compacta {{style}}", "Escritorio plegable {{style}}"],
+        "mid": ["Escritorio con gestión de cables {{style}}", "Escritorio adaptable {{style}}", "Escritorio con cajonera {{style}}"],
+        "high": ["Escritorio premium con sobre sólido {{style}}", "Workstation de diseño {{style}}", "Escritorio ejecutivo {{style}}"]
+      },
+      "lamp": {
+        "low": ["Lámpara de noche {{style}}", "Lámpara de tarea {{style}}", "Lámpara de mesa regulable {{style}}"],
+        "mid": ["Lámpara LED regulable {{style}}", "Lámpara ambiental {{style}}", "Lámpara de lectura sin reflejos {{style}}"],
+        "high": ["Lámpara inteligente con escenas {{style}}", "Lámpara ambiental premium {{style}}", "Lámpara de diseño {{style}}"]
+      },
+      "storage": {
+        "low": ["Estantería abierta {{style}}", "Cajas bajo cama {{style}}", "Burro de armario simple {{style}}"],
+        "mid": ["Cómoda de 3-4 cajones {{style}}", "Armario con baldas {{style}}", "Mueble cerrado de almacenaje {{style}}"],
+        "high": ["Sistema de armario premium {{style}}", "Cómoda grande con organizador {{style}}", "Almacenaje estilo empotrado {{style}}"]
+      },
+      "notes": {
+        "value": "Estructura simple y gran valor",
+        "sturdy": "Básicos resistentes incluidos",
+        "materials": "Mejores materiales y acabado",
+        "comfort": "Diseño centrado en confort",
+        "premium": "Construcción y detalles premium",
+        "longTerm": "Pensado para confort a largo plazo",
+        "spaceSaving": "Ocupa poco espacio",
+        "functional": "Setup limpio y funcional",
+        "ergonomics": "Mejor ergonomía",
+        "tidy": "Ayuda a mantener el orden",
+        "finish": "Acabado premium",
+        "durable": "Hecho para durar",
+        "warmLight": "Luz cálida recomendada",
+        "valueLighting": "Iluminación de gran valor",
+        "lightQuality": "Mejor calidad de luz",
+        "premiumLook": "Aspecto más premium",
+        "scenes": "Escenas para la noche",
+        "statementLight": "Pieza de iluminación protagonista",
+        "organization": "Organización asequible",
+        "quickSetup": "Fácil de montar",
+        "cleaner": "Aspecto más limpio",
+        "capacity": "Más capacidad",
+        "premiumCapacity": "Capacidad y acabado premium",
+        "builtIn": "Parece integrado"
+      }
     }
   },
   "generator": {
@@ -269,20 +437,23 @@
       {
         "title": "Calma minimalista",
         "meta": "€650 • solo esenciales",
-        "body": "Una configuración inicial limpia que se mantiene enfocada y asequible."
+        "body": "Una configuración inicial limpia que se mantiene enfocada y asequible.",
+        "style": "minimal"
       },
       {
         "title": "Enfoque moderno",
-        "meta": "€1,200 • trabajo + sueño",
-        "body": "Selecciones balanceadas con una estación de trabajo ordenada e iluminación premium."
+        "meta": "\u20ac1,200 \u2022 trabajo + descanso",
+        "body": "Selecciones equilibradas con una zona de trabajo ordenada e iluminacion premium.",
+        "style": "modern"
       },
       {
         "title": "Retiro acogedor",
         "meta": "€2,400 • mejoras de confort",
-        "body": "Texturas cálidas, materiales de mayor calidad y almacenamiento más inteligente."
+        "body": "Texturas cálidas, materiales de mayor calidad y almacenamiento más inteligente.",
+        "style": "cozy"
       }
     ],
-    "tryInDemo": "Prueba esto en el demo →"
+    "tryInDemo": "Probar en la demo \u2192"
   },
   "why": {
     "title": "Por qué NEXROOM",

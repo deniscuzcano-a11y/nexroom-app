@@ -22,31 +22,31 @@ export function RoomTypeSelector({ selectedRoom, onRoomChange }: RoomTypeSelecto
       key: 'bedroom',
       name: t('demo.steps.1.roomTypes.bedroom'),
       icon: <Bed size={24} />,
-      description: 'Sleep & personal space'
+      description: t('demo.steps.1.roomTypeDescriptions.bedroom'),
     },
     {
       key: 'livingroom',
       name: t('demo.steps.1.roomTypes.livingroom'),
       icon: <Sofa size={24} />,
-      description: 'Relaxation & entertainment'
+      description: t('demo.steps.1.roomTypeDescriptions.livingroom'),
     },
     {
       key: 'gaming',
       name: t('demo.steps.1.roomTypes.gaming'),
       icon: <Gamepad2 size={24} />,
-      description: 'Gaming & entertainment setup'
+      description: t('demo.steps.1.roomTypeDescriptions.gaming'),
     },
     {
       key: 'office',
       name: t('demo.steps.1.roomTypes.office'),
       icon: <Monitor size={24} />,
-      description: 'Work & productivity space'
+      description: t('demo.steps.1.roomTypeDescriptions.office'),
     },
     {
       key: 'studio',
       name: t('demo.steps.1.roomTypes.studio'),
       icon: <Home size={24} />,
-      description: 'Multi-purpose living space'
+      description: t('demo.steps.1.roomTypeDescriptions.studio'),
     }
   ]
 

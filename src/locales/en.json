@@ -9,7 +9,16 @@
     "title": "Design a bedroom you'll love—instantly.",
     "subtitle": "Pick a budget, choose a style, and let NEXROOM generate a shoppable setup in seconds—optimized for your space and your wallet.",
     "cta": "Start free demo",
-    "ctaHint": "No signup. Takes ~60 seconds."
+    "ctaHint": "No signup. Takes ~60 seconds.",
+    "visual": {
+      "liveLabel": "Live AI planner",
+      "confidence": "94% match",
+      "title": "Room intelligence preview",
+      "subtitle": "Mock analysis reads style, lighting, empty zones, and budget fit before generating a shoppable layout.",
+      "budget": "Budget",
+      "match": "Style match",
+      "estimate": "Estimate"
+    }
   },
   "trust": {
     "title": "Used by {{count}} users",
@@ -63,17 +72,50 @@
           "office": "Home office",
           "studio": "Studio apartment"
         },
+        "roomTypeDescriptions": {
+          "bedroom": "Sleep and personal space",
+          "livingroom": "Relaxation and entertainment",
+          "gaming": "Gaming and media setup",
+          "office": "Work and focus zone",
+          "studio": "Flexible living space"
+        },
         "roomSizes": {
           "small": "Small",
           "medium": "Medium",
           "large": "Large",
           "xl": "Extra large"
         },
+        "roomSizeDimensions": {
+          "small": "8-12m²",
+          "medium": "12-20m²",
+          "large": "20-35m²",
+          "xl": "35m²+"
+        },
+        "roomSizeDescriptions": {
+          "small": "Compact and efficient",
+          "medium": "Balanced comfort",
+          "large": "Room for larger pieces",
+          "xl": "Spacious and premium"
+        },
         "colorPalettes": {
           "neutral": "Neutral",
           "warm": "Warm",
           "cool": "Cool",
           "bold": "Bold"
+        },
+        "colorPaletteDescriptions": {
+          "neutral": "Calm and refined",
+          "warm": "Cozy and inviting",
+          "cool": "Fresh and airy",
+          "bold": "Expressive accents"
+        },
+        "styleDescriptions": {
+          "modern": "Clean lines, bold accents",
+          "scandinavian": "Light woods, functional design",
+          "japandi": "Natural materials, quiet forms",
+          "minimalist": "Pure, open, pared-back",
+          "luxury": "Rich finishes, elegant details",
+          "cozy": "Warm textures, soft comfort"
         }
       },
       "2": {
@@ -82,12 +124,21 @@
         "needsHelp": "Pick what matters most. We'll optimize within your budget.",
         "moodLabel": "Mood & atmosphere",
         "generate": "Generate setup",
+        "generating": "Generating...",
+        "generateFirst": "Generate a setup first",
         "moods": {
           "productive": "Productive",
           "relaxing": "Relaxing",
           "social": "Social",
           "creative": "Creative",
           "minimal": "Minimal"
+        },
+        "moodDescriptions": {
+          "productive": "Focused work environment",
+          "relaxing": "Peaceful and calming",
+          "social": "Great for gatherings",
+          "creative": "Inspiring and artistic",
+          "minimal": "Clean and uncluttered"
         }
       },
       "3": {
@@ -97,8 +148,30 @@
         "resultHeading": "{{style}} {{room}}",
         "regenerate": "Regenerate",
         "refreshing": "Refreshing...",
+        "budgetSummary": "Budget summary",
+        "budgetLabel": "Budget",
+        "totalSpent": "Total",
+        "remaining": "Remaining",
+        "remainingAmount": "{{amount}} remaining",
+        "overAmount": "{{amount}} over",
+        "overBudget": "Over budget",
         "withinBudget": "Within budget",
-        "overBudget": "Over budget"
+        "roomPreview": "Room preview",
+        "furnitureRecommendations": "Furniture recommendations",
+        "aiRecommendation": "AI recommendation",
+        "optimizedFor": "Optimized for",
+        "roomForUpgrades": "room for small upgrades",
+        "tryRemovingNeed": "Try removing one need or lowering item tiers",
+        "greatPicks": "Strong picks",
+        "butOverBudget": "but you are over budget",
+        "furnitureCategories": {
+          "bed": "Bed",
+          "desk": "Desk",
+          "chair": "Chair",
+          "storage": "Storage",
+          "lamp": "Lamp",
+          "decor": "Decor"
+        }
       }
     },
     "back": "Back",
@@ -114,6 +187,8 @@
       "stopLabel": "Stop camera",
       "analyzeLabel": "Analyze room",
       "analyzing": "Analyzing room details…",
+      "readyLabel": "Ready to scan",
+      "progressLabel": "AI analysis progress",
       "noPhoto": "Add a room photo to unlock intelligent recommendations.",
       "previewAlt": "Room preview image",
       "resultTitle": "Room insight",
@@ -148,6 +223,11 @@
         "luxury": "Rich finishes and sculptural accents",
         "cozy": "Layered textures and soft comfort"
       },
+      "colors": {
+        "softBeige": "soft beige",
+        "charcoal": "charcoal",
+        "spruce": "spruce green"
+      },
       "missingFurniture": {
         "storage": "storage",
         "lamp": "a lamp",
@@ -172,6 +252,18 @@
       },
       "summary": "Your photo shows a {{roomType}} with {{lighting}} and {{style}}. The space feels {{clutter}} and would benefit from {{missing}}.",
       "summaryDefault": "Room scan completed with default analysis.",
+      "scanFlowLabel": "AI room scan flow",
+      "scanSteps": {
+        "upload": "Upload image",
+        "analyzing": "Analyzing room",
+        "style": "Detect style",
+        "lighting": "Detect lighting",
+        "emptySpaces": "Find empty spaces",
+        "recommendations": "Generate recommendations",
+        "transformation": "Final transformation"
+      },
+      "transformationKicker": "Before / after mockup",
+      "transformationTitle": "Recommended transformation",
       "recommendationTitles": {
         "deskSetup": "Desk setup",
         "storageSolution": "Storage solution",
@@ -192,6 +284,98 @@
       },
       "match": "Match: {{percent}}%",
       "priceLabel": "Price"
+    },
+    "visual": {
+      "kicker": "AI demo visual",
+      "title": "{{room}} layout preview",
+      "before": "Before",
+      "after": "After",
+      "tags": {
+        "modernStyle": "Modern Style",
+        "warmLighting": "Warm Lighting",
+        "recommendedLayout": "Recommended Layout"
+      },
+      "analysisState": "AI state",
+      "stateGenerating": "Generating full room",
+      "stateReady": "Analysis complete",
+      "stateMock": "Mock scan ready",
+      "estimatedSpend": "Estimated spend",
+      "suggestedProducts": "Suggested products",
+      "generateFullRoom": "Generate full room",
+      "mockProducts": {
+        "desk": "Floating work desk",
+        "lamp": "Warm floor lamp",
+        "storage": "Low storage unit"
+      },
+      "insights": {
+        "layout": "Layout zones mapped",
+        "lighting": "Lighting temperature detected",
+        "budget": "Budget fit estimated"
+      }
+    },
+    "styleTone": {
+      "modern": { "adjective": "Modern", "vibe": "bold accents and sleek forms" },
+      "scandinavian": { "adjective": "Scandinavian", "vibe": "light woods and functional warmth" },
+      "japandi": { "adjective": "Japandi", "vibe": "natural materials and calm balance" },
+      "minimalist": { "adjective": "Minimal", "vibe": "clean lines and an open palette" },
+      "luxury": { "adjective": "Luxury", "vibe": "premium materials and elegant details" },
+      "cozy": { "adjective": "Cozy", "vibe": "warm textures and soft light" }
+    },
+    "catalog": {
+      "analysisFallback": {
+        "light": "the room light",
+        "palette": "your palette",
+        "and": " and ",
+        "urgent": "Urgent addition for this layout",
+        "flow": "A strong fit for the flow",
+        "reason": "{{missing}}, optimized for {{lighting}} and {{colors}}."
+      },
+      "bed": {
+        "low": ["{{style}} platform bed", "{{style}} slatted frame bed", "{{style}} compact bed frame"],
+        "mid": ["{{style}} upholstered bed", "{{style}} oak-look bed frame", "{{style}} storage bed base"],
+        "high": ["{{style}} premium bed with headboard", "{{style}} solid-wood statement bed", "{{style}} hotel-style bed frame"]
+      },
+      "desk": {
+        "low": ["{{style}} writing desk", "{{style}} compact workstation", "{{style}} foldable desk"],
+        "mid": ["{{style}} desk with cable management", "{{style}} standing-ready desk", "{{style}} desk with drawer unit"],
+        "high": ["{{style}} premium desk with solid top", "{{style}} designer workstation", "{{style}} executive desk"]
+      },
+      "lamp": {
+        "low": ["{{style}} bedside lamp", "{{style}} task lamp", "{{style}} dimmable table lamp"],
+        "mid": ["{{style}} dimmable LED lamp", "{{style}} ambient bedside lamp", "{{style}} glare-free reading lamp"],
+        "high": ["{{style}} smart lamp with scene presets", "{{style}} premium ambient lamp", "{{style}} designer lamp"]
+      },
+      "storage": {
+        "low": ["{{style}} open shelving", "{{style}} under-bed boxes", "{{style}} simple wardrobe rail"],
+        "mid": ["{{style}} dresser with 3-4 drawers", "{{style}} wardrobe with shelves", "{{style}} closed storage cabinet"],
+        "high": ["{{style}} premium wardrobe system", "{{style}} large dresser with organizer", "{{style}} built-in style storage"]
+      },
+      "notes": {
+        "value": "Simple frame, great value",
+        "sturdy": "Sturdy basics included",
+        "materials": "Better materials and finish",
+        "comfort": "Comfort-focused design",
+        "premium": "Premium build and details",
+        "longTerm": "Designed for long-term comfort",
+        "spaceSaving": "Space-saving footprint",
+        "functional": "Clean, functional setup",
+        "ergonomics": "Better ergonomics",
+        "tidy": "Keeps things tidy",
+        "finish": "Premium finish",
+        "durable": "Built to last",
+        "warmLight": "Warm light recommended",
+        "valueLighting": "Great value lighting",
+        "lightQuality": "Better light quality",
+        "premiumLook": "More premium look",
+        "scenes": "Scene presets for evenings",
+        "statementLight": "Statement lighting piece",
+        "organization": "Budget-friendly organization",
+        "quickSetup": "Quick to set up",
+        "cleaner": "Cleaner look",
+        "capacity": "More capacity",
+        "premiumCapacity": "Premium capacity and finish",
+        "builtIn": "Looks built-in"
+      }
     }
   },
   "examples": {
@@ -201,17 +385,20 @@
       {
         "title": "Minimal calm",
         "meta": "€650 • essentials only",
-        "body": "A clean starter setup that stays focused and affordable."
+        "body": "A clean starter setup that stays focused and affordable.",
+        "style": "minimal"
       },
       {
         "title": "Modern focus",
         "meta": "€1,200 • work + sleep",
-        "body": "Balanced picks with a tidy workstation and premium lighting."
+        "body": "Balanced picks with a tidy workstation and premium lighting.",
+        "style": "modern"
       },
       {
         "title": "Cozy retreat",
         "meta": "€2,400 • comfort upgrades",
-        "body": "Warm textures, higher-quality materials, and smarter storage."
+        "body": "Warm textures, higher-quality materials, and smarter storage.",
+        "style": "cozy"
       }
     ],
     "tryInDemo": "Try this in the demo →"

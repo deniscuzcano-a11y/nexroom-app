@@ -22,31 +22,31 @@ export function MoodSelector({ selectedMoods, onMoodsChange }: MoodSelectorProps
       key: 'productive',
       name: t('demo.steps.2.moods.productive'),
       icon: <Zap size={20} />,
-      description: 'Focused work environment'
+      description: t('demo.steps.2.moodDescriptions.productive'),
     },
     {
       key: 'relaxing',
       name: t('demo.steps.2.moods.relaxing'),
       icon: <Heart size={20} />,
-      description: 'Peaceful and calming'
+      description: t('demo.steps.2.moodDescriptions.relaxing'),
     },
     {
       key: 'social',
       name: t('demo.steps.2.moods.social'),
       icon: <Users size={20} />,
-      description: 'Great for gatherings'
+      description: t('demo.steps.2.moodDescriptions.social'),
     },
     {
       key: 'creative',
       name: t('demo.steps.2.moods.creative'),
       icon: <Palette size={20} />,
-      description: 'Inspiring and artistic'
+      description: t('demo.steps.2.moodDescriptions.creative'),
     },
     {
       key: 'minimal',
       name: t('demo.steps.2.moods.minimal'),
       icon: <Minus size={20} />,
-      description: 'Clean and uncluttered'
+      description: t('demo.steps.2.moodDescriptions.minimal'),
     }
   ]
 

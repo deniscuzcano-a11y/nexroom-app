@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { ImagePlaceholder } from './components/ImagePlaceholder'
 import { RoomAnalyzer } from './components/RoomAnalyzer'
+import { HeroShowcase } from './components/HeroShowcase'
+import { AIDemoPreview } from './components/AIDemoPreview'
 import { StyleSelector } from './components/StyleSelector'
 import { RoomTypeSelector } from './components/RoomTypeSelector'
 import { ColorPaletteSelector } from './components/ColorPaletteSelector'
@@ -38,6 +40,37 @@ type GeneratedSetup = {
   total: number
   status: 'within' | 'over'
   summary: string
+}
+
+type ExampleItem = {
+  title: string
+  meta: string
+  body: string
+  style: 'minimal' | 'modern' | 'cozy' | 'scandinavian' | 'japandi' | 'luxury'
+}
+
+type FeatureItem = {
+  title: string
+  body: string
+}
+
+type StepItem = {
+  title: string
+  body: string
+}
+
+type TestimonialItem = {
+  quote: string
+  name: string
+  role: string
+}
+
+type PricingPlan = {
+  name: string
+  price: string
+  unit?: string
+  features: string[]
+  cta: string
 }
 
 function eur(value: number) {
@@ -73,7 +106,17 @@ function tierForBudget(budget: number) {
   return 'high' as const
 }
 
-function styleTone(style: StyleKey) {
+type Translate = (key: string, options?: Record<string, string | number>) => string
+
+function styleTone(style: StyleKey, t?: Translate) {
+  const key = `demo.styleTone.${style}`
+  if (t) {
+    return {
+      adjective: t(`${key}.adjective`),
+      vibe: t(`${key}.vibe`),
+    }
+  }
+
   switch (style) {
     case 'minimalist':
       return { adjective: 'Minimal', vibe: 'clean lines, calm palette' }
@@ -100,7 +143,7 @@ function generateSetup(params: {
   roomSize: RoomSizeKey
   colorPalette: ColorPaletteKey
   moods: MoodKey[]
-  t: (key: string) => string
+  t: Translate
   analysis?: RoomAnalysis | null
 }): GeneratedSetup {
   const budget = clamp(Math.round(params.budget || 0), 150, 12000)
@@ -112,15 +155,15 @@ function generateSetup(params: {
   const moods = params.moods
 
   const tier = tierForBudget(budget)
-  const tone = styleTone(style)
+  const tone = styleTone(style, params.t)
   const analysis = params.analysis
   const analysisReason = (need: NeedKey) => {
-    const lighting = analysis ? analysis.lightingQuality.toLowerCase() : 'the room light'
-    const colors = analysis?.dominantColors?.slice(0, 2).join(' and ') || 'your palette'
+    const lighting = analysis ? analysis.lightingQuality.toLowerCase() : params.t('demo.catalog.analysisFallback.light')
+    const colors = analysis?.dominantColors?.slice(0, 2).join(params.t('demo.catalog.analysisFallback.and')) || params.t('demo.catalog.analysisFallback.palette')
     const missing = analysis?.missingFurniture?.includes(need)
-      ? 'Urgent addition for this layout'
-      : 'A strong fit for the flow'
-    return `${missing}, optimized for ${lighting} and ${colors}.`
+      ? params.t('demo.catalog.analysisFallback.urgent')
+      : params.t('demo.catalog.analysisFallback.flow')
+    return params.t('demo.catalog.analysisFallback.reason', { missing, lighting, colors })
   }
 
   const seed =
@@ -143,129 +186,129 @@ function generateSetup(params: {
     bed: {
       low: {
         names: [
-          `${tone.adjective} platform bed`,
-          `${tone.adjective} slatted frame bed`,
-          `${tone.adjective} compact bed frame`,
+          params.t('demo.catalog.bed.low.0', { style: tone.adjective }),
+          params.t('demo.catalog.bed.low.1', { style: tone.adjective }),
+          params.t('demo.catalog.bed.low.2', { style: tone.adjective }),
         ],
         min: 220,
         max: 420,
-        notes: ['Simple frame, great value', 'Sturdy basics included'],
+        notes: [params.t('demo.catalog.notes.value'), params.t('demo.catalog.notes.sturdy')],
       },
       mid: {
         names: [
-          `${tone.adjective} upholstered bed`,
-          `${tone.adjective} oak-look bed frame`,
-          `${tone.adjective} storage bed base`,
+          params.t('demo.catalog.bed.mid.0', { style: tone.adjective }),
+          params.t('demo.catalog.bed.mid.1', { style: tone.adjective }),
+          params.t('demo.catalog.bed.mid.2', { style: tone.adjective }),
         ],
         min: 520,
         max: 900,
-        notes: ['Better materials, nicer finish', 'Comfort-focused design'],
+        notes: [params.t('demo.catalog.notes.materials'), params.t('demo.catalog.notes.comfort')],
       },
       high: {
         names: [
-          `${tone.adjective} premium bed with headboard`,
-          `${tone.adjective} solid-wood statement bed`,
-          `${tone.adjective} hotel-style bed frame`,
+          params.t('demo.catalog.bed.high.0', { style: tone.adjective }),
+          params.t('demo.catalog.bed.high.1', { style: tone.adjective }),
+          params.t('demo.catalog.bed.high.2', { style: tone.adjective }),
         ],
         min: 980,
         max: 1600,
-        notes: ['Premium build & details', 'Designed for long-term comfort'],
+        notes: [params.t('demo.catalog.notes.premium'), params.t('demo.catalog.notes.longTerm')],
       },
     },
     desk: {
       low: {
         names: [
-          `${tone.adjective} writing desk`,
-          `${tone.adjective} compact workstation`,
-          `${tone.adjective} foldable desk`,
+          params.t('demo.catalog.desk.low.0', { style: tone.adjective }),
+          params.t('demo.catalog.desk.low.1', { style: tone.adjective }),
+          params.t('demo.catalog.desk.low.2', { style: tone.adjective }),
         ],
         min: 80,
         max: 160,
-        notes: ['Space-saving footprint', 'Clean, functional setup'],
+        notes: [params.t('demo.catalog.notes.spaceSaving'), params.t('demo.catalog.notes.functional')],
       },
       mid: {
         names: [
-          `${tone.adjective} desk with cable management`,
-          `${tone.adjective} standing-ready desk`,
-          `${tone.adjective} desk + drawer unit`,
+          params.t('demo.catalog.desk.mid.0', { style: tone.adjective }),
+          params.t('demo.catalog.desk.mid.1', { style: tone.adjective }),
+          params.t('demo.catalog.desk.mid.2', { style: tone.adjective }),
         ],
         min: 220,
         max: 420,
-        notes: ['Better ergonomics', 'Keeps things tidy'],
+        notes: [params.t('demo.catalog.notes.ergonomics'), params.t('demo.catalog.notes.tidy')],
       },
       high: {
         names: [
-          `${tone.adjective} premium desk (solid top)`,
-          `${tone.adjective} designer workstation`,
-          `${tone.adjective} executive desk`,
+          params.t('demo.catalog.desk.high.0', { style: tone.adjective }),
+          params.t('demo.catalog.desk.high.1', { style: tone.adjective }),
+          params.t('demo.catalog.desk.high.2', { style: tone.adjective }),
         ],
         min: 520,
         max: 990,
-        notes: ['Premium finish', 'Built to last'],
+        notes: [params.t('demo.catalog.notes.finish'), params.t('demo.catalog.notes.durable')],
       },
     },
     lamp: {
       low: {
         names: [
-          `${tone.adjective} bedside lamp`,
-          `${tone.adjective} task lamp`,
-          `${tone.adjective} dimmable table lamp`,
+          params.t('demo.catalog.lamp.low.0', { style: tone.adjective }),
+          params.t('demo.catalog.lamp.low.1', { style: tone.adjective }),
+          params.t('demo.catalog.lamp.low.2', { style: tone.adjective }),
         ],
         min: 25,
         max: 60,
-        notes: ['Warm light recommended', 'Great value lighting'],
+        notes: [params.t('demo.catalog.notes.warmLight'), params.t('demo.catalog.notes.valueLighting')],
       },
       mid: {
         names: [
-          `${tone.adjective} dimmable LED lamp`,
-          `${tone.adjective} ambient bedside lamp`,
-          `${tone.adjective} glare-free reading lamp`,
+          params.t('demo.catalog.lamp.mid.0', { style: tone.adjective }),
+          params.t('demo.catalog.lamp.mid.1', { style: tone.adjective }),
+          params.t('demo.catalog.lamp.mid.2', { style: tone.adjective }),
         ],
         min: 70,
         max: 140,
-        notes: ['Better light quality', 'More premium look'],
+        notes: [params.t('demo.catalog.notes.lightQuality'), params.t('demo.catalog.notes.premiumLook')],
       },
       high: {
         names: [
-          `${tone.adjective} smart lamp (scene presets)`,
-          `${tone.adjective} premium ambient lamp`,
-          `${tone.adjective} designer lamp`,
+          params.t('demo.catalog.lamp.high.0', { style: tone.adjective }),
+          params.t('demo.catalog.lamp.high.1', { style: tone.adjective }),
+          params.t('demo.catalog.lamp.high.2', { style: tone.adjective }),
         ],
         min: 160,
         max: 320,
-        notes: ['Scene presets for evenings', 'Statement lighting piece'],
+        notes: [params.t('demo.catalog.notes.scenes'), params.t('demo.catalog.notes.statementLight')],
       },
     },
     storage: {
       low: {
         names: [
-          `${tone.adjective} open shelving`,
-          `${tone.adjective} under-bed boxes`,
-          `${tone.adjective} simple wardrobe rail`,
+          params.t('demo.catalog.storage.low.0', { style: tone.adjective }),
+          params.t('demo.catalog.storage.low.1', { style: tone.adjective }),
+          params.t('demo.catalog.storage.low.2', { style: tone.adjective }),
         ],
         min: 60,
         max: 140,
-        notes: ['Budget-friendly organization', 'Quick to set up'],
+        notes: [params.t('demo.catalog.notes.organization'), params.t('demo.catalog.notes.quickSetup')],
       },
       mid: {
         names: [
-          `${tone.adjective} dresser (3–4 drawers)`,
-          `${tone.adjective} wardrobe with shelves`,
-          `${tone.adjective} closed storage cabinet`,
+          params.t('demo.catalog.storage.mid.0', { style: tone.adjective }),
+          params.t('demo.catalog.storage.mid.1', { style: tone.adjective }),
+          params.t('demo.catalog.storage.mid.2', { style: tone.adjective }),
         ],
         min: 220,
         max: 520,
-        notes: ['Cleaner look', 'More capacity'],
+        notes: [params.t('demo.catalog.notes.cleaner'), params.t('demo.catalog.notes.capacity')],
       },
       high: {
         names: [
-          `${tone.adjective} premium wardrobe system`,
-          `${tone.adjective} large dresser + organizer`,
-          `${tone.adjective} built-in style storage`,
+          params.t('demo.catalog.storage.high.0', { style: tone.adjective }),
+          params.t('demo.catalog.storage.high.1', { style: tone.adjective }),
+          params.t('demo.catalog.storage.high.2', { style: tone.adjective }),
         ],
         min: 620,
         max: 1250,
-        notes: ['Premium capacity & finish', 'Looks built-in'],
+        notes: [params.t('demo.catalog.notes.premiumCapacity'), params.t('demo.catalog.notes.builtIn')],
       },
     },
   }
@@ -337,6 +380,34 @@ function App() {
 
   const canContinueToNeeds = useMemo(() => budget >= 150 && budget <= 12000, [budget])
   const canGenerate = useMemo(() => selectedNeeds.length > 0, [selectedNeeds.length])
+  const exampleItems = useMemo(
+    () => t('examples.items', { returnObjects: true }) as ExampleItem[],
+    [t],
+  )
+  const whyFeatures = useMemo(
+    () => t('why.features', { returnObjects: true }) as FeatureItem[],
+    [t],
+  )
+  const workflowSteps = useMemo(
+    () => t('howItWorks.steps', { returnObjects: true }) as StepItem[],
+    [t],
+  )
+  const pricingPlans = useMemo(
+    () => t('pricing.plans', { returnObjects: true }) as PricingPlan[],
+    [t],
+  )
+  const trustBadges = useMemo(
+    () => t('trust.badges', { returnObjects: true }) as string[],
+    [t],
+  )
+  const trustLogos = useMemo(
+    () => t('trust.logos', { returnObjects: true }) as string[],
+    [t],
+  )
+  const testimonialItems = useMemo(
+    () => t('testimonials', { returnObjects: true }) as TestimonialItem[],
+    [t],
+  )
 
   async function onGenerate() {
     setIsGenerating(true)
@@ -394,8 +465,8 @@ function App() {
         <div className="nr-heroGrid">
           <motion.div
             className="nr-heroCopy"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <p className="nr-eyebrow">{t('hero.eyebrow')}</p>
@@ -404,7 +475,7 @@ function App() {
               {t('hero.subtitle')}
             </p>
 
-            <div className="nr-ctaRow" id="demo">
+            <div className="nr-ctaRow">
               <motion.a
                 className="nr-primaryBtn"
                 href="#demo"
@@ -417,61 +488,7 @@ function App() {
             </div>
           </motion.div>
 
-          <motion.div
-            className="nr-heroVisual"
-            aria-hidden="true"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <div className="nr-glow nr-glowA" />
-            <div className="nr-glow nr-glowB" />
-
-            <motion.div
-              className="nr-mockCard"
-              whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="nr-mockTop">
-                <div className="nr-dots" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <div className="nr-pill">Bedroom • Scandinavian • €1200</div>
-              </div>
-
-              <div className="nr-mockBody">
-                <div className="nr-mockGrid">
-                  <div className="nr-swatch nr-swatch1" />
-                  <div className="nr-swatch nr-swatch2" />
-                  <div className="nr-swatch nr-swatch3" />
-                  <div className="nr-swatch nr-swatch4" />
-                </div>
-
-                <div className="nr-mockLines">
-                  <div className="nr-line nr-line1" />
-                  <div className="nr-line nr-line2" />
-                  <div className="nr-line nr-line3" />
-                </div>
-
-                <div className="nr-mockFooter">
-                  <div className="nr-miniKpi">
-                    <div className="nr-miniLabel">Budget</div>
-                    <div className="nr-miniValue">€1,200</div>
-                  </div>
-                  <div className="nr-miniKpi">
-                    <div className="nr-miniLabel">Est.</div>
-                    <div className="nr-miniValue">€1,148</div>
-                  </div>
-                  <div className="nr-miniKpi">
-                    <div className="nr-miniLabel">Match</div>
-                    <div className="nr-miniValue">92%</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+          <HeroShowcase />
         </div>
       </motion.section>
 
@@ -482,19 +499,18 @@ function App() {
                 {t('trust.title', { count: 1000 })}
               </h2>
               <p className="nr-sectionSub">
-                Designers, students, and busy builders use NEXROOM to go from “ideas”
-                to “done” faster.
+                {t('trust.subtitle')}
               </p>
             </div>
             <div className="nr-badges" aria-label="Trust badges">
-              <span className="nr-badge">Privacy‑first</span>
-              <span className="nr-badge">Budget‑aware</span>
-              <span className="nr-badge">Fast iterations</span>
+              {trustBadges.map((badge) => (
+                <span key={badge} className="nr-badge">{badge}</span>
+              ))}
             </div>
           </div>
 
           <div className="nr-logoRow" aria-label="Customer logos">
-            {(['ArcHome', 'NordNest', 'StudioNine', 'Roomly', 'Craft & Co'] as const).map(
+            {trustLogos.map(
               (name) => (
                 <motion.div
                   key={name}
@@ -510,30 +526,9 @@ function App() {
           </div>
 
           <div className="nr-testimonialGrid" aria-label="Testimonials">
-            {(
-              [
-                {
-                  quote:
-                    'I went from “blank room” to a cohesive setup in minutes. The budget bar is surprisingly accurate.',
-                  name: 'Mina K.',
-                  role: 'First apartment',
-                },
-                {
-                  quote:
-                    'The style consistency is the killer feature. Everything matches without me hunting through 20 tabs.',
-                  name: 'Alex R.',
-                  role: 'Remote worker',
-                },
-                {
-                  quote:
-                    'Perfect for quick iterations. Change one need, regenerate, done. Feels like a real product.',
-                  name: 'Sam P.',
-                  role: 'Indie builder',
-                },
-              ] as const
-            ).map((t, index) => (
+            {testimonialItems.map((testimonial, index) => (
               <motion.div
-                key={t.name}
+                key={testimonial.name}
                 className="nr-testimonialCard"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -548,12 +543,12 @@ function App() {
                   <span />
                   <span />
                 </div>
-                <p className="nr-quote">“{t.quote}”</p>
+                <p className="nr-quote">"{testimonial.quote}"</p>
                 <div className="nr-person">
                   <div className="nr-avatar" aria-hidden="true" />
                   <div>
-                    <div className="nr-personName">{t.name}</div>
-                    <div className="nr-personRole">{t.role}</div>
+                    <div className="nr-personName">{testimonial.name}</div>
+                    <div className="nr-personRole">{testimonial.role}</div>
                   </div>
                 </div>
               </motion.div>
@@ -725,10 +720,10 @@ function App() {
                       <div className="nr-needGrid" role="group" aria-label="Needs">
                         {(
                           [
-                            ['bed', 'Bed'],
-                            ['desk', 'Desk'],
-                            ['lamp', 'Lamp'],
-                            ['storage', 'Storage'],
+                            ['bed', t('demo.steps.3.furnitureCategories.bed')],
+                            ['desk', t('demo.steps.3.furnitureCategories.desk')],
+                            ['lamp', t('demo.steps.3.furnitureCategories.lamp')],
+                            ['storage', t('demo.steps.3.furnitureCategories.storage')],
                           ] as const
                         ).map(([key, label]) => (
                           <label key={key} className="nr-need">
@@ -765,7 +760,7 @@ function App() {
                       onClick={onGenerate}
                       disabled={isGenerating || !canGenerate}
                     >
-                      {isGenerating ? 'Generating…' : t('demo.steps.2.generate')}
+                      {isGenerating ? t('demo.steps.2.generating') : t('demo.steps.2.generate')}
                     </button>
 
                     <div className="nr-panelActions">
@@ -781,7 +776,7 @@ function App() {
                         className="nr-nextBtn"
                         onClick={() => setDemoStep(3)}
                         disabled={!setup}
-                        title={!setup ? 'Generate a setup first' : undefined}
+                        title={!setup ? t('demo.steps.2.generateFirst') : undefined}
                       >
                         {t('demo.viewResults')}
                       </button>
@@ -827,6 +822,21 @@ function App() {
 
               <div className="nr-demoCard nr-demoResults" aria-label="Generated setup">
                 <div className={`nr-resultsInner ${setup ? 'is-ready' : ''}`}>
+                  <AIDemoPreview
+                    budget={budget}
+                    total={setup?.total}
+                    status={setup?.status}
+                    roomLabel={t(`demo.steps.1.roomTypes.${roomType}`)}
+                    styleLabel={t(`demo.steps.1.styles.${style}`)}
+                    lightingLabel={analysis?.lightingQuality}
+                    analysisReady={Boolean(analysis)}
+                    isGenerating={isGenerating}
+                    canGenerate={canGenerate}
+                    items={setup?.items}
+                    onGenerate={onGenerate}
+                    isReady={Boolean(setup)}
+                  />
+
                   {analysis && (
                     <div className="nr-analysisBanner">
                       <div className="nr-analysisMeta">
@@ -858,7 +868,7 @@ function App() {
                           <div className="nr-resultsKicker">{t('demo.steps.3.generatedSetup')}</div>
                           <div className="nr-resultsTitle">
                             {t('demo.steps.3.resultHeading', {
-                              style: styleTone(setup.style as StyleKey).adjective,
+                              style: styleTone(setup.style as StyleKey, t).adjective,
                               room: t(`demo.steps.1.roomTypes.${roomType}`),
                             })}
                           </div>
@@ -933,25 +943,25 @@ function App() {
 
                         <div className="nr-summaryCard">
                           <div className="nr-summaryTop">
-                            <div className="nr-summaryTitle">Total summary</div>
+                            <div className="nr-summaryTitle">{t('demo.steps.3.budgetSummary')}</div>
                             <div
                               className={`nr-status ${
                                 setup.status === 'within' ? 'ok' : 'bad'
                               }`}
                             >
                               {setup.status === 'within'
-                                ? 'Within budget'
-                                : 'Over budget'}
+                                ? t('demo.steps.3.withinBudget')
+                                : t('demo.steps.3.overBudget')}
                             </div>
                           </div>
 
                           <div className="nr-totals">
                             <div className="nr-totalRow">
-                              <span>Budget</span>
+                              <span>{t('demo.steps.3.budgetLabel')}</span>
                               <strong>{eur(setup.budget)}</strong>
                             </div>
                             <div className="nr-totalRow">
-                              <span>Total</span>
+                              <span>{t('demo.steps.3.totalSpent')}</span>
                               <strong>{eur(setup.total)}</strong>
                             </div>
 
@@ -975,8 +985,8 @@ function App() {
                                 </span>
                                 <span>
                                   {setup.total <= setup.budget
-                                    ? `${eur(setup.budget - setup.total)} remaining`
-                                    : `${eur(setup.total - setup.budget)} over`}
+                                    ? t('demo.steps.3.remainingAmount', { amount: eur(setup.budget - setup.total) })
+                                    : t('demo.steps.3.overAmount', { amount: eur(setup.total - setup.budget) })}
                                 </span>
                               </div>
                             </div>
@@ -995,12 +1005,12 @@ function App() {
           <div className="nr-sectionHead">
             <h2 id="examples-title">{t('examples.title')}</h2>
             <p className="nr-sectionSub">
-              A few curated previews—so you know what “good” looks like.
+              {t('examples.subtitle')}
             </p>
           </div>
 
           <div className="nr-exampleGrid">
-            {(t('examples.items', { returnObjects: true }) as any[]).map((item: any, index: number) => (
+            {exampleItems.map((item, index) => (
               <motion.div
                 key={item.title}
                 className="nr-exampleCard"
@@ -1011,7 +1021,7 @@ function App() {
                 whileHover={{ y: -5 }}
               >
                 <ImagePlaceholder
-                  type={item.style as any}
+                  type={item.style}
                   className="nr-exampleImg"
                 />
                 <div className="nr-exampleBody">
@@ -1040,7 +1050,7 @@ function App() {
           </div>
 
           <div className="nr-whyGrid">
-            {(t('why.features', { returnObjects: true }) as any[]).map((f: any) => (
+            {whyFeatures.map((f) => (
               <div key={f.title} className="nr-whyCard">
                 <div className="nr-whyTitle">{f.title}</div>
                 <p className="nr-whyBody">{f.body}</p>
@@ -1062,7 +1072,7 @@ function App() {
           </div>
 
           <ol className="nr-stepGrid">
-            {(t('howItWorks.steps', { returnObjects: true }) as any[]).map((step: any, index: number) => (
+            {workflowSteps.map((step, index) => (
               <li key={step.title} className="nr-stepCard">
                 <div className="nr-stepNum">0{index + 1}</div>
                 <h3 className="nr-stepTitle">{step.title}</h3>
@@ -1081,12 +1091,12 @@ function App() {
           </div>
 
           <div className="nr-priceGrid">
-            {(t('pricing.plans', { returnObjects: true }) as any[]).map((plan: any, index: number) => (
+            {pricingPlans.map((plan, index) => (
               <div key={plan.name} className={`nr-priceCard ${index === 1 ? 'is-featured' : ''}`}>
                 <div className="nr-priceTop">
                   <div className="nr-priceName">{plan.name}</div>
                   <div className="nr-priceValue">
-                    {plan.price === '0' ? eur(0) : eur(plan.price)}
+                    {Number(plan.price) === 0 ? eur(0) : eur(Number(plan.price))}
                     {plan.unit && <span className="nr-priceUnit">{plan.unit}</span>}
                   </div>
                 </div>

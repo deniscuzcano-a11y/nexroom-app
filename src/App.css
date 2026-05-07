@@ -2303,3 +2303,2234 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Premium MVP visual pass */
+.nr-page {
+  background:
+    linear-gradient(145deg, color-mix(in oklab, #f7f3ea 64%, var(--bg)), transparent 42%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 98%, #f7f3ea), var(--bg));
+}
+
+.nr-header {
+  padding: 18px 30px;
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  backdrop-filter: blur(22px);
+}
+
+.nr-langBtn {
+  appearance: none;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  color: var(--text-h);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  font-weight: 760;
+  cursor: pointer;
+  box-shadow: 0 10px 24px color-mix(in oklab, var(--shadow-color) 8%, transparent);
+}
+
+.nr-hero {
+  min-height: 690px;
+  padding: 76px 32px 54px;
+  background:
+    linear-gradient(135deg, color-mix(in oklab, #f8f1df 58%, transparent), transparent 46%),
+    linear-gradient(215deg, color-mix(in oklab, #def4eb 42%, transparent), transparent 52%);
+}
+
+.nr-hero::before {
+  inset: 0;
+  height: auto;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 16%, transparent), transparent 38%);
+}
+
+.nr-heroGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 0.9fr);
+  gap: 52px;
+}
+
+.nr-heroCopy h1 {
+  max-width: 11ch;
+  font-size: 64px;
+  line-height: 0.98;
+  letter-spacing: 0;
+  margin: 18px 0 0;
+}
+
+.nr-eyebrow {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border) 74%, transparent);
+  background: color-mix(in oklab, var(--bg) 74%, transparent);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-subtitle {
+  margin-top: 20px;
+  max-width: 56ch;
+  font-size: 19px;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--text-h) 62%, var(--text));
+}
+
+.nr-primaryBtn,
+.nr-genBtn,
+.nr-nextBtn {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #ffffff 58%, transparent), transparent),
+    linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, #fff), color-mix(in oklab, #7cd3b0 22%, #fff));
+  border-color: color-mix(in oklab, var(--accent) 36%, var(--border));
+  box-shadow: 0 18px 42px color-mix(in oklab, var(--shadow-color) 12%, transparent);
+}
+
+.nr-secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: color-mix(in oklab, var(--bg) 90%, transparent);
+  box-shadow: 0 12px 30px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-heroShowcase {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 34px;
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 84%, transparent), color-mix(in oklab, var(--bg) 70%, transparent));
+  box-shadow:
+    0 34px 82px color-mix(in oklab, var(--shadow-color) 18%, transparent),
+    inset 0 1px 0 color-mix(in oklab, #ffffff 55%, transparent);
+  backdrop-filter: blur(22px);
+}
+
+.nr-heroShowcaseTop,
+.nr-aiPreviewHeader,
+.nr-transformationHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.nr-heroShowcaseTop {
+  padding: 2px 4px;
+  color: color-mix(in oklab, var(--text-h) 72%, var(--text));
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.nr-heroShowcaseTop div,
+.nr-heroInsightTitle,
+.nr-aiPreviewFooter div {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nr-aiDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 0 7px color-mix(in oklab, #22c55e 14%, transparent);
+}
+
+.nr-heroInsightPanel,
+.nr-aiPreview,
+.nr-transformationCard {
+  border-radius: 24px;
+  border: 1px solid color-mix(in oklab, var(--border) 76%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 88%, transparent), color-mix(in oklab, var(--bg) 76%, transparent));
+  box-shadow: 0 18px 46px color-mix(in oklab, var(--shadow-color) 9%, transparent);
+}
+
+.nr-heroInsightPanel {
+  padding: 18px;
+}
+
+.nr-heroInsightTitle {
+  color: var(--text-h);
+  font-weight: 820;
+}
+
+.nr-heroInsightPanel p {
+  margin-top: 8px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.nr-heroMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.nr-heroMetric {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.nr-heroMetric svg {
+  color: color-mix(in oklab, var(--accent) 78%, #0f766e);
+}
+
+.nr-heroMetric span {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.nr-heroMetric strong {
+  color: var(--text-h);
+  font-size: 18px;
+}
+
+.nr-roomScene {
+  position: relative;
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  background:
+    linear-gradient(160deg, #fbf5e9 0 42%, #e9f3ee 42% 64%, #d7c6aa 64% 100%);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, #ffffff 70%, transparent);
+}
+
+.nr-roomScene.is-compact {
+  min-height: 170px;
+  border-radius: 20px;
+}
+
+.nr-roomScene--before {
+  filter: saturate(0.86);
+}
+
+.nr-roomScene--after,
+.nr-roomScene--scan {
+  background:
+    linear-gradient(160deg, #fff8ed 0 42%, #e7f5ef 42% 64%, #d7b98d 64% 100%);
+}
+
+.nr-roomSceneWindow {
+  position: absolute;
+  top: 34px;
+  left: 34px;
+  width: 31%;
+  height: 29%;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #dff7ff, #f8fdff);
+  border: 8px solid color-mix(in oklab, #ffffff 80%, #e2d7c4);
+  box-shadow: 0 16px 34px color-mix(in oklab, #0f172a 9%, transparent);
+}
+
+.nr-roomSceneWindow span {
+  position: absolute;
+  background: color-mix(in oklab, #94a3b8 28%, transparent);
+}
+
+.nr-roomSceneWindow span:first-child {
+  inset: 50% 0 auto;
+  height: 1px;
+}
+
+.nr-roomSceneWindow span:last-child {
+  inset: 0 auto 0 50%;
+  width: 1px;
+}
+
+.nr-roomSceneLight {
+  position: absolute;
+  top: 78px;
+  right: 64px;
+  width: 86px;
+  height: 86px;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in oklab, #fff7c2 74%, transparent), transparent 68%);
+  opacity: 0.85;
+}
+
+.nr-roomSceneFloor {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in oklab, #9c744a 12%, transparent) 0 1px, transparent 1px 54px),
+    linear-gradient(135deg, #d9b98c, #b89463);
+  clip-path: polygon(0 22%, 100% 0, 100% 100%, 0 100%);
+}
+
+.nr-roomSceneRug {
+  position: absolute;
+  left: 23%;
+  bottom: 11%;
+  width: 48%;
+  height: 21%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ede7dc, #c7d9cf);
+  box-shadow: 0 16px 24px color-mix(in oklab, #0f172a 12%, transparent);
+}
+
+.nr-roomSceneSofa {
+  position: absolute;
+  left: 28%;
+  bottom: 25%;
+  width: 44%;
+  height: 22%;
+  border-radius: 28px 28px 16px 16px;
+  background: linear-gradient(180deg, #d9e5de, #94a991);
+  box-shadow: 0 18px 34px color-mix(in oklab, #0f172a 16%, transparent);
+}
+
+.nr-roomSceneSofa::before,
+.nr-roomSceneSofa::after {
+  content: '';
+  position: absolute;
+  top: 24%;
+  width: 30%;
+  height: 48%;
+  border-radius: 16px;
+  background: color-mix(in oklab, #ffffff 26%, transparent);
+}
+
+.nr-roomSceneSofa::before {
+  left: 14%;
+}
+
+.nr-roomSceneSofa::after {
+  right: 14%;
+}
+
+.nr-roomSceneTable {
+  position: absolute;
+  left: 43%;
+  bottom: 18%;
+  width: 25%;
+  height: 9%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f4dfbf, #b7834c);
+  box-shadow: 0 12px 18px color-mix(in oklab, #0f172a 12%, transparent);
+}
+
+.nr-roomScenePlant {
+  position: absolute;
+  right: 10%;
+  bottom: 22%;
+  width: 9%;
+  height: 26%;
+  border-radius: 999px 999px 14px 14px;
+  background:
+    radial-gradient(circle at 42% 12%, #4f8f68 0 18%, transparent 19%),
+    radial-gradient(circle at 60% 28%, #6eaa7d 0 19%, transparent 20%),
+    linear-gradient(180deg, transparent 0 55%, #b7834c 56% 100%);
+}
+
+.nr-roomSceneShelf {
+  position: absolute;
+  right: 12%;
+  top: 31%;
+  width: 26%;
+  height: 6%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #b7834c, #e7c89e);
+}
+
+.nr-roomSceneLamp {
+  position: absolute;
+  left: 12%;
+  bottom: 25%;
+  width: 12%;
+  height: 28%;
+  border-radius: 999px 999px 12px 12px;
+  background:
+    radial-gradient(circle at 50% 12%, #fff0a6 0 24%, transparent 25%),
+    linear-gradient(90deg, transparent 45%, #7b6a58 46% 54%, transparent 55%);
+}
+
+.nr-roomSceneOutline {
+  position: absolute;
+  border: 1px dashed color-mix(in oklab, var(--accent) 62%, #0f766e);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  opacity: 0;
+}
+
+.nr-roomSceneOutline--desk {
+  right: 14%;
+  bottom: 13%;
+  width: 24%;
+  height: 14%;
+  border-radius: 16px;
+}
+
+.nr-roomSceneOutline--storage {
+  left: 8%;
+  top: 38%;
+  width: 18%;
+  height: 22%;
+  border-radius: 18px;
+}
+
+.nr-roomScene--before .nr-roomSceneSofa,
+.nr-roomScene--before .nr-roomSceneTable,
+.nr-roomScene--before .nr-roomScenePlant,
+.nr-roomScene--before .nr-roomSceneShelf {
+  opacity: 0.28;
+}
+
+.nr-roomScene--before .nr-roomSceneOutline {
+  opacity: 1;
+}
+
+.nr-roomSceneGrid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(color-mix(in oklab, #ffffff 34%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, #ffffff 34%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mix-blend-mode: screen;
+  opacity: 0.38;
+}
+
+.nr-roomScanBeam,
+.nr-liveScanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #7cd3b0, var(--accent), transparent);
+  box-shadow: 0 0 22px color-mix(in oklab, #7cd3b0 72%, transparent);
+  animation: nr-scan-sweep 3.2s ease-in-out infinite;
+}
+
+.nr-roomScanBeam {
+  top: 22%;
+}
+
+.nr-roomScanPoint,
+.nr-liveScanPin {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid #7cd3b0;
+  box-shadow: 0 0 0 8px color-mix(in oklab, #7cd3b0 16%, transparent);
+}
+
+.nr-roomScanPoint--one,
+.nr-liveScanPin--one {
+  left: 29%;
+  top: 34%;
+}
+
+.nr-roomScanPoint--two,
+.nr-liveScanPin--two {
+  right: 20%;
+  top: 54%;
+}
+
+.nr-roomScanPoint--three,
+.nr-liveScanPin--three {
+  left: 48%;
+  bottom: 22%;
+}
+
+.nr-roomSceneLabels {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nr-roomSceneLabels span,
+.nr-analyzerOverlay span,
+.nr-aiPreviewFooter div {
+  border: 1px solid color-mix(in oklab, #ffffff 46%, var(--border));
+  background: color-mix(in oklab, #ffffff 62%, transparent);
+  color: #243326;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 760;
+  box-shadow: 0 10px 22px color-mix(in oklab, #0f172a 10%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.nr-demo {
+  padding-top: 58px;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 94%, #f7f1e4), color-mix(in oklab, var(--bg) 98%, #eef7f0));
+}
+
+.nr-demoHead h2 {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.nr-demoShell {
+  border-radius: 30px;
+  border: 1px solid color-mix(in oklab, var(--border) 76%, transparent);
+  background: color-mix(in oklab, var(--bg) 64%, transparent);
+  padding: 18px;
+  box-shadow: 0 30px 72px color-mix(in oklab, var(--shadow-color) 11%, transparent);
+  backdrop-filter: blur(22px);
+}
+
+.nr-demoGrid {
+  grid-template-columns: minmax(360px, 0.95fr) minmax(0, 1.25fr);
+  gap: 18px;
+}
+
+.nr-demoCard {
+  border-radius: 26px;
+  border-color: color-mix(in oklab, var(--border) 78%, transparent);
+  box-shadow: 0 18px 46px color-mix(in oklab, var(--shadow-color) 7%, transparent);
+}
+
+.nr-demoForm {
+  padding: 24px;
+}
+
+.nr-stepper {
+  margin: 0 0 18px;
+}
+
+.nr-stepPill {
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+}
+
+.nr-stepPill.is-active {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #ffffff 54%, transparent), transparent),
+    color-mix(in oklab, #7cd3b0 20%, var(--bg));
+}
+
+.nr-formRow {
+  margin-bottom: 18px;
+}
+
+.nr-label {
+  margin-bottom: 9px;
+}
+
+.nr-styleGrid,
+.nr-roomGrid,
+.nr-paletteGrid,
+.nr-moodGrid,
+.nr-sizeGrid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.nr-styleCard,
+.nr-roomCard,
+.nr-paletteCard,
+.nr-moodCard,
+.nr-sizeCard,
+.nr-need {
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--bg) 84%, transparent);
+  box-shadow: 0 12px 26px color-mix(in oklab, var(--shadow-color) 5%, transparent);
+}
+
+.nr-roomIcon,
+.nr-moodIcon {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 10px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: color-mix(in oklab, var(--accent) 80%, #0f766e);
+  background: color-mix(in oklab, #7cd3b0 13%, var(--bg));
+}
+
+.nr-roomName,
+.nr-styleName,
+.nr-paletteName,
+.nr-moodName,
+.nr-sizeName {
+  color: var(--text-h);
+  font-weight: 780;
+  line-height: 1.2;
+}
+
+.nr-roomDesc,
+.nr-styleDesc,
+.nr-paletteDesc,
+.nr-moodDesc,
+.nr-sizeDesc {
+  margin-top: 5px;
+  color: color-mix(in oklab, var(--text) 82%, transparent);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.nr-styleImage {
+  height: 90px;
+  border-radius: 14px;
+  margin: -6px -6px 12px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, #ffffff 44%, transparent);
+}
+
+.nr-paletteColors {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.nr-paletteSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 2px solid color-mix(in oklab, #ffffff 72%, var(--border));
+  box-shadow: 0 8px 16px color-mix(in oklab, var(--shadow-color) 8%, transparent);
+}
+
+.nr-sizeDimensions {
+  margin: 8px auto;
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: color-mix(in oklab, #7cd3b0 14%, var(--bg));
+  color: var(--text-h);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.nr-analyzerPanel {
+  border-radius: 28px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 88%, transparent), color-mix(in oklab, var(--bg) 74%, transparent));
+  box-shadow: 0 24px 60px color-mix(in oklab, var(--shadow-color) 11%, transparent);
+}
+
+.nr-analyzerHeader {
+  align-items: center;
+}
+
+.nr-analyzerHeader .nr-panelTitle {
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.nr-analyzerContent {
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.75fr);
+}
+
+.nr-analyzerPreview {
+  min-height: 340px;
+  border-radius: 26px;
+  background: #f8f2e7;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, #ffffff 70%, transparent);
+}
+
+.nr-analyzerImage,
+.nr-analyzerVideo {
+  min-height: 340px;
+}
+
+.nr-analyzerPlaceholder {
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  align-content: center;
+}
+
+.nr-analyzerPlaceholder .nr-roomScene {
+  width: 100%;
+}
+
+.nr-analyzerPlaceholder p {
+  position: absolute;
+  left: 24px;
+  top: 22px;
+  max-width: 28ch;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: color-mix(in oklab, #ffffff 66%, transparent);
+  color: #233127;
+  box-shadow: 0 12px 28px color-mix(in oklab, #0f172a 10%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.nr-analyzerOverlay {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+.nr-liveScanLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(color-mix(in oklab, #ffffff 22%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, #ffffff 22%, transparent) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.nr-liveScanLine {
+  top: 18%;
+}
+
+.nr-scanFlow {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  background: color-mix(in oklab, var(--bg) 76%, transparent);
+}
+
+.nr-scanStep {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border-radius: 14px;
+  color: color-mix(in oklab, var(--text) 88%, transparent);
+  font-size: 13px;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.nr-scanStepIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in oklab, var(--social-bg) 76%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+}
+
+.nr-scanStep.is-active {
+  color: var(--text-h);
+  background: color-mix(in oklab, #7cd3b0 14%, var(--bg));
+  transform: translateX(2px);
+}
+
+.nr-scanStep.is-complete .nr-scanStepIcon {
+  color: #15803d;
+  background: color-mix(in oklab, #22c55e 15%, var(--bg));
+}
+
+.nr-analysisDeck {
+  gap: 16px;
+}
+
+.nr-transformationCard {
+  padding: 18px;
+}
+
+.nr-transformationHeader strong {
+  color: var(--text-h);
+}
+
+.nr-transformationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.nr-analysisDetails {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.nr-analysisStat,
+.nr-analysisSummaryCard {
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  box-shadow: 0 14px 32px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-recommendationRail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.nr-recommendationMini {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+}
+
+.nr-recommendationMini span,
+.nr-recommendationMini small {
+  display: block;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.nr-recommendationMini strong {
+  display: block;
+  color: var(--text-h);
+  line-height: 1.25;
+}
+
+.nr-demoResults {
+  padding: 18px;
+}
+
+.nr-resultsInner {
+  min-height: auto;
+}
+
+.nr-aiPreview {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.nr-aiPreviewHeader strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-h);
+  font-size: 20px;
+}
+
+.nr-beforeAfter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.nr-beforeAfterPanel {
+  position: relative;
+  min-width: 0;
+}
+
+.nr-beforeAfterPanel > span {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: color-mix(in oklab, #ffffff 68%, transparent);
+  color: #213126;
+  font-size: 12px;
+  font-weight: 780;
+  box-shadow: 0 8px 18px color-mix(in oklab, #0f172a 10%, transparent);
+}
+
+.nr-aiPreviewFooter {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.nr-aiPreviewFooter div {
+  justify-content: center;
+  min-height: 42px;
+}
+
+.nr-analysisBanner {
+  box-shadow: 0 14px 34px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-suggestionGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.nr-suggestionCard {
+  border-radius: 22px;
+  box-shadow: 0 14px 34px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-suggestionPreview {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 auto;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  background:
+    linear-gradient(135deg, #f1eadc, #bddccc);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, #ffffff 64%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-suggestionPreview::after {
+  content: '';
+  position: absolute;
+  inset: 14px 10px 10px;
+  border-radius: 12px 12px 6px 6px;
+  background: color-mix(in oklab, var(--accent) 50%, #7cd3b0);
+}
+
+.nr-suggestionPreview--lamp::after {
+  inset: 9px 22px 10px;
+  border-radius: 999px 999px 8px 8px;
+  background: linear-gradient(180deg, #fff0a6 0 34%, #8a6f53 35%);
+}
+
+.nr-suggestionPreview--storage::after {
+  inset: 12px;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 48%, color-mix(in oklab, #ffffff 30%, transparent) 49% 51%, transparent 52%),
+    linear-gradient(180deg, #d0b28a, #8f6848);
+}
+
+.nr-productCard {
+  border-radius: 22px;
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+}
+
+@keyframes nr-scan-sweep {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(210px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .nr-hero {
+    min-height: auto;
+    padding: 50px 18px 28px;
+  }
+
+  .nr-heroGrid,
+  .nr-demoGrid,
+  .nr-analyzerContent {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-heroCopy h1 {
+    max-width: 12ch;
+    font-size: 46px;
+  }
+
+  .nr-heroShowcase {
+    max-width: 620px;
+    margin-inline: auto;
+  }
+
+  .nr-demoShell {
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  .nr-analysisDetails,
+  .nr-recommendationRail,
+  .nr-suggestionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .nr-header {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .nr-nav {
+    display: none;
+  }
+
+  .nr-heroCopy h1 {
+    font-size: 38px;
+  }
+
+  .nr-subtitle {
+    font-size: 16px;
+  }
+
+  .nr-heroMetricGrid,
+  .nr-beforeAfter,
+  .nr-transformationGrid,
+  .nr-aiPreviewFooter {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-roomScene {
+    min-height: 250px;
+  }
+
+  .nr-roomScene.is-compact {
+    min-height: 150px;
+  }
+
+  .nr-demo {
+    padding-inline: 14px;
+  }
+
+  .nr-stepper {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-stepBar {
+    display: none;
+  }
+
+  .nr-demoHead,
+  .nr-analyzerHeader,
+  .nr-aiPreviewHeader,
+  .nr-resultsTop,
+  .nr-summaryTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nr-analyzerPreview,
+  .nr-analyzerImage,
+  .nr-analyzerVideo {
+    min-height: 280px;
+  }
+
+  .nr-productCard {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .nr-productCard .nr-itemPrice {
+    grid-column: 2;
+  }
+}
+
+/* Focused polish pass */
+.nr-aiPreview {
+  display: grid;
+  gap: 14px;
+}
+
+.nr-aiPanelStack {
+  display: grid;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.nr-aiStatusCard,
+.nr-aiBudgetCard,
+.nr-aiProductList {
+  border-radius: 20px;
+  border: 1px solid color-mix(in oklab, var(--border) 74%, transparent);
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  box-shadow: 0 14px 32px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+  padding: 14px;
+}
+
+.nr-aiStatusTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nr-aiStatusTop strong {
+  display: block;
+  color: var(--text-h);
+  margin-top: 4px;
+}
+
+.nr-aiProgressValue {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: color-mix(in oklab, #7cd3b0 18%, var(--bg));
+  border: 1px solid color-mix(in oklab, #7cd3b0 34%, var(--border));
+  color: var(--text-h);
+  font-weight: 820;
+  font-size: 12px;
+}
+
+.nr-aiProgressTrack {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--social-bg) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.nr-aiProgressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7cd3b0, var(--accent));
+  box-shadow: 0 0 14px color-mix(in oklab, #7cd3b0 50%, transparent);
+  transition: width 420ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.nr-aiStatusCard .nr-aiProgressTrack {
+  margin-top: 12px;
+}
+
+.nr-aiInsightList {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.nr-aiInsightList span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: color-mix(in oklab, var(--text-h) 72%, var(--text));
+  font-size: 13px;
+}
+
+.nr-aiInsightList svg {
+  color: #16a34a;
+}
+
+.nr-aiBudgetCard .nr-meterTrack {
+  margin-top: 12px;
+}
+
+.nr-aiBudgetRows {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.nr-aiBudgetRows div,
+.nr-aiProductRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nr-aiBudgetRows span,
+.nr-aiProductRow span {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.nr-aiBudgetRows strong,
+.nr-aiProductRow strong,
+.nr-aiProductRow b {
+  color: var(--text-h);
+}
+
+.nr-aiProductList {
+  display: grid;
+  gap: 10px;
+}
+
+.nr-aiProductRow {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  padding: 9px;
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--bg) 76%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 64%, transparent);
+}
+
+.nr-aiProductRow .nr-suggestionPreview {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+}
+
+.nr-aiProductRow strong {
+  display: block;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+.nr-aiProductRow b {
+  font-family: var(--mono);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.nr-aiFullRoomBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  margin-top: 0;
+}
+
+.nr-scanProgressHeader {
+  display: grid;
+  gap: 9px;
+  margin: -2px 0 16px;
+  padding: 12px 14px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in oklab, var(--border) 68%, transparent);
+  background: color-mix(in oklab, var(--bg) 72%, transparent);
+}
+
+.nr-scanProgressHeader > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.nr-scanProgressHeader strong {
+  color: var(--text-h);
+}
+
+.nr-analyzerPanel {
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-analyzerPanel::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  border-radius: 24px;
+  box-shadow: inset 0 0 42px color-mix(in oklab, #7cd3b0 12%, transparent);
+}
+
+.nr-analyzerPreview.is-scanning {
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 70%, transparent),
+    0 0 0 1px color-mix(in oklab, #7cd3b0 28%, transparent),
+    0 0 34px color-mix(in oklab, #7cd3b0 16%, transparent);
+}
+
+.nr-scanStep.is-active .nr-scanStepIcon {
+  color: var(--text-h);
+  background: linear-gradient(135deg, color-mix(in oklab, #7cd3b0 22%, var(--bg)), color-mix(in oklab, var(--accent) 13%, var(--bg)));
+  box-shadow: 0 0 0 5px color-mix(in oklab, #7cd3b0 11%, transparent);
+}
+
+.nr-scanStep.is-complete {
+  color: color-mix(in oklab, var(--text-h) 78%, var(--text));
+}
+
+.nr-analysisSummaryCard {
+  border-color: color-mix(in oklab, #7cd3b0 28%, var(--border));
+}
+
+.nr-styleImage {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.nr-styleImage span {
+  position: absolute;
+  border-radius: 999px;
+  background: color-mix(in oklab, #ffffff 58%, transparent);
+  box-shadow: 0 12px 24px color-mix(in oklab, #0f172a 10%, transparent);
+}
+
+.nr-styleImage span:nth-child(1) {
+  width: 44%;
+  height: 56%;
+  left: 12%;
+  bottom: 16%;
+}
+
+.nr-styleImage span:nth-child(2) {
+  width: 28%;
+  height: 24%;
+  right: 13%;
+  top: 18%;
+}
+
+.nr-styleImage span:nth-child(3) {
+  width: 48%;
+  height: 8px;
+  right: 14%;
+  bottom: 18%;
+}
+
+.nr-styleCard[data-style='modern'] .nr-styleImage {
+  background: linear-gradient(135deg, #e8f1ff, #d9f5ee 48%, #101827);
+}
+
+.nr-styleCard[data-style='scandinavian'] .nr-styleImage {
+  background: linear-gradient(135deg, #fff8e8, #e8dcc7 52%, #c7d7ce);
+}
+
+.nr-styleCard[data-style='japandi'] .nr-styleImage {
+  background: linear-gradient(135deg, #eee7da, #b6a990 48%, #27372f);
+}
+
+.nr-styleCard[data-style='minimalist'] .nr-styleImage {
+  background: linear-gradient(135deg, #ffffff, #edf0ec 58%, #cdd4cd);
+}
+
+.nr-styleCard[data-style='luxury'] .nr-styleImage {
+  background: linear-gradient(135deg, #191522, #483256 48%, #d9b66d);
+}
+
+.nr-styleCard[data-style='cozy'] .nr-styleImage {
+  background: linear-gradient(135deg, #fff1df, #d99a63 48%, #6d4a34);
+}
+
+.nr-styleCard[data-style='luxury'] .nr-styleImage span,
+.nr-styleCard[data-style='cozy'] .nr-styleImage span,
+.nr-styleCard[data-style='modern'] .nr-styleImage span {
+  background: color-mix(in oklab, #ffffff 42%, transparent);
+}
+
+.nr-styleCard[data-style='minimalist'] .nr-styleImage span:nth-child(1) {
+  width: 34%;
+}
+
+.nr-styleCard[data-style='japandi'] .nr-styleImage span:nth-child(2),
+.nr-styleCard[data-style='luxury'] .nr-styleImage span:nth-child(2) {
+  border-radius: 12px;
+}
+
+@media (max-width: 1024px) {
+  .nr-aiPanelStack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nr-aiProductList,
+  .nr-aiFullRoomBtn {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 680px) {
+  .nr-aiPanelStack {
+    grid-template-columns: 1fr;
+  }
+
+  .nr-aiProductList,
+  .nr-aiFullRoomBtn {
+    grid-column: auto;
+  }
+
+  .nr-aiProductRow {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .nr-aiProductRow b {
+    grid-column: 2;
+  }
+
+  .nr-aiPreviewFooter div,
+  .nr-roomSceneLabels span,
+  .nr-analyzerOverlay span {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .nr-scanFlow {
+    padding: 10px;
+  }
+
+  .nr-scanStep {
+    align-items: flex-start;
+  }
+
+  .nr-styleGrid,
+  .nr-roomGrid,
+  .nr-paletteGrid,
+  .nr-moodGrid,
+  .nr-sizeGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive QA polish */
+html,
+body,
+#root,
+.nr-page {
+  overflow-x: clip;
+}
+
+.nr-header,
+.nr-hero,
+.nr-demo,
+.nr-trust,
+.nr-examples,
+.nr-why,
+.nr-steps,
+.nr-pricing,
+.nr-footer {
+  box-sizing: border-box;
+}
+
+.nr-demoCard,
+.nr-demoForm,
+.nr-demoResults,
+.nr-analyzerPanel,
+.nr-priceCard,
+.nr-exampleCard,
+.nr-styleCard,
+.nr-roomCard,
+.nr-paletteCard,
+.nr-moodCard,
+.nr-sizeCard {
+  min-width: 0;
+}
+
+.nr-navLink,
+.nr-primaryBtn,
+.nr-secondaryBtn,
+.nr-nextBtn,
+.nr-genBtn,
+.nr-priceBtn,
+.nr-stepPill,
+.nr-status,
+.nr-badge,
+.nr-logoPill {
+  overflow-wrap: anywhere;
+}
+
+.nr-heroCopy,
+.nr-heroShowcase,
+.nr-demoShell,
+.nr-analyzerPanel,
+.nr-aiPreview,
+.nr-priceCard,
+.nr-footer {
+  max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .nr-header {
+    gap: 14px;
+  }
+
+  .nr-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .nr-hero {
+    min-height: auto;
+    padding: 48px 20px 34px;
+  }
+
+  .nr-heroGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .nr-heroCopy h1 {
+    max-width: 13ch;
+    font-size: 44px;
+  }
+
+  .nr-subtitle {
+    max-width: 58ch;
+  }
+
+  .nr-heroShowcase {
+    justify-self: center;
+    width: min(620px, 100%);
+  }
+
+  .nr-demoShell {
+    padding: 12px;
+  }
+
+  .nr-demoGrid,
+  .nr-analyzerContent,
+  .nr-priceGrid,
+  .nr-exampleGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nr-analyzerContent {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 680px) {
+  .nr-header {
+    padding: 12px 14px;
+  }
+
+  .nr-brand {
+    min-width: 0;
+  }
+
+  .nr-name {
+    font-size: 14px;
+  }
+
+  .nr-langBtn {
+    flex: 0 0 auto;
+    padding: 8px 10px;
+  }
+
+  .nr-hero {
+    padding: 40px 16px 28px;
+  }
+
+  .nr-heroCopy h1 {
+    max-width: 12ch;
+    font-size: 36px;
+    line-height: 1.04;
+  }
+
+  .nr-eyebrow {
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  .nr-subtitle {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .nr-ctaRow {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .nr-primaryBtn,
+  .nr-genBtn,
+  .nr-priceBtn,
+  .nr-aiFullRoomBtn {
+    width: 100%;
+  }
+
+  .nr-ctaHint {
+    font-size: 13px;
+  }
+
+  .nr-heroShowcase {
+    border-radius: 26px;
+    padding: 10px;
+  }
+
+  .nr-heroShowcaseTop,
+  .nr-aiStatusTop,
+  .nr-meterMeta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nr-heroMetric {
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .nr-heroMetric strong {
+    grid-column: 2;
+  }
+
+  .nr-roomScene {
+    min-height: 230px;
+    border-radius: 22px;
+  }
+
+  .nr-roomScene.is-compact {
+    min-height: 140px;
+  }
+
+  .nr-roomSceneLabels {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .nr-demo,
+  .nr-trust,
+  .nr-examples,
+  .nr-why,
+  .nr-steps,
+  .nr-pricing {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .nr-demoHead h2 {
+    font-size: 26px;
+  }
+
+  .nr-demoShell {
+    margin-inline: -2px;
+    padding: 10px;
+    border-radius: 22px;
+  }
+
+  .nr-demoForm,
+  .nr-demoResults,
+  .nr-aiPreview,
+  .nr-analyzerPanel,
+  .nr-priceCard {
+    padding: 16px;
+  }
+
+  .nr-stepPill {
+    min-height: 54px;
+    align-items: center;
+  }
+
+  .nr-beforeAfter,
+  .nr-aiPanelStack,
+  .nr-aiPreviewFooter,
+  .nr-transformationGrid,
+  .nr-priceGrid,
+  .nr-exampleGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nr-analyzerPreview,
+  .nr-analyzerImage,
+  .nr-analyzerVideo {
+    min-height: 250px;
+  }
+
+  .nr-analyzerPlaceholder {
+    padding: 10px;
+  }
+
+  .nr-analyzerPlaceholder p {
+    left: 14px;
+    right: 14px;
+    top: 14px;
+    max-width: none;
+    font-size: 12px;
+  }
+
+  .nr-analyzerOverlay {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .nr-scanProgressHeader > div:first-child,
+  .nr-summaryTop,
+  .nr-resultsTop {
+    gap: 8px;
+  }
+
+  .nr-aiProductRow {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .nr-aiProductRow b {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .nr-priceValue {
+    font-size: 30px;
+  }
+
+  .nr-footer {
+    padding: 16px 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nr-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+
+  .nr-name {
+    font-size: 13px;
+  }
+
+  .nr-langBtn {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .nr-heroCopy h1 {
+    font-size: 32px;
+  }
+
+  .nr-demoForm,
+  .nr-demoResults,
+  .nr-aiPreview,
+  .nr-analyzerPanel,
+  .nr-priceCard {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 15px;
+  }
+
+  .nr-header {
+    padding: 8px 12px;
+    min-height: 46px;
+  }
+
+  .nr-brand {
+    gap: 8px;
+  }
+
+  .nr-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    font-size: 14px;
+  }
+
+  .nr-name {
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  .nr-langBtn {
+    min-height: 34px;
+    padding: 6px 9px;
+    gap: 6px;
+    font-size: 12px;
+    box-shadow: 0 6px 16px color-mix(in oklab, var(--shadow-color) 5%, transparent);
+  }
+
+  .nr-langBtn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .nr-hero {
+    padding: 28px 12px 20px;
+  }
+
+  .nr-heroGrid {
+    gap: 16px;
+  }
+
+  .nr-eyebrow {
+    padding: 6px 9px;
+    font-size: 11px;
+    line-height: 1.25;
+    box-shadow: 0 6px 16px color-mix(in oklab, var(--shadow-color) 4%, transparent);
+  }
+
+  .nr-heroCopy h1 {
+    max-width: 12ch;
+    margin-top: 12px;
+    font-size: 30px;
+    line-height: 1.03;
+  }
+
+  .nr-subtitle {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.42;
+  }
+
+  .nr-ctaRow {
+    margin-top: 18px;
+  }
+
+  .nr-primaryBtn,
+  .nr-secondaryBtn,
+  .nr-nextBtn,
+  .nr-genBtn,
+  .nr-priceBtn,
+  .nr-aiFullRoomBtn {
+    min-height: 40px;
+    padding: 9px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.2;
+    box-shadow: 0 8px 20px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+  }
+
+  .nr-ctaHint,
+  .nr-help,
+  .nr-micro {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .nr-heroShowcase,
+  .nr-aiPreview,
+  .nr-analyzerPanel,
+  .nr-demoCard,
+  .nr-priceCard,
+  .nr-exampleCard,
+  .nr-styleCard,
+  .nr-roomCard,
+  .nr-paletteCard,
+  .nr-moodCard,
+  .nr-sizeCard {
+    border-radius: 16px;
+    box-shadow: 0 8px 22px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+  }
+
+  .nr-heroShowcase {
+    gap: 9px;
+    padding: 8px;
+  }
+
+  .nr-heroShowcaseTop,
+  .nr-aiPreviewHeader,
+  .nr-transformationHeader {
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .nr-heroInsightPanel {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .nr-heroInsightTitle,
+  .nr-panelTitle,
+  .nr-summaryTitle,
+  .nr-resultsTitle {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .nr-heroInsightPanel p,
+  .nr-exampleText,
+  .nr-whyBody,
+  .nr-resultsSummary,
+  .nr-analysisText,
+  .nr-suggestionReason {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .nr-heroMetricGrid {
+    gap: 7px;
+    margin-top: 10px;
+  }
+
+  .nr-heroMetric {
+    padding: 9px;
+    border-radius: 13px;
+  }
+
+  .nr-heroMetric span {
+    font-size: 10px;
+  }
+
+  .nr-heroMetric strong {
+    font-size: 14px;
+  }
+
+  .nr-roomScene {
+    min-height: 188px;
+    border-radius: 16px;
+  }
+
+  .nr-roomScene.is-compact {
+    min-height: 112px;
+    border-radius: 14px;
+  }
+
+  .nr-roomSceneLabels {
+    gap: 5px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .nr-roomSceneLabels span,
+  .nr-analyzerOverlay span,
+  .nr-aiPreviewFooter div {
+    padding: 5px 7px;
+    font-size: 10px;
+    line-height: 1.15;
+    box-shadow: 0 6px 12px color-mix(in oklab, #0f172a 7%, transparent);
+  }
+
+  .nr-demo,
+  .nr-trust,
+  .nr-examples,
+  .nr-why,
+  .nr-steps,
+  .nr-pricing {
+    padding: 32px 10px 36px;
+  }
+
+  .nr-demoHead {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .nr-demoHead h2,
+  .nr-sectionHead h2 {
+    font-size: 22px;
+    line-height: 1.08;
+  }
+
+  .nr-sectionSub {
+    font-size: 13px;
+    line-height: 1.42;
+  }
+
+  .nr-demoShell {
+    padding: 8px;
+    border-radius: 18px;
+    box-shadow: 0 14px 34px color-mix(in oklab, var(--shadow-color) 8%, transparent);
+  }
+
+  .nr-stepper {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .nr-stepPill {
+    min-height: 42px;
+    padding: 8px 10px;
+    border-radius: 13px;
+    gap: 8px;
+  }
+
+  .nr-stepIdx {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .nr-stepLabel {
+    font-size: 12px;
+  }
+
+  .nr-demoForm,
+  .nr-demoResults,
+  .nr-aiPreview,
+  .nr-analyzerPanel,
+  .nr-priceCard,
+  .nr-analysisBanner,
+  .nr-summaryCard,
+  .nr-suggestionCard,
+  .nr-transformationCard,
+  .nr-analysisSummaryCard {
+    padding: 12px;
+  }
+
+  .nr-formRow {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .nr-label,
+  .nr-roomName,
+  .nr-styleName,
+  .nr-paletteName,
+  .nr-moodName,
+  .nr-sizeName,
+  .nr-exampleTitle,
+  .nr-whyTitle,
+  .nr-priceName {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .nr-roomDesc,
+  .nr-styleDesc,
+  .nr-paletteDesc,
+  .nr-moodDesc,
+  .nr-sizeDesc,
+  .nr-exampleMeta,
+  .nr-bullets,
+  .nr-analysisLabel {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .nr-styleGrid,
+  .nr-roomGrid,
+  .nr-paletteGrid,
+  .nr-moodGrid,
+  .nr-sizeGrid {
+    gap: 9px;
+  }
+
+  .nr-styleCard,
+  .nr-roomCard,
+  .nr-paletteCard,
+  .nr-moodCard,
+  .nr-sizeCard,
+  .nr-need {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .nr-styleImage {
+    height: 64px;
+    margin: -3px -3px 8px;
+    border-radius: 11px;
+  }
+
+  .nr-roomIcon,
+  .nr-moodIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    margin-bottom: 7px;
+  }
+
+  .nr-paletteColors {
+    margin-bottom: 8px;
+  }
+
+  .nr-paletteSwatch {
+    width: 19px;
+    height: 19px;
+  }
+
+  .nr-sizeDimensions {
+    margin: 5px auto;
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .nr-analyzerHeader,
+  .nr-panelActions,
+  .nr-analyzerActions,
+  .nr-scanFlow,
+  .nr-analysisDeck,
+  .nr-aiPanelStack {
+    gap: 8px;
+  }
+
+  .nr-scanProgressHeader {
+    margin-bottom: 10px;
+    padding: 9px 10px;
+    border-radius: 14px;
+  }
+
+  .nr-analyzerPreview,
+  .nr-analyzerImage,
+  .nr-analyzerVideo {
+    min-height: 188px;
+  }
+
+  .nr-analyzerPlaceholder {
+    padding: 8px;
+  }
+
+  .nr-analyzerPlaceholder p {
+    left: 12px;
+    right: 12px;
+    top: 12px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .nr-analyzerOverlay {
+    gap: 5px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .nr-scanFlow {
+    padding: 9px;
+    border-radius: 14px;
+  }
+
+  .nr-scanStep {
+    padding: 6px 7px;
+    gap: 7px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .nr-scanStepIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 10px;
+  }
+
+  .nr-aiStatusCard,
+  .nr-aiBudgetCard,
+  .nr-aiProductList {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .nr-aiPreviewHeader strong {
+    font-size: 16px;
+  }
+
+  .nr-beforeAfter {
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .nr-aiProductRow {
+    padding: 7px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+
+  .nr-aiProductRow .nr-suggestionPreview {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .nr-priceGrid,
+  .nr-exampleGrid,
+  .nr-whyGrid {
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .nr-priceCard {
+    gap: 12px;
+  }
+
+  .nr-priceCard.is-featured {
+    transform: none;
+  }
+
+  .nr-priceValue {
+    font-size: 24px;
+  }
+
+  .nr-priceUnit {
+    font-size: 12px;
+  }
+
+  .nr-bullets {
+    gap: 7px;
+  }
+
+  .nr-footer {
+    padding: 12px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .nr-header {
+    padding: 7px 10px;
+    min-height: 42px;
+  }
+
+  .nr-mark {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .nr-name {
+    font-size: 12px;
+  }
+
+  .nr-langBtn {
+    min-height: 32px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+
+  .nr-hero {
+    padding: 24px 10px 18px;
+  }
+
+  .nr-heroCopy h1 {
+    font-size: 28px;
+  }
+
+  .nr-subtitle {
+    font-size: 12px;
+  }
+
+  .nr-roomScene {
+    min-height: 168px;
+  }
+
+  .nr-roomScene.is-compact {
+    min-height: 104px;
+  }
+
+  .nr-heroInsightPanel,
+  .nr-demoForm,
+  .nr-demoResults,
+  .nr-aiPreview,
+  .nr-analyzerPanel,
+  .nr-priceCard,
+  .nr-analysisBanner,
+  .nr-summaryCard,
+  .nr-suggestionCard,
+  .nr-transformationCard,
+  .nr-analysisSummaryCard {
+    padding: 10px;
+  }
+
+  .nr-styleCard,
+  .nr-roomCard,
+  .nr-paletteCard,
+  .nr-moodCard,
+  .nr-sizeCard,
+  .nr-need {
+    padding: 9px;
+  }
+
+  .nr-styleImage {
+    height: 56px;
+  }
+
+  .nr-analyzerPreview,
+  .nr-analyzerImage,
+  .nr-analyzerVideo {
+    min-height: 164px;
+  }
+
+  .nr-primaryBtn,
+  .nr-secondaryBtn,
+  .nr-nextBtn,
+  .nr-genBtn,
+  .nr-priceBtn,
+  .nr-aiFullRoomBtn {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .nr-demo,
+  .nr-trust,
+  .nr-examples,
+  .nr-why,
+  .nr-steps,
+  .nr-pricing {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
