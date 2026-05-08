@@ -14,7 +14,7 @@
       "liveLabel": "Live AI planner",
       "confidence": "94% match",
       "title": "Room intelligence preview",
-      "subtitle": "Mock analysis reads style, lighting, empty zones, and budget fit before generating a shoppable layout.",
+      "subtitle": "Smart analysis reads style, lighting, empty zones, and budget fit before generating a shoppable layout.",
       "budget": "Budget",
       "match": "Style match",
       "estimate": "Estimate"
@@ -178,6 +178,16 @@
     "continue": "Continue",
     "viewResults": "View results",
     "micro": "Everything runs locally in your browser—no backend.",
+    "config": {
+      "space": "Space",
+      "style": "Style",
+      "budget": "Budget",
+      "edit": "Edit",
+      "completed": "Completed",
+      "continue": "Continue",
+      "back": "Back",
+      "generateFullRoom": "Generate full room"
+    },
     "analysis": {
       "sectionTitle": "Smart room scan",
       "sectionHint": "Upload a photo or use your camera to let NEXROOM read your room layout and style.",
@@ -188,6 +198,8 @@
       "analyzeLabel": "Analyze room",
       "analyzing": "Analyzing room details…",
       "readyLabel": "Ready to scan",
+      "errorTitle": "We could not analyze the image",
+      "errorBadge": "Check image",
       "progressLabel": "AI analysis progress",
       "noPhoto": "Add a room photo to unlock intelligent recommendations.",
       "previewAlt": "Room preview image",
@@ -262,7 +274,7 @@
         "recommendations": "Generate recommendations",
         "transformation": "Final transformation"
       },
-      "transformationKicker": "Before / after mockup",
+      "transformationKicker": "Before / after preview",
       "transformationTitle": "Recommended transformation",
       "recommendationTitles": {
         "deskSetup": "Desk setup",
@@ -298,7 +310,7 @@
       "analysisState": "AI state",
       "stateGenerating": "Generating full room",
       "stateReady": "Analysis complete",
-      "stateMock": "Mock scan ready",
+      "stateMock": "Scan preview ready",
       "estimatedSpend": "Estimated spend",
       "suggestedProducts": "Suggested products",
       "generateFullRoom": "Generate full room",
@@ -403,6 +415,89 @@
     ],
     "tryInDemo": "Try this in the demo →"
   },
+  "updates": {
+    "title": "NEXROOM Updates",
+    "subtitle": "We keep improving the experience to turn rooms into complete, visual and ready-to-shop proposals.",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "viewHistory": "View update history",
+    "hideHistory": "Hide update history",
+    "selectLabel": "Select update",
+    "items": [
+      {
+        "badge": "Improved",
+        "title": "Improved Smart Room Scan",
+        "body": "The room analysis experience is now clearer, faster and more visual, helping users understand the potential of their space."
+      },
+      {
+        "badge": "Improved",
+        "title": "More structured recommendations",
+        "body": "Suggestions are displayed in a more organized way, considering priority, style, budget and usefulness to support better decisions."
+      },
+      {
+        "badge": "New",
+        "title": "More complete room packs",
+        "body": "NEXROOM is evolving toward full furniture proposals matched by style, space and budget."
+      },
+      {
+        "badge": "New",
+        "title": "Bilingual experience",
+        "body": "The platform is now prepared to work in Spanish and English while keeping a consistent experience across both languages."
+      },
+      {
+        "badge": "Coming soon",
+        "title": "Ready for advanced visual analysis",
+        "body": "The platform has been prepared for future, more precise visual analysis features while keeping the experience secure and stable."
+      },
+      {
+        "badge": "Improved",
+        "title": "Stability and performance improvements",
+        "body": "Improvements have been made to keep the experience smoother, more stable and responsive across mobile, tablet and desktop."
+      }
+    ],
+    "releases": [
+      {
+        "key": "roomPacksUpdate",
+        "name": "Room Packs Update",
+        "label": "Latest update",
+        "changes": [
+          "More complete room packs",
+          "More structured recommendations",
+          "Better organization by style, budget and usefulness"
+        ]
+      },
+      {
+        "key": "smartScanUpdate",
+        "name": "Smart Scan Update",
+        "label": "Previous update",
+        "changes": [
+          "Improved Smart Room Scan",
+          "Clearer scan preview",
+          "Stability and performance improvements"
+        ]
+      },
+      {
+        "key": "bilingualExperienceUpdate",
+        "name": "Bilingual Experience",
+        "label": "Previous update",
+        "changes": [
+          "Bilingual experience",
+          "Clearer public-facing text",
+          "Better language consistency in the demo"
+        ]
+      },
+      {
+        "key": "firstPreview",
+        "name": "First Public Preview",
+        "label": "Initial foundation",
+        "changes": [
+          "Initial premium landing",
+          "Interactive AI demo",
+          "Value proposition focused on shoppable rooms"
+        ]
+      }
+    ]
+  },
   "why": {
     "title": "Why NEXROOM",
     "subtitle": "Built for speed, taste, and budget reality—without the overwhelm.",
@@ -418,6 +513,26 @@
       {
         "title": "Fast iteration",
         "body": "Adjust needs and regenerate instantly until it feels right."
+      }
+    ]
+  },
+  "about": {
+    "title": "About us",
+    "subtitle": "NEXROOM was created to make designing a beautiful, functional and budget-aware room much easier.",
+    "mainText": "NEXROOM is a project created by Denis Rudenko with a clear idea: helping people and companies turn rooms into complete, visual and ready-to-shop proposals.",
+    "trustText": "Instead of leaving users lost between hundreds of furniture options, NEXROOM organizes the process: it understands the space, style and budget, then turns the decision into a clearer and more actionable room pack.",
+    "cards": [
+      {
+        "title": "Clear vision",
+        "body": "Turning undecided rooms into shoppable, coherent and attractive proposals."
+      },
+      {
+        "title": "Built for real users",
+        "body": "Designed for people who want to improve their space without spending hours comparing options."
+      },
+      {
+        "title": "Commercial focus",
+        "body": "Prepared to help companies turn inspiration into purchase decisions."
       }
     ]
   },
@@ -464,6 +579,165 @@
         "cta": "Start with Premium"
       }
     ]
+  },
+  "aiMock": {
+    "labels": {
+      "futureCatalog": "Future catalog",
+      "alternativeFutureStore": "Alternative future store",
+      "dimensionsNote": "Approximate dimensions for future fit validation.",
+      "placementAdvice": "Keep at least 70 cm of circulation clearance around the main path."
+    },
+    "errors": {
+      "invalidImage": "Upload a valid image.",
+      "imageTooLarge": "The image is too large. Try a photo under 8 MB.",
+      "readFailure": "Could not read the room image."
+    },
+    "alternatives": {
+      "cheaperSuffix": "budget option",
+      "premiumSuffix": "premium option",
+      "smallSpaceSuffix": "compact option",
+      "otherStoreSuffix": "other store option",
+      "cheaperReason": "Prepared cheaper alternative slot for catalog matching.",
+      "premiumReason": "Prepared premium alternative slot for upsell and comparison.",
+      "smallSpaceReason": "Prepared compact alternative if clearance is limited.",
+      "otherStoreReason": "Prepared alternate-store slot for future marketplace routing."
+    },
+    "products": [
+      {
+        "id": "storage-low-001",
+        "name": "Low storage unit",
+        "category": "Storage",
+        "reason": "Uses an empty wall and reduces visual noise without consuming too much budget.",
+        "color": "light oak",
+        "imageType": "storage",
+        "status": "smartFit",
+        "priority": "essential",
+        "widthCm": 120,
+        "depthCm": 40,
+        "heightCm": 72,
+        "budgetRatio": 0.18,
+        "score": 91
+      },
+      {
+        "id": "lamp-warm-001",
+        "name": "Warm ambient lamp",
+        "category": "Lighting",
+        "reason": "Adds a second lighting layer so the room feels more finished.",
+        "color": "matte black",
+        "imageType": "lamp",
+        "status": "budgetFriendly",
+        "priority": "recommended",
+        "widthCm": 32,
+        "depthCm": 32,
+        "heightCm": 150,
+        "budgetRatio": 0.08,
+        "score": 88
+      },
+      {
+        "id": "desk-compact-001",
+        "name": "Compact desk or console",
+        "category": "Desk",
+        "reason": "Creates a useful zone without blocking circulation or breaking the visual line.",
+        "color": "warm white",
+        "imageType": "desk",
+        "status": "styleMatch",
+        "priority": "optional",
+        "widthCm": 100,
+        "depthCm": 48,
+        "heightCm": 75,
+        "budgetRatio": 0.16,
+        "score": 86
+      }
+    ],
+    "packs": {
+      "basic": {
+        "id": "pack-basic",
+        "title": "Functional basic pack",
+        "summary": "Solves light and storage with minimal spend.",
+        "pros": ["Lowest cost", "Easy to buy"],
+        "cons": ["Limited visual transformation"]
+      },
+      "recommended": {
+        "id": "pack-recommended",
+        "title": "Ready-room pack",
+        "summary": "Balances design, utility, and budget.",
+        "pros": ["Best balance", "Complete purchase"],
+        "cons": ["Requires real measurement validation"]
+      },
+      "premium": {
+        "id": "pack-premium",
+        "title": "Elevated premium pack",
+        "summary": "Upgrades materials, visual presence, and durability.",
+        "pros": ["Higher visual impact", "Better finishes"],
+        "cons": ["May exceed target budget"]
+      }
+    },
+    "room": {
+      "fallbackRoom": "Bedroom",
+      "fallbackStyle": "modern",
+      "fallbackSize": "Medium",
+      "lighting": "Soft natural light",
+      "styleCues": "{{style}} base with clean lines",
+      "colors": ["soft beige", "charcoal", "muted green"],
+      "spaceProblems": ["Lighting needs a second layer", "Exact measurements are missing for fit validation"],
+      "missingFurniture": ["storage", "a lamp"],
+      "clutterLevel": "Moderate",
+      "budgetFitTight": "Tight but practical",
+      "budgetFitBalanced": "Well-balanced",
+      "budgetFitPremium": "Premium upgrade ready",
+      "summary": "Room analysis ready: the space reads as a {{room}} with soft light and a {{style}} base. The recommendation prioritizes furniture that can become a shoppable pack, be validated by measurements, and adapt to budget.",
+      "nextAction": "Confirm measurements and upload another angle to refine fit, cart, and visual planning.",
+      "layoutSummary": "Suggested layout with a usable wall and circulation to protect.",
+      "naturalLight": "Soft natural light with possible color shift.",
+      "existingFurniture": "unvalidated existing furniture",
+      "measurementNotes": "Measurements pending user confirmation."
+    },
+    "zones": {
+      "mainWallLabel": "Main wall",
+      "mainWallPurpose": "Storage and visual anchor",
+      "mainWallAdvice": "Use low pieces to avoid visual weight.",
+      "circulationLabel": "Main circulation",
+      "circulationPurpose": "Keep movement clear",
+      "circulationAdvice": "Avoid bulky furniture."
+    },
+    "obstacles": {
+      "windowLabel": "Likely window or light source"
+    },
+    "layoutSuggestion": {
+      "title": "Protect main circulation",
+      "description": "Keep at least 70 cm clear before recommending large pieces."
+    },
+    "visualMockupPlan": {
+      "storageInstruction": "Place centered on the open wall.",
+      "lampInstruction": "Place beside storage for side lighting.",
+      "storageLabel": "Storage zone",
+      "clearanceLabel": "70 cm clearance",
+      "beforeAfterPrompt": "Future before/after mockup: keep the original photo, add recommended furniture, and label circulation zones."
+    },
+    "commercialSummary": {
+      "packTitle": "Your room ready in one shoppable pack",
+      "readyRoomSummary": "A balanced pack to organize, light, and add function without exceeding the budget.",
+      "recommendedCta": "View recommended pack"
+    },
+    "warnings": {
+      "measurements": "Exact measurements are missing: validate width, depth, and clearance before buying.",
+      "measurementsAction": "Add measurements or upload another angle.",
+      "lightColor": "Photo lighting can alter the real color of furniture."
+    },
+    "analysisSteps": {
+      "room": "Room detected",
+      "layout": "Zones and obstacles",
+      "pack": "Shoppable pack"
+    },
+    "nextActions": {
+      "saveVersion": "Save this room version",
+      "comparePacks": "Compare basic, recommended, and premium packs",
+      "regenerateBudget": "Regenerate with another budget"
+    },
+    "regeneration": {
+      "lowerBudget": "Lower budget",
+      "upgradePremium": "Upgrade to premium"
+    }
   },
   "footer": {
     "copyright": "© {{year}} NEXROOM"

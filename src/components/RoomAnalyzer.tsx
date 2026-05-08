@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ComponentType } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { TFunction } from 'i18next'
 import {
   Camera,
   CheckCircle2,
@@ -14,9 +13,10 @@ import {
   WandSparkles,
 } from 'lucide-react'
 import { RoomSceneMockup } from './RoomSceneMockup'
+import { analyzeRoomImage } from '../services/roomAnalysisService'
+import type { RoomAnalysisResult } from '../types/roomAnalysis'
 import type {
   NeedKey,
-  RoomAnalysis,
   RoomSizeKey,
   RoomTypeKey,
   StyleKey,
@@ -28,7 +28,7 @@ interface RoomAnalyzerProps {
   roomSize: RoomSizeKey
   budget: number
   selectedNeeds: NeedKey[]
-  onAnalysisChange: (analysis: RoomAnalysis | null) => void
+  onAnalysisChange: (analysis: RoomAnalysisResult | null) => void
 }
 
 type ScanStep = {
@@ -53,215 +53,16 @@ const scanStepConfig: ScanStep[] = [
   { key: 'transformation', Icon: CheckCircle2 },
 ]
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value))
-}
-
-function createRng(seed: number) {
-  let t = seed >>> 0
-  return () => {
-    t += 0x6d2b79f5
-    let x = t
-    x = Math.imul(x ^ (x >>> 15), x | 1)
-    x ^= x + Math.imul(x ^ (x >>> 7), x | 61)
-    return ((x ^ (x >>> 14)) >>> 0) / 4294967296
+function dataUrlToFile(dataUrl: string, fileName: string) {
+  const [meta, value] = dataUrl.split(',')
+  const mimeType = meta.match(/data:(.*?);base64/)?.[1] || 'image/jpeg'
+  const binary = window.atob(value || '')
+  const bytes = new Uint8Array(binary.length)
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index)
   }
-}
 
-function choose<T>(arr: readonly T[], r: () => number) {
-  return arr[Math.floor(r() * arr.length)] ?? arr[0]
-}
-
-function getSizeLabel(width: number, height: number) {
-  const area = width * height
-  if (area < 600_000) return 'Small'
-  if (area < 1_600_000) return 'Medium'
-  if (area < 3_600_000) return 'Large'
-  return 'Extra large'
-}
-
-async function analyzeRoomPhoto(
-  t: TFunction,
-  src: string,
-  roomType: RoomTypeKey,
-  roomSize: RoomSizeKey,
-  style: StyleKey,
-  budget: number,
-  selectedNeeds: NeedKey[],
-) {
-  const image = new Image()
-  image.crossOrigin = 'anonymous'
-  image.src = src
-
-  const analysis = await new Promise<RoomAnalysis>((resolve) => {
-    image.onload = () => {
-      const width = image.naturalWidth || 1280
-      const height = image.naturalHeight || 960
-      const canvas = document.createElement('canvas')
-      canvas.width = 32
-      canvas.height = 32
-      const ctx = canvas.getContext('2d')
-      if (!ctx) {
-        resolve({
-          imageSrc: src,
-          detectedRoom: roomType,
-          estimatedSize: roomSize === 'small' ? t('demo.analysis.sizes.small') : roomSize === 'medium' ? t('demo.analysis.sizes.medium') : roomSize === 'large' ? t('demo.analysis.sizes.large') : t('demo.analysis.sizes.xl'),
-          lightingQuality: t('demo.analysis.lightLevels.softNatural'),
-          styleCues: t(`demo.analysis.styleCuesValues.${style}`),
-          dominantColors: [t('demo.analysis.colors.softBeige'), t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
-          missingFurniture: [t('demo.analysis.missingFurniture.storage'), t('demo.analysis.missingFurniture.lamp')],
-          clutterLevel: t('demo.analysis.clutterLevels.moderate'),
-          budgetFit: t('demo.analysis.budgetFits.balanced'),
-          confidence: 82,
-          summary: t('demo.analysis.summaryDefault'),
-          nextAction: t('demo.analysis.nextActions.default'),
-          recommendations: [],
-        })
-        return
-      }
-
-      ctx.drawImage(image, 0, 0, 32, 32)
-      const data = ctx.getImageData(0, 0, 32, 32).data
-      let rTotal = 0
-      let gTotal = 0
-      let bTotal = 0
-      let brightness = 0
-      let count = 0
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i]
-        const g = data[i + 1]
-        const b = data[i + 2]
-        const value = (r + g + b) / 3
-        rTotal += r
-        gTotal += g
-        bTotal += b
-        brightness += value
-        count += 1
-      }
-      const avgBrightness = Math.round(brightness / count)
-      const avgRed = Math.round(rTotal / count)
-      const avgGreen = Math.round(gTotal / count)
-      const avgBlue = Math.round(bTotal / count)
-      const brightnessKey =
-        avgBrightness > 190
-          ? 'brightOpen'
-          : avgBrightness > 130
-          ? 'softNatural'
-          : avgBrightness > 90
-          ? 'moody'
-          : 'cozyLow'
-      const brightnessLabel = t(`demo.analysis.lightLevels.${brightnessKey}`)
-      const styleCues = t(`demo.analysis.styleCuesValues.${style}`)
-      const possibleClutter = ['lightlyLayered', 'wellOrganized', 'airyUnderfurnished', 'slightlyCluttered'] as const
-      const clutterKey = choose(possibleClutter, createRng(width + height + avgBrightness))
-      const clutterLevel = t(`demo.analysis.clutterLevels.${clutterKey}`)
-      const missingFurniture = selectedNeeds.length > 0 ? [] : ['storage', 'lamp'] as const
-      const inferredMissing = ['storage', 'lamp'] as const
-      const missing = missingFurniture.length
-        ? missingFurniture.map((item) => t(`demo.analysis.missingFurniture.${item}`))
-        : inferredMissing.filter((item) => !selectedNeeds.includes(item)).slice(0, 2).map((item) => t(`demo.analysis.missingFurniture.${item}`))
-      const budgetFitKey = budget < 600 ? 'tight' : budget < 1400 ? 'balanced' : 'premium'
-      const budgetFit = t(`demo.analysis.budgetFits.${budgetFitKey}`)
-      const nextAction = budgetFitKey === 'tight'
-        ? t('demo.analysis.nextActions.raiseBudget')
-        : t('demo.analysis.nextActions.focusLighting')
-      const confidence = clamp(74 + Math.round((avgBrightness / 255) * 18) + Math.floor(createRng(avgBrightness + width + height)() * 8), 76, 98)
-      const colorMood = avgRed > avgBlue && avgRed > avgGreen
-        ? t('demo.analysis.colors.softBeige')
-        : avgBlue > avgRed
-          ? t('demo.analysis.colors.spruce')
-          : t('demo.analysis.colors.charcoal')
-      const summary = t('demo.analysis.summary', {
-        roomType: t(`demo.steps.1.roomTypes.${roomType}`),
-        lighting: brightnessLabel,
-        style: styleCues,
-        clutter: clutterLevel,
-        missing: missing.join(', '),
-      })
-      const scoreBase = clamp(Math.round((avgBrightness / 255) * 20 + 80), 80, 96)
-      const recommendations = [
-        {
-          title: roomType === 'office'
-            ? t('demo.analysis.recommendationTitles.deskSetup')
-            : t('demo.analysis.recommendationTitles.storageSolution'),
-          price: Math.round((budget / 5) / 5) * 5,
-          reason: t('demo.analysis.recommendationReasons.smartFit', {
-            style: styleCues.toLowerCase(),
-            clutter: clutterLevel.toLowerCase(),
-          }),
-          status: 'smartFit' as const,
-          match: clamp(scoreBase + 6, 82, 98),
-          imageType: roomType === 'office' ? 'desk' as const : 'storage' as const,
-        },
-        {
-          title: style === 'cozy'
-            ? t('demo.analysis.recommendationTitles.warmLamp')
-            : t('demo.analysis.recommendationTitles.sculpturalLamp'),
-          price: Math.round((budget / 12) / 5) * 5,
-          reason: t('demo.analysis.recommendationReasons.budgetFriendly', {
-            light: brightnessLabel.toLowerCase(),
-          }),
-          status: 'budgetFriendly' as const,
-          match: clamp(scoreBase + 2, 78, 92),
-          imageType: 'lamp' as const,
-        },
-        {
-          title: style === 'minimalist'
-            ? t('demo.analysis.recommendationTitles.lowShelf')
-            : t('demo.analysis.recommendationTitles.modularStorage'),
-          price: Math.round((budget / 8) / 5) * 5,
-          reason: t('demo.analysis.recommendationReasons.styleMatch', {
-            palette: styleCues.toLowerCase(),
-          }),
-          status: 'styleMatch' as const,
-          match: clamp(scoreBase + 4, 80, 94),
-          imageType: 'storage' as const,
-        },
-      ]
-
-      resolve({
-        imageSrc: src,
-        detectedRoom: t(`demo.steps.1.roomTypes.${roomType}`),
-        estimatedSize:
-          getSizeLabel(width, height) === 'Small'
-            ? t('demo.analysis.sizes.small')
-            : getSizeLabel(width, height) === 'Medium'
-            ? t('demo.analysis.sizes.medium')
-            : getSizeLabel(width, height) === 'Large'
-            ? t('demo.analysis.sizes.large')
-            : t('demo.analysis.sizes.xl'),
-        lightingQuality: brightnessLabel,
-        styleCues,
-        dominantColors: [colorMood, t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
-        missingFurniture: missing,
-        clutterLevel,
-        budgetFit,
-        confidence,
-        summary,
-        nextAction,
-        recommendations,
-      })
-    }
-    image.onerror = () => {
-      resolve({
-        imageSrc: src,
-        detectedRoom: t(`demo.steps.1.roomTypes.${roomType}`),
-        estimatedSize: roomSize === 'small' ? t('demo.analysis.sizes.small') : roomSize === 'medium' ? t('demo.analysis.sizes.medium') : roomSize === 'large' ? t('demo.analysis.sizes.large') : t('demo.analysis.sizes.xl'),
-        lightingQuality: t('demo.analysis.lightLevels.softNatural'),
-        styleCues: t(`demo.analysis.styleCuesValues.${style}`),
-        dominantColors: [t('demo.analysis.colors.softBeige'), t('demo.analysis.colors.charcoal'), t('demo.analysis.colors.spruce')],
-        missingFurniture: [t('demo.analysis.missingFurniture.storage'), t('demo.analysis.missingFurniture.lamp')],
-        clutterLevel: t('demo.analysis.clutterLevels.moderate'),
-        budgetFit: t('demo.analysis.budgetFits.balanced'),
-        confidence: 78,
-        summary: t('demo.analysis.summaryDefault'),
-        nextAction: t('demo.analysis.nextActions.default'),
-        recommendations: [],
-      })
-    }
-  })
-
-  return analysis
+  return new File([bytes], fileName, { type: mimeType })
 }
 
 export function RoomAnalyzer({
@@ -272,14 +73,16 @@ export function RoomAnalyzer({
   selectedNeeds,
   onAnalysisChange,
 }: RoomAnalyzerProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [imageSrc, setImageSrc] = useState<string | null>(null)
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [scanStage, setScanStage] = useState(0)
-  const [analysis, setAnalysis] = useState<RoomAnalysis | null>(null)
+  const [analysis, setAnalysis] = useState<RoomAnalysisResult | null>(null)
+  const [analysisError, setAnalysisError] = useState<string | null>(null)
 
   useEffect(() => {
     return () => {
@@ -313,6 +116,7 @@ export function RoomAnalyzer({
       { label: t('demo.analysis.styleCues'), value: analysis.styleCues },
     ]
   }, [analysis, t])
+  const errorTitle = t('demo.analysis.errorTitle')
 
   const handleCamera = async () => {
     if (!navigator.mediaDevices?.getUserMedia) {
@@ -324,6 +128,7 @@ export function RoomAnalyzer({
         video: { facingMode: 'environment' },
         audio: false,
       })
+      setAnalysisError(null)
       setStream(mediaStream)
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream
@@ -349,9 +154,11 @@ export function RoomAnalyzer({
     if (!ctx) return
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
     const dataUrl = canvas.toDataURL('image/jpeg', 0.85)
+    const file = dataUrlToFile(dataUrl, 'nexroom-room-capture.jpg')
     setImageSrc(dataUrl)
+    setPhotoFile(file)
     stopCamera()
-    await analyzePhoto(dataUrl)
+    await analyzePhoto(dataUrl, file)
   }
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -359,12 +166,17 @@ export function RoomAnalyzer({
     if (!file) return
     const objectUrl = URL.createObjectURL(file)
     setImageSrc(objectUrl)
-    await analyzePhoto(objectUrl)
+    setPhotoFile(file)
+    await analyzePhoto(objectUrl, file)
   }
 
-  const analyzePhoto = async (src: string) => {
+  const analyzePhoto = async (src: string, file = photoFile) => {
+    const fileToAnalyze = file ?? (src.startsWith('data:') ? dataUrlToFile(src, 'nexroom-room.jpg') : null)
+    if (!fileToAnalyze) return
+
     setIsAnalyzing(true)
     setAnalysis(null)
+    setAnalysisError(null)
     setScanStage(1)
     let nextStage = 1
     const stageTimer = window.setInterval(() => {
@@ -374,11 +186,25 @@ export function RoomAnalyzer({
 
     try {
       const [result] = await Promise.all([
-        analyzeRoomPhoto(t, src, roomType, roomSize, style, budget, selectedNeeds),
+        analyzeRoomImage(fileToAnalyze, {
+          budget,
+          language: i18n.language,
+          locale: i18n.language,
+          roomType: t(`demo.steps.1.roomTypes.${roomType}`),
+          roomSize: t(`demo.steps.1.roomSizes.${roomSize}`),
+          selectedNeeds: selectedNeeds.map((need) => t(`demo.steps.3.furnitureCategories.${need}`)),
+          style: t(`demo.steps.1.styles.${style}`),
+        }),
         new Promise((resolve) => window.setTimeout(resolve, 1500)),
       ])
       setScanStage(scanStepConfig.length - 1)
       setAnalysis(result)
+    } catch (error) {
+      setAnalysisError(
+        error instanceof Error
+          ? error.message
+          : t('aiMock.errors.readFailure'),
+      )
     } finally {
       window.clearInterval(stageTimer)
       setIsAnalyzing(false)
@@ -393,7 +219,9 @@ export function RoomAnalyzer({
           <p className="nr-help">{t('demo.analysis.sectionHint')}</p>
         </div>
         <div className="nr-analyzerStatus">
-          {analysisReady ? (
+          {analysisError ? (
+            <span className="nr-status bad">{t('demo.analysis.errorBadge')}</span>
+          ) : analysisReady ? (
             <span className="nr-status ok">{analysis?.confidence}% {t('demo.analysis.confidence')}</span>
           ) : (
             <span className="nr-status">{isAnalyzing ? t('demo.analysis.analyzing') : t('demo.analysis.readyLabel')}</span>
@@ -503,6 +331,16 @@ export function RoomAnalyzer({
           </div>
         </div>
       </div>
+
+      {analysisError && (
+        <div className="nr-analysisSummaryCard">
+          <div className="nr-summaryTop">
+            <div className="nr-summaryTitle">{errorTitle}</div>
+            <span className="nr-status bad">AI</span>
+          </div>
+          <p>{analysisError}</p>
+        </div>
+      )}
 
       {analysis && (
         <div className="nr-analysisDeck">

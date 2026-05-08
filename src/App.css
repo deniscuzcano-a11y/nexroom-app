@@ -744,6 +744,95 @@
   animation: nr-pop 200ms ease both;
 }
 
+.nr-stepPanel--compactConfig > .nr-analyzerPanel,
+.nr-stepPanel--compactConfig > .nr-formRow,
+.nr-stepPanel--compactConfig > .nr-panelActions {
+  display: none;
+}
+
+.nr-configAccordion {
+  display: grid;
+  gap: 12px;
+}
+
+.nr-configSection {
+  border: 1px solid color-mix(in oklab, var(--border) 84%, transparent);
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px color-mix(in oklab, var(--shadow-color) 5%, transparent);
+}
+
+.nr-configSection.is-open {
+  border-color: color-mix(in oklab, var(--accent) 28%, var(--border));
+}
+
+.nr-configHeader {
+  appearance: none;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  color: var(--text-h);
+  text-align: left;
+  cursor: pointer;
+}
+
+.nr-configHeader strong,
+.nr-configHeader small {
+  display: block;
+  min-width: 0;
+}
+
+.nr-configHeader strong {
+  font-family: var(--heading);
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.nr-configHeader small {
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.nr-configHeader em {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 750;
+  color: color-mix(in oklab, var(--text-h) 72%, var(--text));
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 76%, transparent);
+  border-radius: 999px;
+  padding: 6px 8px;
+  white-space: nowrap;
+}
+
+.nr-configIndex {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  background: color-mix(in oklab, #7cd3b0 16%, var(--bg));
+  color: color-mix(in oklab, var(--text-h) 82%, var(--accent));
+}
+
+.nr-configBody {
+  display: grid;
+  gap: 14px;
+  padding: 0 14px 14px;
+}
+
 .nr-panelTitle {
   font-family: var(--heading);
   color: var(--text-h);
@@ -1813,10 +1902,244 @@
 }
 
 .nr-examples,
+.nr-updates,
 .nr-why,
+.nr-about,
 .nr-pricing {
   padding: 54px 28px 64px;
   border-bottom: 1px solid var(--border);
+}
+
+.nr-updates {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 98%, #eef7f0), color-mix(in oklab, var(--bg) 96%, #f7f1e4));
+}
+
+.nr-updatesHistory {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.nr-updateHistoryPanel {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 22px;
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  background: color-mix(in oklab, var(--bg) 72%, transparent);
+  box-shadow: 0 16px 36px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-updateSelectLabel {
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 760;
+}
+
+.nr-updateSelectWrap {
+  position: relative;
+  width: min(360px, 100%);
+}
+
+.nr-updateSelectWrap::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid color-mix(in oklab, var(--text-h) 70%, var(--text));
+  border-bottom: 2px solid color-mix(in oklab, var(--text-h) 70%, var(--text));
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+.nr-updateSelect {
+  appearance: none;
+  width: 100%;
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  color: var(--text-h);
+  border-radius: 16px;
+  padding: 11px 42px 11px 14px;
+  font: inherit;
+  font-weight: 760;
+  cursor: pointer;
+  box-shadow: 0 12px 26px color-mix(in oklab, var(--shadow-color) 6%, transparent);
+}
+
+.nr-updateSelect:focus {
+  outline: 2px solid color-mix(in oklab, var(--accent) 72%, transparent);
+  outline-offset: 3px;
+}
+
+.nr-updateReleaseCard {
+  margin-top: 12px;
+  border-radius: 18px;
+  border: 1.5px solid color-mix(in oklab, var(--border) 84%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--bg) 92%, transparent), color-mix(in oklab, var(--bg) 82%, transparent));
+  box-shadow: 0 10px 26px color-mix(in oklab, var(--shadow-color) 5%, transparent);
+  padding: 14px;
+}
+
+.nr-updateReleaseTop,
+.nr-updateReleaseBody {
+  display: flex;
+  gap: 16px;
+}
+
+.nr-updateReleaseTop {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.nr-updateReleaseBody {
+  align-items: start;
+  justify-content: space-between;
+}
+
+.nr-updateReleaseBody > div {
+  max-width: 58ch;
+}
+
+.nr-updateReleaseCard h3 {
+  margin: 0;
+  font-family: var(--heading);
+  font-size: 18px;
+  line-height: 1.15;
+  color: var(--text-h);
+}
+
+.nr-updateReleaseCard p {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.nr-updateChangeList {
+  display: grid;
+  gap: 8px;
+  min-width: min(360px, 100%);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nr-updateChangeList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--text-h);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.nr-updateChangeList svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: color-mix(in oklab, var(--accent) 80%, #0f766e);
+}
+
+.nr-updatesGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.nr-updateCard {
+  position: relative;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+  border-radius: 20px;
+  border: 1.5px solid color-mix(in oklab, var(--border) 86%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--bg) 88%, transparent), color-mix(in oklab, var(--bg) 78%, transparent));
+  box-shadow: 0 18px 46px color-mix(in oklab, var(--shadow-color) 7%, transparent);
+  padding: 18px;
+  overflow: hidden;
+}
+
+.nr-updateCard::after {
+  content: '';
+  position: absolute;
+  inset: auto 14px 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent) 38%, transparent), transparent);
+}
+
+.nr-updateTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nr-updateIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 15px;
+  color: color-mix(in oklab, var(--text-h) 86%, var(--accent));
+  background:
+    linear-gradient(135deg, color-mix(in oklab, #7cd3b0 18%, var(--bg)), color-mix(in oklab, var(--accent) 11%, var(--bg)));
+  box-shadow: inset 0 1px 0 color-mix(in oklab, #ffffff 55%, transparent);
+}
+
+.nr-updateBadge {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 750;
+  color: color-mix(in oklab, var(--text-h) 80%, var(--text));
+  border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  background: color-mix(in oklab, var(--social-bg) 76%, transparent);
+  border-radius: 999px;
+  padding: 6px 9px;
+  white-space: nowrap;
+}
+
+.nr-updateCard h3 {
+  margin: 4px 0 0;
+  font-family: var(--heading);
+  font-size: 18px;
+  line-height: 1.15;
+  color: var(--text-h);
+}
+
+.nr-updateCard p {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.nr-updatesAction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.nr-updatesToggle {
+  min-height: 44px;
+}
+
+.nr-updatesToggle svg {
+  transition: transform 180ms ease;
+}
+
+.nr-updatesToggle svg.is-open {
+  transform: rotate(180deg);
 }
 
 .nr-exampleGrid {
@@ -1890,6 +2213,99 @@
   padding: 8px 10px;
   background: color-mix(in oklab, var(--accent-bg) 55%, transparent);
   border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+}
+
+.nr-about {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 98%, #eef7f0), color-mix(in oklab, var(--bg) 96%, #f7f1e4));
+}
+
+.nr-aboutGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.nr-sectionHead--left {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.nr-aboutStatement {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1.5px solid color-mix(in oklab, var(--border) 84%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--bg) 92%, transparent), color-mix(in oklab, var(--bg) 82%, transparent));
+  box-shadow: 0 18px 46px color-mix(in oklab, var(--shadow-color) 7%, transparent);
+}
+
+.nr-aboutIcon,
+.nr-aboutCardIcon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: color-mix(in oklab, var(--text-h) 86%, var(--accent));
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #ffffff 70%, transparent), transparent),
+    color-mix(in oklab, #7cd3b0 18%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+}
+
+.nr-aboutIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+}
+
+.nr-aboutStatement p {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.nr-aboutStatement p + p {
+  margin-top: 10px;
+}
+
+.nr-aboutCards {
+  display: grid;
+  gap: 12px;
+}
+
+.nr-aboutCard {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 84%, transparent);
+  background: color-mix(in oklab, var(--bg) 84%, transparent);
+  box-shadow: 0 12px 26px color-mix(in oklab, var(--shadow-color) 5%, transparent);
+}
+
+.nr-aboutCardIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 14px;
+}
+
+.nr-aboutCard h3 {
+  margin: 0;
+  color: var(--text-h);
+  font-family: var(--heading);
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.nr-aboutCard p {
+  margin: 6px 0 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .nr-textLink:hover {
@@ -2280,9 +2696,23 @@
   }
 
   .nr-exampleGrid,
+  .nr-updatesGrid,
   .nr-whyGrid,
   .nr-priceGrid {
     grid-template-columns: 1fr;
+  }
+
+  .nr-updatesHistory,
+  .nr-updateReleaseBody,
+  .nr-aboutStatement,
+  .nr-aboutCard {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .nr-updateSelectWrap {
+    width: 100%;
   }
 
   .nr-productGrid {
@@ -2290,7 +2720,9 @@
   }
 
   .nr-examples,
+  .nr-updates,
   .nr-why,
+  .nr-about,
   .nr-pricing {
     padding: 44px 18px 52px;
   }
@@ -3684,7 +4116,9 @@ body,
 .nr-demo,
 .nr-trust,
 .nr-examples,
+.nr-updates,
 .nr-why,
+.nr-about,
 .nr-steps,
 .nr-pricing,
 .nr-footer {
@@ -3697,6 +4131,9 @@ body,
 .nr-analyzerPanel,
 .nr-priceCard,
 .nr-exampleCard,
+.nr-updateCard,
+.nr-updateReleaseCard,
+.nr-aboutCard,
 .nr-styleCard,
 .nr-roomCard,
 .nr-paletteCard,
@@ -3712,6 +4149,7 @@ body,
 .nr-genBtn,
 .nr-priceBtn,
 .nr-stepPill,
+.nr-updateSelect,
 .nr-status,
 .nr-badge,
 .nr-logoPill {
@@ -3724,6 +4162,10 @@ body,
 .nr-analyzerPanel,
 .nr-aiPreview,
 .nr-priceCard,
+.nr-updateCard,
+.nr-updateReleaseCard,
+.nr-aboutStatement,
+.nr-aboutCard,
 .nr-footer {
   max-width: 100%;
 }
@@ -3769,7 +4211,9 @@ body,
 
   .nr-demoGrid,
   .nr-analyzerContent,
+  .nr-aboutGrid,
   .nr-priceGrid,
+  .nr-updatesGrid,
   .nr-exampleGrid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3872,7 +4316,9 @@ body,
   .nr-demo,
   .nr-trust,
   .nr-examples,
+  .nr-updates,
   .nr-why,
+  .nr-about,
   .nr-steps,
   .nr-pricing {
     padding-left: 14px;
@@ -3907,6 +4353,7 @@ body,
   .nr-aiPreviewFooter,
   .nr-transformationGrid,
   .nr-priceGrid,
+  .nr-updatesGrid,
   .nr-exampleGrid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -4083,11 +4530,14 @@ body,
   .nr-heroShowcase,
   .nr-aiPreview,
   .nr-analyzerPanel,
-  .nr-demoCard,
-  .nr-priceCard,
-  .nr-exampleCard,
-  .nr-styleCard,
-  .nr-roomCard,
+.nr-demoCard,
+.nr-priceCard,
+.nr-exampleCard,
+.nr-updateCard,
+.nr-updateReleaseCard,
+.nr-aboutCard,
+.nr-styleCard,
+.nr-roomCard,
   .nr-paletteCard,
   .nr-moodCard,
   .nr-sizeCard {
@@ -4177,7 +4627,9 @@ body,
   .nr-demo,
   .nr-trust,
   .nr-examples,
+  .nr-updates,
   .nr-why,
+  .nr-about,
   .nr-steps,
   .nr-pricing {
     padding: 32px 10px 36px;
@@ -4407,6 +4859,7 @@ body,
 
   .nr-priceGrid,
   .nr-exampleGrid,
+  .nr-updatesGrid,
   .nr-whyGrid {
     gap: 12px;
     margin-top: 16px;
@@ -4527,7 +4980,9 @@ body,
   .nr-demo,
   .nr-trust,
   .nr-examples,
+  .nr-updates,
   .nr-why,
+  .nr-about,
   .nr-steps,
   .nr-pricing {
     padding-left: 8px;

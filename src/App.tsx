@@ -13,12 +13,13 @@ import { RoomTypeSelector } from './components/RoomTypeSelector'
 import { ColorPaletteSelector } from './components/ColorPaletteSelector'
 import { MoodSelector } from './components/MoodSelector'
 import { RoomSizeSelector } from './components/RoomSizeSelector'
+import { UpdatesSection } from './components/UpdatesSection'
+import { AboutSection } from './components/AboutSection'
+import type { RoomAnalysisResult } from './types/roomAnalysis'
 import type {
   ColorPaletteKey,
-  DemoStep,
   MoodKey,
   NeedKey,
-  RoomAnalysis,
   RoomSizeKey,
   RoomTypeKey,
   StyleKey,
@@ -72,6 +73,8 @@ type PricingPlan = {
   features: string[]
   cta: string
 }
+
+type ConfigPanelStep = 'space' | 'style' | 'budget'
 
 function eur(value: number) {
   return new Intl.NumberFormat('de-DE', {
@@ -144,7 +147,7 @@ function generateSetup(params: {
   colorPalette: ColorPaletteKey
   moods: MoodKey[]
   t: Translate
-  analysis?: RoomAnalysis | null
+  analysis?: RoomAnalysisResult | null
 }): GeneratedSetup {
   const budget = clamp(Math.round(params.budget || 0), 150, 12000)
   const style = params.style
@@ -355,7 +358,7 @@ function generateSetup(params: {
 
 function App() {
   const { t } = useTranslation()
-  const [demoStep, setDemoStep] = useState<DemoStep>(1)
+  const [configPanelStep, setConfigPanelStep] = useState<ConfigPanelStep>('space')
   const [roomType, setRoomType] = useState<RoomTypeKey>('bedroom')
   const [budget, setBudget] = useState<number>(1200)
   const [style, setStyle] = useState<StyleKey>('modern')
@@ -374,7 +377,7 @@ function App() {
     [needs],
   )
 
-  const [analysis, setAnalysis] = useState<RoomAnalysis | null>(null)
+  const [analysis, setAnalysis] = useState<RoomAnalysisResult | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [setup, setSetup] = useState<GeneratedSetup | null>(null)
 
@@ -408,6 +411,51 @@ function App() {
     () => t('testimonials', { returnObjects: true }) as TestimonialItem[],
     [t],
   )
+  const configSummaries = useMemo(
+    () => ({
+      space: `${t(`demo.steps.1.roomTypes.${roomType}`)} / ${t(`demo.steps.1.roomSizeDimensions.${roomSize}`)}`,
+      style: `${t(`demo.steps.1.styles.${style}`)} / ${t(`demo.steps.1.colorPalettes.${colorPalette}`)}`,
+      budget: eur(budget),
+    }),
+    [budget, colorPalette, roomSize, roomType, style, t],
+  )
+  const configSteps = useMemo(
+    () =>
+      [
+        {
+          key: 'space',
+          index: '01',
+          label: t('demo.config.space'),
+          summary: configSummaries.space,
+          isComplete: true,
+        },
+        {
+          key: 'style',
+          index: '02',
+          label: t('demo.config.style'),
+          summary: configSummaries.style,
+          isComplete: moods.length > 0,
+        },
+        {
+          key: 'budget',
+          index: '03',
+          label: t('demo.config.budget'),
+          summary: configSummaries.budget,
+          isComplete: canContinueToNeeds && canGenerate,
+        },
+      ] satisfies Array<{
+        key: ConfigPanelStep
+        index: string
+        label: string
+        summary: string
+        isComplete: boolean
+      }>,
+    [canContinueToNeeds, canGenerate, configSummaries, moods.length, t],
+  )
+  const activeConfigIndex = Math.max(
+    0,
+    configSteps.findIndex((step) => step.key === configPanelStep),
+  )
 
   async function onGenerate() {
     setIsGenerating(true)
@@ -426,7 +474,7 @@ function App() {
     })
     setSetup(result)
     setIsGenerating(false)
-    setDemoStep(3)
+    setConfigPanelStep('budget')
   }
 
   return (
@@ -570,254 +618,259 @@ function App() {
           </div>
 
           <div className="nr-demoShell">
-            <div className="nr-stepper" role="tablist" aria-label="Demo steps">
-              {(
-                [
-                  [1, t('demo.steps.1.title')],
-                  [2, t('demo.steps.2.title')],
-                  [3, t('demo.steps.3.title')],
-                ] as const
-              ).map(([idx, label]) => (
+            <div className="nr-stepper" role="tablist" aria-label="Demo configuration steps">
+              {configSteps.map((step, index) => (
                 <button
-                  key={idx}
+                  key={step.key}
                   type="button"
-                  className={`nr-stepPill ${demoStep === idx ? 'is-active' : ''} ${
-                    demoStep > idx ? 'is-done' : ''
+                  className={`nr-stepPill ${configPanelStep === step.key ? 'is-active' : ''} ${
+                    index < activeConfigIndex ? 'is-done' : ''
                   }`}
-                  onClick={() => setDemoStep(idx)}
-                  aria-selected={demoStep === idx}
+                  onClick={() => setConfigPanelStep(step.key)}
+                  aria-selected={configPanelStep === step.key}
                   role="tab"
                 >
-                  <span className="nr-stepIdx">{String(idx).padStart(2, '0')}</span>
-                  <span className="nr-stepLabel">{label}</span>
+                  <span className="nr-stepIdx">{step.index}</span>
+                  <span className="nr-stepLabel">{step.label}</span>
                 </button>
               ))}
               <div
                 className="nr-stepBar"
                 aria-hidden="true"
                 style={{
-                  width: `${(demoStep / 3) * 100}%`,
+                  width: `${((activeConfigIndex + 1) / configSteps.length) * 100}%`,
                 }}
               />
             </div>
 
             <div className="nr-demoGrid">
               <div className="nr-demoCard nr-demoForm" aria-label="Demo inputs">
-                {demoStep === 1 && (
-                  <motion.div
-                    className="nr-stepPanel"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                  >
-                    <div className="nr-panelTitle">{t('demo.steps.1.title')}</div>
+                <motion.div
+                  className="nr-stepPanel nr-stepPanel--compactConfig"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                >
+                    <div className="nr-configAccordion">
+                      <div className={`nr-configSection ${configPanelStep === 'space' ? 'is-open' : ''}`}>
+                        <button
+                          type="button"
+                          className="nr-configHeader"
+                          onClick={() => setConfigPanelStep('space')}
+                          aria-expanded={configPanelStep === 'space'}
+                        >
+                          <span className="nr-configIndex">01</span>
+                          <span>
+                            <strong>{t('demo.config.space')}</strong>
+                            <small>{configSummaries.space}</small>
+                          </span>
+                          <em>{t('demo.config.completed')}</em>
+                        </button>
 
-                    <RoomAnalyzer
-                      style={style}
-                      roomType={roomType}
-                      roomSize={roomSize}
-                      budget={budget}
-                      selectedNeeds={selectedNeeds}
-                      onAnalysisChange={setAnalysis}
-                    />
-
-                    <div className="nr-formRow">
-                      <div className="nr-label">{t('demo.steps.1.roomType')}</div>
-                      <RoomTypeSelector
-                        selectedRoom={roomType}
-                        onRoomChange={(room) => setRoomType(room as RoomTypeKey)}
-                      />
-                    </div>
-
-                    <div className="nr-formRow">
-                      <div className="nr-label">{t('demo.steps.1.styleLabel')}</div>
-                      <StyleSelector
-                        selectedStyle={style}
-                        onStyleChange={(newStyle) => setStyle(newStyle as StyleKey)}
-                      />
-                    </div>
-
-                    <div className="nr-formRow">
-                      <div className="nr-label">{t('demo.steps.1.roomSize')}</div>
-                      <RoomSizeSelector
-                        selectedSize={roomSize}
-                        onSizeChange={(size) => setRoomSize(size as RoomSizeKey)}
-                      />
-                    </div>
-
-                    <div className="nr-formRow">
-                      <div className="nr-label">{t('demo.steps.1.colorPalette')}</div>
-                      <ColorPaletteSelector
-                        selectedPalette={colorPalette}
-                        onPaletteChange={(palette) => setColorPalette(palette as ColorPaletteKey)}
-                      />
-                    </div>
-
-                    <div className="nr-formRow">
-                      <label className="nr-label" htmlFor="nr-budget">
-                        {t('demo.steps.1.budgetLabel')}
-                      </label>
-                      <div className="nr-inputWrap">
-                        <span className="nr-inputPrefix" aria-hidden="true">
-                          €
-                        </span>
-                        <input
-                          id="nr-budget"
-                          className="nr-input"
-                          type="number"
-                          inputMode="numeric"
-                          min={150}
-                          max={12000}
-                          step={50}
-                          value={budget}
-                          onChange={(e) => setBudget(Number(e.target.value || 0))}
-                          aria-describedby="nr-budget-help"
-                        />
-                      </div>
-                      <div className="nr-help" id="nr-budget-help">
-                        {t('demo.steps.1.budgetHelp')}
-                      </div>
-                    </div>
-
-                    <div className="nr-panelActions">
-                      <button
-                        type="button"
-                        className="nr-secondaryBtn"
-                        onClick={() => {
-                          setRoomType('bedroom')
-                          setBudget(1200)
-                          setStyle('modern')
-                          setRoomSize('medium')
-                          setColorPalette('neutral')
-                          setDemoStep(2)
-                        }}
-                      >
-                        {t('demo.steps.1.recommended')}
-                      </button>
-                      <button
-                        type="button"
-                        className="nr-nextBtn"
-                        onClick={() => setDemoStep(2)}
-                        disabled={!canContinueToNeeds}
-                      >
-                        {t('demo.continue')}
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {demoStep === 2 && (
-                  <motion.div
-                    className="nr-stepPanel"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                  >
-                    <div className="nr-panelTitle">{t('demo.steps.2.title')}</div>
-
-                    <div className="nr-formRow">
-                      <div className="nr-label">{t('demo.steps.2.needsLabel')}</div>
-                      <div className="nr-needGrid" role="group" aria-label="Needs">
-                        {(
-                          [
-                            ['bed', t('demo.steps.3.furnitureCategories.bed')],
-                            ['desk', t('demo.steps.3.furnitureCategories.desk')],
-                            ['lamp', t('demo.steps.3.furnitureCategories.lamp')],
-                            ['storage', t('demo.steps.3.furnitureCategories.storage')],
-                          ] as const
-                        ).map(([key, label]) => (
-                          <label key={key} className="nr-need">
-                            <input
-                              type="checkbox"
-                              checked={needs[key]}
-                              onChange={(e) =>
-                                setNeeds((prev) => ({
-                                  ...prev,
-                                  [key]: e.target.checked,
-                                }))
-                              }
+                        {configPanelStep === 'space' && (
+                          <div className="nr-configBody">
+                            <RoomAnalyzer
+                              style={style}
+                              roomType={roomType}
+                              roomSize={roomSize}
+                              budget={budget}
+                              selectedNeeds={selectedNeeds}
+                              onAnalysisChange={setAnalysis}
                             />
-                            <span>{label}</span>
-                          </label>
-                        ))}
+
+                            <div className="nr-formRow">
+                              <div className="nr-label">{t('demo.steps.1.roomType')}</div>
+                              <RoomTypeSelector
+                                selectedRoom={roomType}
+                                onRoomChange={(room) => setRoomType(room as RoomTypeKey)}
+                              />
+                            </div>
+
+                            <div className="nr-formRow">
+                              <div className="nr-label">{t('demo.steps.1.roomSize')}</div>
+                              <RoomSizeSelector
+                                selectedSize={roomSize}
+                                onSizeChange={(size) => setRoomSize(size as RoomSizeKey)}
+                              />
+                            </div>
+
+                            <div className="nr-panelActions">
+                              <button
+                                type="button"
+                                className="nr-nextBtn"
+                                onClick={() => setConfigPanelStep('style')}
+                              >
+                                {t('demo.config.continue')}
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <div className="nr-help">
-                        {t('demo.steps.2.needsHelp')}
+
+                      <div className={`nr-configSection ${configPanelStep === 'style' ? 'is-open' : ''}`}>
+                        <button
+                          type="button"
+                          className="nr-configHeader"
+                          onClick={() => setConfigPanelStep('style')}
+                          aria-expanded={configPanelStep === 'style'}
+                        >
+                          <span className="nr-configIndex">02</span>
+                          <span>
+                            <strong>{t('demo.config.style')}</strong>
+                            <small>{configSummaries.style}</small>
+                          </span>
+                          <em>{moods.length ? t('demo.config.completed') : t('demo.config.edit')}</em>
+                        </button>
+
+                        {configPanelStep === 'style' && (
+                          <div className="nr-configBody">
+                            <div className="nr-formRow">
+                              <div className="nr-label">{t('demo.steps.1.styleLabel')}</div>
+                              <StyleSelector
+                                selectedStyle={style}
+                                onStyleChange={(newStyle) => setStyle(newStyle as StyleKey)}
+                              />
+                            </div>
+
+                            <div className="nr-formRow">
+                              <div className="nr-label">{t('demo.steps.1.colorPalette')}</div>
+                              <ColorPaletteSelector
+                                selectedPalette={colorPalette}
+                                onPaletteChange={(palette) => setColorPalette(palette as ColorPaletteKey)}
+                              />
+                            </div>
+
+                            <div className="nr-formRow">
+                              <div className="nr-label">{t('demo.steps.2.moodLabel')}</div>
+                              <MoodSelector
+                                selectedMoods={moods}
+                                onMoodsChange={(newMoods) => setMoods(newMoods as MoodKey[])}
+                              />
+                            </div>
+
+                            <div className="nr-panelActions">
+                              <button
+                                type="button"
+                                className="nr-secondaryBtn"
+                                onClick={() => setConfigPanelStep('space')}
+                              >
+                                {t('demo.config.back')}
+                              </button>
+                              <button
+                                type="button"
+                                className="nr-nextBtn"
+                                onClick={() => setConfigPanelStep('budget')}
+                              >
+                                {t('demo.config.continue')}
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={`nr-configSection ${configPanelStep === 'budget' ? 'is-open' : ''}`}>
+                        <button
+                          type="button"
+                          className="nr-configHeader"
+                          onClick={() => setConfigPanelStep('budget')}
+                          aria-expanded={configPanelStep === 'budget'}
+                        >
+                          <span className="nr-configIndex">03</span>
+                          <span>
+                            <strong>{t('demo.config.budget')}</strong>
+                            <small>{configSummaries.budget}</small>
+                          </span>
+                          <em>{canContinueToNeeds && canGenerate ? t('demo.config.completed') : t('demo.config.edit')}</em>
+                        </button>
+
+                        {configPanelStep === 'budget' && (
+                          <div className="nr-configBody">
+                            <div className="nr-formRow">
+                              <label className="nr-label" htmlFor="nr-budget-compact">
+                                {t('demo.steps.1.budgetLabel')}
+                              </label>
+                              <div className="nr-inputWrap">
+                                <span className="nr-inputPrefix" aria-hidden="true">
+                                  €
+                                </span>
+                                <input
+                                  id="nr-budget-compact"
+                                  className="nr-input"
+                                  type="number"
+                                  inputMode="numeric"
+                                  min={150}
+                                  max={12000}
+                                  step={50}
+                                  value={budget}
+                                  onChange={(e) => setBudget(Number(e.target.value || 0))}
+                                  aria-describedby="nr-budget-help-compact"
+                                />
+                              </div>
+                              <div className="nr-help" id="nr-budget-help-compact">
+                                {t('demo.steps.1.budgetHelp')}
+                              </div>
+                            </div>
+
+                            <div className="nr-formRow">
+                              <div className="nr-label">{t('demo.steps.2.needsLabel')}</div>
+                              <div className="nr-needGrid" role="group" aria-label={t('demo.steps.2.needsLabel')}>
+                                {(
+                                  [
+                                    ['bed', t('demo.steps.3.furnitureCategories.bed')],
+                                    ['desk', t('demo.steps.3.furnitureCategories.desk')],
+                                    ['lamp', t('demo.steps.3.furnitureCategories.lamp')],
+                                    ['storage', t('demo.steps.3.furnitureCategories.storage')],
+                                  ] as const
+                                ).map(([key, label]) => (
+                                  <label key={key} className="nr-need">
+                                    <input
+                                      type="checkbox"
+                                      checked={needs[key]}
+                                      onChange={(e) =>
+                                        setNeeds((prev) => ({
+                                          ...prev,
+                                          [key]: e.target.checked,
+                                        }))
+                                      }
+                                    />
+                                    <span>{label}</span>
+                                  </label>
+                                ))}
+                              </div>
+                              <div className="nr-help">
+                                {t('demo.steps.2.needsHelp')}
+                              </div>
+                            </div>
+
+                            <div className="nr-panelActions">
+                              <button
+                                type="button"
+                                className="nr-secondaryBtn"
+                                onClick={() => {
+                                  setRoomType('bedroom')
+                                  setBudget(1200)
+                                  setStyle('modern')
+                                  setRoomSize('medium')
+                                  setColorPalette('neutral')
+                                }}
+                              >
+                                {t('demo.steps.1.recommended')}
+                              </button>
+                              <button
+                                type="button"
+                                className="nr-nextBtn"
+                                onClick={onGenerate}
+                                disabled={isGenerating || !canContinueToNeeds || !canGenerate}
+                              >
+                                {isGenerating ? t('demo.steps.2.generating') : t('demo.config.generateFullRoom')}
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    <div className="nr-formRow">
-                      <div className="nr-label">{t('demo.steps.2.moodLabel')}</div>
-                      <MoodSelector
-                        selectedMoods={moods}
-                        onMoodsChange={(newMoods) => setMoods(newMoods as MoodKey[])}
-                      />
-                    </div>
-
-                    <button
-                      type="button"
-                      className="nr-genBtn"
-                      onClick={onGenerate}
-                      disabled={isGenerating || !canGenerate}
-                    >
-                      {isGenerating ? t('demo.steps.2.generating') : t('demo.steps.2.generate')}
-                    </button>
-
-                    <div className="nr-panelActions">
-                      <button
-                        type="button"
-                        className="nr-secondaryBtn"
-                        onClick={() => setDemoStep(1)}
-                      >
-                        {t('demo.back')}
-                      </button>
-                      <button
-                        type="button"
-                        className="nr-nextBtn"
-                        onClick={() => setDemoStep(3)}
-                        disabled={!setup}
-                        title={!setup ? t('demo.steps.2.generateFirst') : undefined}
-                      >
-                        {t('demo.viewResults')}
-                      </button>
-                    </div>
-
-                    <p className="nr-micro">
-                      {t('demo.micro')}
-                    </p>
                   </motion.div>
-                )}
-
-                {demoStep === 3 && (
-                  <motion.div
-                    className="nr-stepPanel"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                  >
-                    <div className="nr-panelTitle">{t('demo.steps.3.title')}</div>
-                    <p className="nr-help">
-                      {t('demo.steps.3.help')}
-                    </p>
-                    <div className="nr-panelActions">
-                      <button
-                        type="button"
-                        className="nr-secondaryBtn"
-                        onClick={() => setDemoStep(2)}
-                      >
-                        {t('demo.back')}
-                      </button>
-                      <button
-                        type="button"
-                        className="nr-nextBtn"
-                        onClick={onGenerate}
-                        disabled={isGenerating}
-                      >
-                        {isGenerating ? t('demo.steps.3.refreshing') : t('demo.steps.3.regenerate')}
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
               </div>
 
               <div className="nr-demoCard nr-demoResults" aria-label="Generated setup">
@@ -1001,6 +1054,8 @@ function App() {
           </div>
         </section>
 
+        <UpdatesSection />
+
         <section className="nr-examples" aria-labelledby="examples-title">
           <div className="nr-sectionHead">
             <h2 id="examples-title">{t('examples.title')}</h2>
@@ -1059,6 +1114,8 @@ function App() {
           </div>
         </section>
 
+        <AboutSection />
+
         <section
           className="nr-steps"
           id="how-it-works"
@@ -1110,7 +1167,7 @@ function App() {
                     type="button"
                     className="nr-genBtn nr-priceBtn"
                     onClick={() => {
-                      setDemoStep(1)
+                      setConfigPanelStep('space')
                       const el = document.getElementById('demo')
                       el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                     }}
