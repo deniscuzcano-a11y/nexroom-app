@@ -41,7 +41,7 @@ type AnalyzeRoomPayload = {
 
 const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024
 const MAX_REQUEST_BODY_BYTES = 12 * 1024 * 1024
-const SUPPORTED_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp'])
+const SUPPORTED_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/avif'])
 
 type AiResponseBody = {
   output_text?: string
@@ -52,6 +52,14 @@ type AiResponseBody = {
     }>
   }>
 }
+
+type FallbackReason =
+  | 'invalid-image'
+  | 'missing-key'
+  | 'flag-disabled'
+  | 'openai-error'
+  | 'invalid-json'
+  | 'normalization-failed'
 
 function getEnv() {
   return (globalThis as unknown as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {}
@@ -466,19 +474,19 @@ async function readJsonBody(request: ServerlessRequest): Promise<AnalyzeRoomPayl
   })
 }
 
-function isValidImagePayload(image: SerializedImage) {
+function getImageValidationReason(image: SerializedImage): FallbackReason | null {
   if (
     typeof image.dataUrl !== 'string' ||
     typeof image.mimeType !== 'string' ||
     typeof image.size !== 'number'
   ) {
-    return false
+    return 'invalid-image'
   }
 
-  if (!SUPPORTED_IMAGE_TYPES.has(image.mimeType)) return false
-  if (image.size <= 0 || image.size > MAX_IMAGE_SIZE_BYTES) return false
+  if (!SUPPORTED_IMAGE_TYPES.has(image.mimeType)) return 'invalid-image'
+  if (image.size <= 0 || image.size > MAX_IMAGE_SIZE_BYTES) return 'invalid-image'
 
-  return image.dataUrl.startsWith(`data:${image.mimeType};base64,`)
+  return image.dataUrl.startsWith(`data:${image.mimeType};base64,`) ? null : 'invalid-image'
 }
 
 function isRealAiEnabled(env: Record<string, string | undefined>) {
@@ -492,6 +500,27 @@ function isRealAiEnabled(env: Record<string, string | undefined>) {
 function logServerError(message: string, error?: unknown) {
   const detail = error instanceof Error ? error.message : undefined
   console.warn(`[NEXROOM analyze-room] ${message}${detail ? `: ${detail}` : ''}`)
+}
+
+function logAnalysisEvent(params: {
+  mode: 'real-ai' | 'mock-fallback'
+  reason?: FallbackReason
+  image: SerializedImage
+  realAiEnabled: boolean
+  hasApiKey: boolean
+  locale?: string
+}) {
+  const dataUrlSize = typeof params.image.dataUrl === 'string' ? params.image.dataUrl.length : 0
+  console.info('[NEXROOM analyze-room]', {
+    mode: params.mode,
+    reason: params.reason,
+    mimeType: params.image.mimeType || 'missing',
+    fileSize: params.image.size || 0,
+    dataUrlSize,
+    realAiEnabled: params.realAiEnabled,
+    hasApiKey: params.hasApiKey,
+    locale: params.locale || 'missing',
+  })
 }
 
 function extractTextFromOpenAIResponse(value: unknown): string | null {
@@ -632,17 +661,21 @@ function extractJsonCandidate(text: string) {
   return null
 }
 
-function normalizeAIResponse(text: string, fallback: RoomAnalysisResult): RoomAnalysisResult {
+type NormalizedAiResponse =
+  | { ok: true; result: RoomAnalysisResult }
+  | { ok: false; reason: FallbackReason }
+
+function normalizeAIResponse(text: string, fallback: RoomAnalysisResult): NormalizedAiResponse {
   try {
     const candidate = extractJsonCandidate(text)
-    if (!candidate) return fallback
+    if (!candidate) return { ok: false, reason: 'invalid-json' }
 
     const parsed = JSON.parse(candidate) as Partial<RoomAnalysisResult>
-    if (!hasUsableAiResult(parsed)) return fallback
+    if (!hasUsableAiResult(parsed)) return { ok: false, reason: 'normalization-failed' }
 
-    return mergeAiResult(parsed, fallback)
+    return { ok: true, result: mergeAiResult(parsed, fallback) }
   } catch {
-    return fallback
+    return { ok: false, reason: 'invalid-json' }
   }
 }
 
@@ -941,18 +974,66 @@ async function analyzeWithOpenAI(
       }),
     })
   } catch (error) {
+    logAnalysisEvent({
+      mode: 'mock-fallback',
+      reason: 'openai-error',
+      image,
+      realAiEnabled: true,
+      hasApiKey: true,
+      locale: context.locale || context.language,
+    })
     logServerError('OpenAI request failed; using fallback', error)
     return fallback
   }
 
   if (!response.ok) {
+    logAnalysisEvent({
+      mode: 'mock-fallback',
+      reason: 'openai-error',
+      image,
+      realAiEnabled: true,
+      hasApiKey: true,
+      locale: context.locale || context.language,
+    })
     logServerError(`OpenAI returned ${response.status}; using fallback`)
     return fallback
   }
 
   const data = (await response.json().catch(() => null)) as unknown
   const text = extractTextFromOpenAIResponse(data)
-  return text ? normalizeAIResponse(text, fallback) : fallback
+  if (!text) {
+    logAnalysisEvent({
+      mode: 'mock-fallback',
+      reason: 'invalid-json',
+      image,
+      realAiEnabled: true,
+      hasApiKey: true,
+      locale: context.locale || context.language,
+    })
+    return fallback
+  }
+
+  const normalized = normalizeAIResponse(text, fallback)
+  if (!normalized.ok) {
+    logAnalysisEvent({
+      mode: 'mock-fallback',
+      reason: normalized.reason,
+      image,
+      realAiEnabled: true,
+      hasApiKey: true,
+      locale: context.locale || context.language,
+    })
+    return fallback
+  }
+
+  logAnalysisEvent({
+    mode: 'real-ai',
+    image,
+    realAiEnabled: true,
+    hasApiKey: true,
+    locale: context.locale || context.language,
+  })
+  return normalized.result
 }
 
 export default async function handler(request: ServerlessRequest, response: ServerlessResponse) {
@@ -970,13 +1051,23 @@ export default async function handler(request: ServerlessRequest, response: Serv
     const image = isRecord(payload.image) ? payload.image : {}
     const apiKey = env.OPENAI_API_KEY || env.AI_API_KEY
     const realAiEnabled = isRealAiEnabled(env)
+    const hasApiKey = Boolean(apiKey)
+    const imageFallbackReason = getImageValidationReason(image)
 
-    if (!apiKey || !realAiEnabled || !isValidImagePayload(image)) {
+    if (!realAiEnabled || !hasApiKey || imageFallbackReason) {
+      logAnalysisEvent({
+        mode: 'mock-fallback',
+        reason: imageFallbackReason || (!realAiEnabled ? 'flag-disabled' : 'missing-key'),
+        image,
+        realAiEnabled,
+        hasApiKey,
+        locale: context.locale || context.language,
+      })
       response.status(200).json(createMockAnalysis(context) as unknown as JsonValue)
       return
     }
 
-    const result = await analyzeWithOpenAI(image, context, apiKey)
+    const result = await analyzeWithOpenAI(image, context, apiKey as string)
     response.status(200).json(result as unknown as JsonValue)
   } catch (error) {
     logServerError('Unexpected handler failure; using fallback', error)
