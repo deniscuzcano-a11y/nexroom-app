@@ -109,7 +109,7 @@ function isSpanish(locale?: string) {
 }
 
 function resolveLanguage(context: RoomAnalysisClientContext) {
-  return context.language || context.locale || 'en'
+  return context.language || context.locale || 'es'
 }
 
 function getMockText(context: RoomAnalysisClientContext): RoomAnalysisMockText {
@@ -737,14 +737,92 @@ function mergeAiResult(parsed: Partial<RoomAnalysisResult>, fallback: RoomAnalys
   }
 }
 
-function extractJsonCandidate(text: string) {
-  const trimmed = text.trim().replace(/^```(?:json)?/i, '').replace(/```$/i, '').trim()
-  if (trimmed.startsWith('{') && trimmed.endsWith('}')) return trimmed
+function stripMarkdownJsonFence(text: string) {
+  let cleaned = text.trim()
+  const openingFence = cleaned.match(/^```(?:json|JSON)?\s*/)
+  if (openingFence) {
+    cleaned = cleaned.slice(openingFence[0].length).trim()
+  }
+  if (cleaned.endsWith('```')) {
+    cleaned = cleaned.slice(0, -3).trim()
+  }
 
-  const start = trimmed.indexOf('{')
-  const end = trimmed.lastIndexOf('}')
-  if (start >= 0 && end > start) {
-    return trimmed.slice(start, end + 1)
+  return cleaned
+}
+
+function isValidJsonObjectCandidate(candidate: string) {
+  try {
+    const parsed = JSON.parse(candidate)
+    return isRecord(parsed)
+  } catch {
+    return false
+  }
+}
+
+function extractBalancedJsonObject(text: string) {
+  let start = -1
+  let depth = 0
+  let inString = false
+  let escaped = false
+
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index]
+
+    if (start === -1) {
+      if (char === '{') {
+        start = index
+        depth = 1
+      }
+      continue
+    }
+
+    if (escaped) {
+      escaped = false
+      continue
+    }
+
+    if (char === '\\') {
+      escaped = true
+      continue
+    }
+
+    if (char === '"') {
+      inString = !inString
+      continue
+    }
+
+    if (inString) continue
+
+    if (char === '{') {
+      depth += 1
+    } else if (char === '}') {
+      depth -= 1
+      if (depth === 0) {
+        const candidate = text.slice(start, index + 1)
+        if (isValidJsonObjectCandidate(candidate)) return candidate
+
+        start = -1
+      }
+    }
+  }
+
+  return null
+}
+
+function extractJsonFromAiText(rawText: string) {
+  if (!rawText.trim()) return null
+
+  const cleaned = stripMarkdownJsonFence(rawText)
+  if (isValidJsonObjectCandidate(cleaned)) return cleaned
+
+  const balancedCandidate = extractBalancedJsonObject(cleaned)
+  if (balancedCandidate) return balancedCandidate
+
+  const fallbackStart = cleaned.indexOf('{')
+  const fallbackEnd = cleaned.lastIndexOf('}')
+  if (fallbackStart >= 0 && fallbackEnd > fallbackStart) {
+    const fallbackCandidate = cleaned.slice(fallbackStart, fallbackEnd + 1)
+    if (isValidJsonObjectCandidate(fallbackCandidate)) return fallbackCandidate
   }
 
   return null
@@ -756,7 +834,7 @@ type NormalizedAiResponse =
 
 function normalizeAIResponse(text: string, fallback: RoomAnalysisResult): NormalizedAiResponse {
   try {
-    const candidate = extractJsonCandidate(text)
+    const candidate = extractJsonFromAiText(text)
     if (!candidate) return { ok: false, reason: 'invalid-json' }
 
     const parsed = JSON.parse(candidate) as Partial<RoomAnalysisResult>
@@ -986,6 +1064,25 @@ function createAiInstructions(context: RoomAnalysisClientContext, fallback: Room
   ].join('\n')
 }
 
+function createOpenRouterInstructions(context: RoomAnalysisClientContext, fallback: RoomAnalysisResult) {
+  const language = isSpanish(resolveLanguage(context)) ? 'Spanish' : 'English'
+
+  return [
+    createAiInstructions(context, fallback),
+    `All customer-facing strings in the JSON must be in ${language}.`,
+    'Return only valid JSON.',
+    'Do not use markdown.',
+    'Do not wrap the response in ```json.',
+    'Do not add explanations before or after the JSON.',
+    'Output must be a single valid JSON object.',
+    'Use double quotes for all JSON keys and string values.',
+    'The JSON must match RoomAnalysisResult and include useful values for detectedRoom, estimatedSize, lightingQuality, styleCues, dominantColors, emptySpaces, spaceProblems, missingFurniture, clutterLevel, budgetFit, budgetEstimate, confidence, summary, nextAction, recommendations, roomAnalysis, layoutSuggestions, furniturePack, suggestedFurniture, budgetBreakdown, analysisSteps, visualMockupPlan, warnings, commercialSummary and nextActions.',
+    'If unsure about details in the image, use cautious approximations.',
+    'Do not invent exact measurements.',
+    'Prioritize useful, visual, purchasable room recommendations.',
+  ].join('\n')
+}
+
 async function analyzeWithOpenAI(
   image: SerializedImage,
   context: RoomAnalysisClientContext,
@@ -1098,7 +1195,7 @@ async function analyzeWithOpenRouter(
 
   const openRouterModel = env.OPENROUTER_MODEL || 'openrouter/free'
   const modelCandidates = [...new Set([openRouterModel])]
-  const instructions = createAiInstructions(context, fallback)
+  const instructions = createOpenRouterInstructions(context, fallback)
   let lastReason: FallbackReason = 'openrouter-error'
 
   for (const model of modelCandidates) {
