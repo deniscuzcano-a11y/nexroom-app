@@ -7,9 +7,8 @@ import type {
   RoomAnalysisRecommendation,
   RoomAnalysisResult,
   VisualMockupPlan,
-} from '../src/types/roomAnalysis'
-import enTranslations from '../src/locales/en.json'
-import esTranslations from '../src/locales/es.json'
+} from '../src/types/roomAnalysis.js'
+import { mockRoomAnalysisContent } from './mockRoomAnalysisContent.js'
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue }
 
@@ -42,11 +41,7 @@ type AnalyzeRoomPayload = {
 
 const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024
 const MAX_REQUEST_BODY_BYTES = 12 * 1024 * 1024
-const SUPPORTED_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/gif'])
-
-type LocaleResource = {
-  aiMock: RoomAnalysisMockText
-}
+const SUPPORTED_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp'])
 
 type AiResponseBody = {
   output_text?: string
@@ -83,7 +78,7 @@ function resolveLanguage(context: RoomAnalysisClientContext) {
 }
 
 function getMockText(context: RoomAnalysisClientContext): RoomAnalysisMockText {
-  return ((isSpanish(resolveLanguage(context)) ? esTranslations : enTranslations) as LocaleResource).aiMock
+  return isSpanish(resolveLanguage(context)) ? mockRoomAnalysisContent.es : mockRoomAnalysisContent.en
 }
 
 function fillTemplate(template: string, values: Record<string, string | number>) {
@@ -486,6 +481,19 @@ function isValidImagePayload(image: SerializedImage) {
   return image.dataUrl.startsWith(`data:${image.mimeType};base64,`)
 }
 
+function isRealAiEnabled(env: Record<string, string | undefined>) {
+  return (
+    env.NEXROOM_REAL_AI === 'true' ||
+    env.NEXROOM_ENABLE_REAL_AI === 'true' ||
+    env.ENABLE_REAL_AI === 'true'
+  )
+}
+
+function logServerError(message: string, error?: unknown) {
+  const detail = error instanceof Error ? error.message : undefined
+  console.warn(`[NEXROOM analyze-room] ${message}${detail ? `: ${detail}` : ''}`)
+}
+
 function extractTextFromOpenAIResponse(value: unknown): string | null {
   if (!isRecord(value)) return null
   const response = value as AiResponseBody
@@ -611,9 +619,25 @@ function mergeAiResult(parsed: Partial<RoomAnalysisResult>, fallback: RoomAnalys
   }
 }
 
-function safeParseAiResult(text: string, fallback: RoomAnalysisResult): RoomAnalysisResult {
+function extractJsonCandidate(text: string) {
+  const trimmed = text.trim().replace(/^```(?:json)?/i, '').replace(/```$/i, '').trim()
+  if (trimmed.startsWith('{') && trimmed.endsWith('}')) return trimmed
+
+  const start = trimmed.indexOf('{')
+  const end = trimmed.lastIndexOf('}')
+  if (start >= 0 && end > start) {
+    return trimmed.slice(start, end + 1)
+  }
+
+  return null
+}
+
+function normalizeAIResponse(text: string, fallback: RoomAnalysisResult): RoomAnalysisResult {
   try {
-    const parsed = JSON.parse(text) as Partial<RoomAnalysisResult>
+    const candidate = extractJsonCandidate(text)
+    if (!candidate) return fallback
+
+    const parsed = JSON.parse(candidate) as Partial<RoomAnalysisResult>
     if (!hasUsableAiResult(parsed)) return fallback
 
     return mergeAiResult(parsed, fallback)
@@ -816,14 +840,18 @@ function createAiInstructions(context: RoomAnalysisClientContext, fallback: Room
 
   return [
     `Return visible customer-facing text in ${language}.`,
-    'Analyze the room image as an interior planning and shopping assistant.',
+    'You are an expert in interior design, furniture ecommerce, room layout, visual composition, and premium shopping experiences.',
+    'Analyze the real room image as an interior planning and shopping assistant.',
     'Focus on turning the room into a practical, attractive, budget-aware room pack.',
-    'Infer room type, layout, light, current style, visible furniture, empty zones, obstacles, risks, and opportunities.',
+    'Detect room type, layout, lighting, current style, visible furniture, empty zones, obstacles, space problems, and improvement opportunities.',
+    'Recommend color palette, materials, furniture categories, layout improvements, and shoppable room-pack priorities.',
+    'Do not claim exact measurements unless they are clearly visible. Use cautious approximations when needed.',
+    'Do not claim facts that cannot be verified from the image.',
     'Recommend furniture categories and product-like placeholders that can later be replaced by real catalog items.',
     'Do not invent real store links, real product URLs, or claims of live availability.',
     'Use the provided user preferences and budget when ranking recommendations.',
     'Keep all scores between 0 and 100.',
-    'Return JSON only.',
+    'Return strict JSON only. Do not return markdown, comments, or prose outside JSON.',
     JSON.stringify({
       userPreferences: context,
       fallbackLabels: {
@@ -912,15 +940,19 @@ async function analyzeWithOpenAI(
         ],
       }),
     })
-  } catch {
+  } catch (error) {
+    logServerError('OpenAI request failed; using fallback', error)
     return fallback
   }
 
-  if (!response.ok) return fallback
+  if (!response.ok) {
+    logServerError(`OpenAI returned ${response.status}; using fallback`)
+    return fallback
+  }
 
   const data = (await response.json().catch(() => null)) as unknown
   const text = extractTextFromOpenAIResponse(data)
-  return text ? safeParseAiResult(text, fallback) : fallback
+  return text ? normalizeAIResponse(text, fallback) : fallback
 }
 
 export default async function handler(request: ServerlessRequest, response: ServerlessResponse) {
@@ -937,7 +969,7 @@ export default async function handler(request: ServerlessRequest, response: Serv
     const context = normalizeContext(payload.context)
     const image = isRecord(payload.image) ? payload.image : {}
     const apiKey = env.OPENAI_API_KEY || env.AI_API_KEY
-    const realAiEnabled = env.NEXROOM_ENABLE_REAL_AI === 'true'
+    const realAiEnabled = isRealAiEnabled(env)
 
     if (!apiKey || !realAiEnabled || !isValidImagePayload(image)) {
       response.status(200).json(createMockAnalysis(context) as unknown as JsonValue)
@@ -946,7 +978,8 @@ export default async function handler(request: ServerlessRequest, response: Serv
 
     const result = await analyzeWithOpenAI(image, context, apiKey)
     response.status(200).json(result as unknown as JsonValue)
-  } catch {
+  } catch (error) {
+    logServerError('Unexpected handler failure; using fallback', error)
     response.status(200).json(createMockAnalysis() as unknown as JsonValue)
   }
 }
