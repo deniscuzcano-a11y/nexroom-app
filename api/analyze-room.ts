@@ -57,9 +57,33 @@ type FallbackReason =
   | 'invalid-image'
   | 'missing-key'
   | 'flag-disabled'
+  | 'openai-401'
+  | 'openai-quota'
   | 'openai-error'
+  | 'openrouter-missing-key'
+  | 'openrouter-error'
+  | 'openrouter-no-vision-model'
   | 'invalid-json'
   | 'normalization-failed'
+
+type AnalysisLogSource = 'openai-real-ai' | 'openrouter-real-ai' | 'mock-fallback'
+
+type RealAiSource = 'openai-real-ai' | 'openrouter-real-ai'
+
+type AiAnalysisOutcome =
+  | { ok: true; result: RoomAnalysisResult; source: RealAiSource; reason?: FallbackReason }
+  | { ok: false; reason: FallbackReason }
+
+type OpenRouterResponseBody = {
+  choices?: Array<{
+    message?: {
+      content?: string | Array<{
+        type?: string
+        text?: string
+      }>
+    }
+  }>
+}
 
 function getEnv() {
   return (globalThis as unknown as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {}
@@ -503,22 +527,24 @@ function logServerError(message: string, error?: unknown) {
 }
 
 function logAnalysisEvent(params: {
-  mode: 'real-ai' | 'mock-fallback'
+  source: AnalysisLogSource
   reason?: FallbackReason
   image: SerializedImage
   realAiEnabled: boolean
-  hasApiKey: boolean
+  hasOpenAIKey: boolean
+  hasOpenRouterKey: boolean
   locale?: string
 }) {
   const dataUrlSize = typeof params.image.dataUrl === 'string' ? params.image.dataUrl.length : 0
   console.info('[NEXROOM analyze-room]', {
-    mode: params.mode,
+    source: params.source,
     reason: params.reason,
     mimeType: params.image.mimeType || 'missing',
     fileSize: params.image.size || 0,
     dataUrlSize,
     realAiEnabled: params.realAiEnabled,
-    hasApiKey: params.hasApiKey,
+    hasOpenAiKey: params.hasOpenAIKey,
+    hasOpenRouterKey: params.hasOpenRouterKey,
     locale: params.locale || 'missing',
   })
 }
@@ -542,6 +568,62 @@ function extractTextFromOpenAIResponse(value: unknown): string | null {
   }
 
   return null
+}
+
+function extractTextFromOpenRouterResponse(value: unknown): string | null {
+  if (!isRecord(value)) return null
+  const response = value as OpenRouterResponseBody
+
+  for (const choice of response.choices ?? []) {
+    const content = choice.message?.content
+    if (typeof content === 'string') return content
+    if (!Array.isArray(content)) continue
+
+    for (const part of content) {
+      if (typeof part.text === 'string') {
+        return part.text
+      }
+    }
+  }
+
+  return null
+}
+
+function getBase64FromDataUrl(image: SerializedImage) {
+  if (typeof image.dataUrl !== 'string') return ''
+  const separatorIndex = image.dataUrl.indexOf(',')
+
+  return separatorIndex >= 0 ? image.dataUrl.slice(separatorIndex + 1) : ''
+}
+
+async function getSafeResponseText(response: Response) {
+  return response.text().catch(() => '')
+}
+
+async function getOpenAIFailureReason(response: Response): Promise<FallbackReason> {
+  if (response.status === 401) return 'openai-401'
+
+  const body = (await getSafeResponseText(response)).toLowerCase()
+  const quotaSignals = ['quota', 'billing', 'credit', 'credits', 'insufficient_quota', 'insufficient funds']
+  if (response.status === 429 || quotaSignals.some((signal) => body.includes(signal))) {
+    return 'openai-quota'
+  }
+
+  return 'openai-error'
+}
+
+function getOpenRouterFailureReason(response: Response, body: string): FallbackReason {
+  const normalizedBody = body.toLowerCase()
+  const noVisionSignals = ['vision', 'image', 'multimodal', 'no endpoints', 'model not found', 'not support']
+
+  if (
+    (response.status === 400 || response.status === 404) &&
+    noVisionSignals.some((signal) => normalizedBody.includes(signal))
+  ) {
+    return 'openrouter-no-vision-model'
+  }
+
+  return 'openrouter-error'
 }
 
 function hasUsableAiResult(value: Partial<RoomAnalysisResult>) {
@@ -901,10 +983,10 @@ async function analyzeWithOpenAI(
   image: SerializedImage,
   context: RoomAnalysisClientContext,
   apiKey: string,
-): Promise<RoomAnalysisResult> {
+): Promise<AiAnalysisOutcome> {
   const env = getEnv()
   const fallback = createMockAnalysis(context)
-  if (!image.dataUrl) return fallback
+  if (!image.dataUrl) return { ok: false, reason: 'invalid-image' }
 
   const model = env.OPENAI_MODEL || 'gpt-4.1-mini'
   const instructions = createAiInstructions(context, fallback)
@@ -967,73 +1049,126 @@ async function analyzeWithOpenAI(
                   ],
                 }),
               },
-      { type: 'input_image', image_url: image.dataUrl, detail: 'high' },
+              { type: 'input_image', image_url: image.dataUrl, detail: 'high' },
             ],
           },
         ],
       }),
     })
   } catch (error) {
-    logAnalysisEvent({
-      mode: 'mock-fallback',
-      reason: 'openai-error',
-      image,
-      realAiEnabled: true,
-      hasApiKey: true,
-      locale: context.locale || context.language,
-    })
-    logServerError('OpenAI request failed; using fallback', error)
-    return fallback
+    logServerError('OpenAI request failed', error)
+    return { ok: false, reason: 'openai-error' }
   }
 
   if (!response.ok) {
-    logAnalysisEvent({
-      mode: 'mock-fallback',
-      reason: 'openai-error',
-      image,
-      realAiEnabled: true,
-      hasApiKey: true,
-      locale: context.locale || context.language,
-    })
-    logServerError(`OpenAI returned ${response.status}; using fallback`)
-    return fallback
+    const reason = await getOpenAIFailureReason(response)
+    logServerError(`OpenAI returned ${response.status}`)
+    return { ok: false, reason }
   }
 
   const data = (await response.json().catch(() => null)) as unknown
   const text = extractTextFromOpenAIResponse(data)
   if (!text) {
-    logAnalysisEvent({
-      mode: 'mock-fallback',
-      reason: 'invalid-json',
-      image,
-      realAiEnabled: true,
-      hasApiKey: true,
-      locale: context.locale || context.language,
-    })
-    return fallback
+    return { ok: false, reason: 'invalid-json' }
   }
 
   const normalized = normalizeAIResponse(text, fallback)
   if (!normalized.ok) {
-    logAnalysisEvent({
-      mode: 'mock-fallback',
-      reason: normalized.reason,
-      image,
-      realAiEnabled: true,
-      hasApiKey: true,
-      locale: context.locale || context.language,
-    })
-    return fallback
+    return { ok: false, reason: normalized.reason }
   }
 
-  logAnalysisEvent({
-    mode: 'real-ai',
-    image,
-    realAiEnabled: true,
-    hasApiKey: true,
-    locale: context.locale || context.language,
-  })
-  return normalized.result
+  return { ok: true, result: normalized.result, source: 'openai-real-ai' }
+}
+
+async function analyzeWithOpenRouter(
+  image: SerializedImage,
+  context: RoomAnalysisClientContext,
+  apiKey: string,
+): Promise<AiAnalysisOutcome> {
+  const env = getEnv()
+  const fallback = createMockAnalysis(context)
+  if (!image.dataUrl || !getBase64FromDataUrl(image)) return { ok: false, reason: 'invalid-image' }
+
+  const primaryModel = env.OPENROUTER_MODEL || 'google/gemma-4-31b-it:free'
+  const modelCandidates = [...new Set([primaryModel, 'openrouter/free'])]
+  const instructions = createAiInstructions(context, fallback)
+  let lastReason: FallbackReason = 'openrouter-error'
+
+  for (const model of modelCandidates) {
+    let response: Response
+    try {
+      response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://nexroom.app',
+          'X-Title': 'NEXROOM',
+        },
+        body: JSON.stringify({
+          model,
+          temperature: 0.2,
+          response_format: { type: 'json_object' },
+          messages: [
+            {
+              role: 'user',
+              content: [
+                {
+                  type: 'text',
+                  text: [
+                    instructions,
+                    JSON.stringify({
+                      context,
+                      commerceRule: 'Use placeholders for store/productUrl/imageUrl until a real catalog is connected.',
+                      expectedResult: 'Return one strict RoomAnalysisResult JSON object only.',
+                    }),
+                  ].join('\n'),
+                },
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: image.dataUrl,
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      })
+    } catch (error) {
+      logServerError('OpenRouter request failed', error)
+      return { ok: false, reason: 'openrouter-error' }
+    }
+
+    if (!response.ok) {
+      const body = await getSafeResponseText(response)
+      lastReason = getOpenRouterFailureReason(response, body)
+      logServerError(`OpenRouter returned ${response.status}`)
+      if (lastReason === 'openrouter-no-vision-model' && model !== modelCandidates[modelCandidates.length - 1]) {
+        continue
+      }
+
+      return { ok: false, reason: lastReason }
+    }
+
+    const data = (await response.json().catch(() => null)) as unknown
+    const text = extractTextFromOpenRouterResponse(data)
+    if (!text) return { ok: false, reason: 'invalid-json' }
+
+    const normalized = normalizeAIResponse(text, fallback)
+    if (!normalized.ok) {
+      if (model !== modelCandidates[modelCandidates.length - 1]) {
+        lastReason = normalized.reason
+        continue
+      }
+
+      return { ok: false, reason: normalized.reason }
+    }
+
+    return { ok: true, result: normalized.result, source: 'openrouter-real-ai' }
+  }
+
+  return { ok: false, reason: lastReason }
 }
 
 export default async function handler(request: ServerlessRequest, response: ServerlessResponse) {
@@ -1049,26 +1184,78 @@ export default async function handler(request: ServerlessRequest, response: Serv
     const payload = await readJsonBody(request)
     const context = normalizeContext(payload.context)
     const image = isRecord(payload.image) ? payload.image : {}
-    const apiKey = env.OPENAI_API_KEY || env.AI_API_KEY
+    const openAiApiKey = env.OPENAI_API_KEY || env.AI_API_KEY
+    const openRouterApiKey = env.OPENROUTER_API_KEY
     const realAiEnabled = isRealAiEnabled(env)
-    const hasApiKey = Boolean(apiKey)
+    const hasOpenAIKey = Boolean(openAiApiKey)
+    const hasOpenRouterKey = Boolean(openRouterApiKey)
     const imageFallbackReason = getImageValidationReason(image)
 
-    if (!realAiEnabled || !hasApiKey || imageFallbackReason) {
+    if (!realAiEnabled || (!hasOpenAIKey && !hasOpenRouterKey) || imageFallbackReason) {
       logAnalysisEvent({
-        mode: 'mock-fallback',
+        source: 'mock-fallback',
         reason: imageFallbackReason || (!realAiEnabled ? 'flag-disabled' : 'missing-key'),
         image,
         realAiEnabled,
-        hasApiKey,
+        hasOpenAIKey,
+        hasOpenRouterKey,
         locale: context.locale || context.language,
       })
       response.status(200).json(createMockAnalysis(context) as unknown as JsonValue)
       return
     }
 
-    const result = await analyzeWithOpenAI(image, context, apiKey as string)
-    response.status(200).json(result as unknown as JsonValue)
+    let lastFailureReason: FallbackReason | undefined
+
+    if (openAiApiKey) {
+      const openAiResult = await analyzeWithOpenAI(image, context, openAiApiKey)
+      if (openAiResult.ok) {
+        logAnalysisEvent({
+          source: openAiResult.source,
+          image,
+          realAiEnabled,
+          hasOpenAIKey,
+          hasOpenRouterKey,
+          locale: context.locale || context.language,
+        })
+        response.status(200).json(openAiResult.result as unknown as JsonValue)
+        return
+      }
+
+      lastFailureReason = openAiResult.reason
+    }
+
+    if (openRouterApiKey) {
+      const openRouterResult = await analyzeWithOpenRouter(image, context, openRouterApiKey)
+      if (openRouterResult.ok) {
+        logAnalysisEvent({
+          source: openRouterResult.source,
+          reason: lastFailureReason,
+          image,
+          realAiEnabled,
+          hasOpenAIKey,
+          hasOpenRouterKey,
+          locale: context.locale || context.language,
+        })
+        response.status(200).json(openRouterResult.result as unknown as JsonValue)
+        return
+      }
+
+      lastFailureReason = openRouterResult.reason
+    } else if (lastFailureReason) {
+      lastFailureReason = 'openrouter-missing-key'
+    }
+
+    logAnalysisEvent({
+      source: 'mock-fallback',
+      reason: lastFailureReason || 'missing-key',
+      image,
+      realAiEnabled,
+      hasOpenAIKey,
+      hasOpenRouterKey,
+      locale: context.locale || context.language,
+    })
+    response.status(200).json(createMockAnalysis(context) as unknown as JsonValue)
   } catch (error) {
     logServerError('Unexpected handler failure; using fallback', error)
     response.status(200).json(createMockAnalysis() as unknown as JsonValue)
