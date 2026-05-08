@@ -1073,7 +1073,7 @@ async function analyzeWithOpenAI(
   }
 
   const normalized = normalizeAIResponse(text, fallback)
-  if (!normalized.ok) {
+  if (normalized.ok === false) {
     return { ok: false, reason: normalized.reason }
   }
 
@@ -1156,7 +1156,7 @@ async function analyzeWithOpenRouter(
     if (!text) return { ok: false, reason: 'invalid-json' }
 
     const normalized = normalizeAIResponse(text, fallback)
-    if (!normalized.ok) {
+    if (normalized.ok === false) {
       if (model !== modelCandidates[modelCandidates.length - 1]) {
         lastReason = normalized.reason
         continue
