@@ -61,6 +61,9 @@ type FallbackReason =
   | 'openai-quota'
   | 'openai-error'
   | 'openrouter-missing-key'
+  | 'openrouter-rate-limit'
+  | 'openrouter-insufficient-credits'
+  | 'openrouter-invalid-key'
   | 'openrouter-error'
   | 'openrouter-no-vision-model'
   | 'invalid-json'
@@ -613,6 +616,10 @@ async function getOpenAIFailureReason(response: Response): Promise<FallbackReaso
 }
 
 function getOpenRouterFailureReason(response: Response, body: string): FallbackReason {
+  if (response.status === 429) return 'openrouter-rate-limit'
+  if (response.status === 402) return 'openrouter-insufficient-credits'
+  if (response.status === 401) return 'openrouter-invalid-key'
+
   const normalizedBody = body.toLowerCase()
   const noVisionSignals = ['vision', 'image', 'multimodal', 'no endpoints', 'model not found', 'not support']
 
@@ -1089,8 +1096,8 @@ async function analyzeWithOpenRouter(
   const fallback = createMockAnalysis(context)
   if (!image.dataUrl || !getBase64FromDataUrl(image)) return { ok: false, reason: 'invalid-image' }
 
-  const primaryModel = env.OPENROUTER_MODEL || 'google/gemma-4-31b-it:free'
-  const modelCandidates = [...new Set([primaryModel, 'openrouter/free'])]
+  const openRouterModel = env.OPENROUTER_MODEL || 'openrouter/free'
+  const modelCandidates = [...new Set([openRouterModel])]
   const instructions = createAiInstructions(context, fallback)
   let lastReason: FallbackReason = 'openrouter-error'
 
