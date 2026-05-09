@@ -193,7 +193,7 @@
     "back": "Atrás",
     "continue": "Continuar",
     "viewResults": "Ver resultados",
-    "micro": "Todo se ejecuta localmente en tu navegador—sin backend.",
+    "micro": "Vista privada. Sin registro.",
     "config": {
       "space": "Espacio",
       "style": "Estilo",
@@ -764,7 +764,7 @@
       "lampInstruction": "Colocar junto al mueble para crear luz lateral.",
       "storageLabel": "Zona de almacenaje",
       "clearanceLabel": "Paso libre 70 cm",
-      "beforeAfterPrompt": "Mockup before/after futuro: mantener la foto original, anadir los muebles recomendados y senalar zonas de paso."
+      "beforeAfterPrompt": "Plan de transformacion visual preparado."
     },
     "commercialSummary": {
       "packTitle": "Tu habitacion lista en un pack comprable",

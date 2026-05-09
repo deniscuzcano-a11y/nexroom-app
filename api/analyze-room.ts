@@ -15,6 +15,10 @@ type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string
 type ServerlessRequest = {
   method?: string
   body?: unknown
+  headers?: Record<string, string | string[] | undefined>
+  socket?: {
+    remoteAddress?: string
+  }
   on: (
     event: 'data' | 'end' | 'error',
     callback: (chunkOrError?: { toString: (encoding?: string) => string } | Error) => void,
@@ -41,7 +45,10 @@ type AnalyzeRoomPayload = {
 
 const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024
 const MAX_REQUEST_BODY_BYTES = 12 * 1024 * 1024
+const RATE_LIMIT_WINDOW_MS = 60 * 1000
+const RATE_LIMIT_MAX_REQUESTS = 12
 const SUPPORTED_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/avif'])
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
 
 type AiResponseBody = {
   output_text?: string
@@ -66,6 +73,7 @@ type FallbackReason =
   | 'openrouter-invalid-key'
   | 'openrouter-error'
   | 'openrouter-no-vision-model'
+  | 'rate-limited'
   | 'invalid-json'
   | 'normalization-failed'
 
@@ -550,6 +558,56 @@ function logAnalysisEvent(params: {
     hasOpenRouterKey: params.hasOpenRouterKey,
     locale: params.locale || 'missing',
   })
+}
+
+function getHeaderValue(headers: ServerlessRequest['headers'], name: string) {
+  const value = headers?.[name] ?? headers?.[name.toLowerCase()]
+  if (Array.isArray(value)) return value[0]
+
+  return value
+}
+
+function getClientRateLimitKey(request: ServerlessRequest) {
+  const forwardedFor = getHeaderValue(request.headers, 'x-forwarded-for')
+  const firstForwardedIp = typeof forwardedFor === 'string' ? forwardedFor.split(',')[0]?.trim() : undefined
+
+  return firstForwardedIp || request.socket?.remoteAddress || 'anonymous'
+}
+
+function isRateLimited(request: ServerlessRequest) {
+  const now = Date.now()
+  const key = getClientRateLimitKey(request)
+  const entry = rateLimitStore.get(key)
+
+  if (!entry || entry.resetAt <= now) {
+    rateLimitStore.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
+    return false
+  }
+
+  entry.count += 1
+  if (rateLimitStore.size > 500) {
+    for (const [storedKey, storedEntry] of rateLimitStore) {
+      if (storedEntry.resetAt <= now) rateLimitStore.delete(storedKey)
+    }
+  }
+
+  return entry.count > RATE_LIMIT_MAX_REQUESTS
+}
+
+function sanitizeClientAnalysis(result: RoomAnalysisResult): RoomAnalysisResult {
+  return {
+    ...result,
+    source: 'ai',
+    analysisSteps: result.analysisSteps.map((step) => ({
+      ...step,
+      status: step.status === 'mock' ? 'partial' : step.status,
+    })),
+    visualMockupPlan: {
+      ...result.visualMockupPlan,
+      beforeAfterPrompt: '',
+    },
+    beforeAfterPrompt: '',
+  }
 }
 
 function extractTextFromOpenAIResponse(value: unknown): string | null {
@@ -1285,6 +1343,19 @@ export default async function handler(request: ServerlessRequest, response: Serv
 
   try {
     const env = getEnv()
+    if (isRateLimited(request)) {
+      logAnalysisEvent({
+        source: 'mock-fallback',
+        reason: 'rate-limited',
+        image: {},
+        realAiEnabled: isRealAiEnabled(env),
+        hasOpenAIKey: Boolean(env.OPENAI_API_KEY || env.AI_API_KEY),
+        hasOpenRouterKey: Boolean(env.OPENROUTER_API_KEY),
+      })
+      response.status(200).json(sanitizeClientAnalysis(createMockAnalysis()) as unknown as JsonValue)
+      return
+    }
+
     const payload = await readJsonBody(request)
     const context = normalizeContext(payload.context)
     const image = isRecord(payload.image) ? payload.image : {}
@@ -1305,7 +1376,7 @@ export default async function handler(request: ServerlessRequest, response: Serv
         hasOpenRouterKey,
         locale: context.locale || context.language,
       })
-      response.status(200).json(createMockAnalysis(context) as unknown as JsonValue)
+      response.status(200).json(sanitizeClientAnalysis(createMockAnalysis(context)) as unknown as JsonValue)
       return
     }
 
@@ -1322,7 +1393,7 @@ export default async function handler(request: ServerlessRequest, response: Serv
           hasOpenRouterKey,
           locale: context.locale || context.language,
         })
-        response.status(200).json(openAiResult.result as unknown as JsonValue)
+        response.status(200).json(sanitizeClientAnalysis(openAiResult.result) as unknown as JsonValue)
         return
       }
 
@@ -1341,7 +1412,7 @@ export default async function handler(request: ServerlessRequest, response: Serv
           hasOpenRouterKey,
           locale: context.locale || context.language,
         })
-        response.status(200).json(openRouterResult.result as unknown as JsonValue)
+        response.status(200).json(sanitizeClientAnalysis(openRouterResult.result) as unknown as JsonValue)
         return
       }
 
@@ -1359,9 +1430,9 @@ export default async function handler(request: ServerlessRequest, response: Serv
       hasOpenRouterKey,
       locale: context.locale || context.language,
     })
-    response.status(200).json(createMockAnalysis(context) as unknown as JsonValue)
+    response.status(200).json(sanitizeClientAnalysis(createMockAnalysis(context)) as unknown as JsonValue)
   } catch (error) {
     logServerError('Unexpected handler failure; using fallback', error)
-    response.status(200).json(createMockAnalysis() as unknown as JsonValue)
+    response.status(200).json(sanitizeClientAnalysis(createMockAnalysis()) as unknown as JsonValue)
   }
 }

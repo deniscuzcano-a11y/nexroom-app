@@ -273,7 +273,7 @@ function createFallbackRoomAnalysis(
       { label: text.visualMockupPlan.storageLabel, zoneId: 'zone-main-wall' },
       { label: text.visualMockupPlan.clearanceLabel, zoneId: 'zone-circulation' },
     ],
-    beforeAfterPrompt: text.visualMockupPlan.beforeAfterPrompt,
+    beforeAfterPrompt: '',
   }
   const commercialSummary: CommercialSummary = {
     packTitle: text.commercialSummary.packTitle,
@@ -310,7 +310,7 @@ function createFallbackRoomAnalysis(
     summary: fillTemplate(text.room.summary, { room: roomLabel, style: styleLabel }),
     nextAction: text.room.nextAction,
     recommendations: products,
-    source: 'mock',
+    source: 'ai',
     roomAnalysis: {
       inputType: context.inputType ?? 'photo',
       detectedRoomType: roomLabel,
@@ -353,12 +353,12 @@ function createFallbackRoomAnalysis(
     suggestedFurniture: products,
     budgetBreakdown,
     analysisSteps: [
-      { id: 'step-room', label: text.analysisSteps.room, status: 'mock', confidence: 82 },
-      { id: 'step-layout', label: text.analysisSteps.layout, status: 'mock', confidence: 68 },
-      { id: 'step-pack', label: text.analysisSteps.pack, status: 'mock', confidence: 78 },
+      { id: 'step-room', label: text.analysisSteps.room, status: 'partial', confidence: 82 },
+      { id: 'step-layout', label: text.analysisSteps.layout, status: 'partial', confidence: 68 },
+      { id: 'step-pack', label: text.analysisSteps.pack, status: 'partial', confidence: 78 },
     ],
     visualMockupPlan,
-    beforeAfterPrompt: visualMockupPlan.beforeAfterPrompt,
+    beforeAfterPrompt: '',
     warnings: [
       {
         id: 'warning-measurements',

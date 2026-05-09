@@ -177,7 +177,7 @@
     "back": "Back",
     "continue": "Continue",
     "viewResults": "View results",
-    "micro": "Everything runs locally in your browser—no backend.",
+    "micro": "Private preview. No signup required.",
     "config": {
       "space": "Space",
       "style": "Style",
@@ -712,7 +712,7 @@
       "lampInstruction": "Place beside storage for side lighting.",
       "storageLabel": "Storage zone",
       "clearanceLabel": "70 cm clearance",
-      "beforeAfterPrompt": "Future before/after mockup: keep the original photo, add recommended furniture, and label circulation zones."
+      "beforeAfterPrompt": "Visual transformation plan prepared."
     },
     "commercialSummary": {
       "packTitle": "Your room ready in one shoppable pack",
