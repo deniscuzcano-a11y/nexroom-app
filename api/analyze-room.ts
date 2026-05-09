@@ -45,8 +45,8 @@ type AnalyzeRoomPayload = {
 
 const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024
 const MAX_REQUEST_BODY_BYTES = 12 * 1024 * 1024
-const RATE_LIMIT_WINDOW_MS = 60 * 1000
-const RATE_LIMIT_MAX_REQUESTS = 12
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+const RATE_LIMIT_MAX_REQUESTS = 5
 const SUPPORTED_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/avif'])
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
 

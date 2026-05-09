@@ -2,18 +2,18 @@
   "nav": {
     "demo": "Demo",
     "howItWorks": "How it works",
-    "pricing": "Pricing"
+    "pricing": "Beta"
   },
   "hero": {
-    "eyebrow": "AI interior planning, simplified",
-    "title": "Design a bedroom you'll love—instantly.",
-    "subtitle": "Pick a budget, choose a style, and let NEXROOM generate a shoppable setup in seconds—optimized for your space and your wallet.",
-    "cta": "Start free demo",
+    "eyebrow": "Visual room planning, simplified",
+    "title": "Plan a room that feels ready to buy.",
+    "subtitle": "Choose a budget, style, and room photo to explore a visual, ready-to-shop proposal. NEXROOM is a demo in development, so results may vary while the product improves.",
+    "cta": "Try the demo preview",
     "ctaHint": "No signup. Takes ~60 seconds.",
     "visual": {
-      "liveLabel": "Live AI planner",
+      "liveLabel": "Product preview",
       "confidence": "94% match",
-      "title": "Room intelligence preview",
+      "title": "Smart room preview",
       "subtitle": "Smart analysis reads style, lighting, empty zones, and budget fit before generating a shoppable layout.",
       "budget": "Budget",
       "match": "Style match",
@@ -21,31 +21,41 @@
     }
   },
   "trust": {
-    "title": "Used by {{count}} users",
-    "subtitle": "Designers, students, and busy builders use NEXROOM to go from 'ideas' to 'done' faster.",
-    "badges": ["Privacy-first", "Budget-aware", "Fast iterations"],
-    "logos": ["ArcHome", "NordNest", "StudioNine", "Roomly", "Craft & Co"]
+    "title": "Built for early room planning",
+    "subtitle": "A polished preview for people who want clearer room ideas before spending time comparing furniture.",
+    "badges": [
+      "Budget clarity",
+      "Visual proposals",
+      "Demo in development"
+    ],
+    "logos": [
+      "Small rooms",
+      "First homes",
+      "Workspaces",
+      "Rentals",
+      "Studios"
+    ]
   },
   "testimonials": [
     {
-      "quote": "I went from 'blank room' to a cohesive setup in minutes. The budget bar is surprisingly accurate.",
-      "name": "Mina K.",
-      "role": "First apartment"
+      "quote": "A clearer way to compare room ideas before committing to a purchase.",
+      "name": "Preview note",
+      "role": "Budget planning"
     },
     {
-      "quote": "The style consistency is the killer feature. Everything matches without me hunting through 20 tabs.",
-      "name": "Alex R.",
-      "role": "Remote worker"
+      "quote": "The goal is simple: turn inspiration into a room proposal that is easier to understand.",
+      "name": "Preview note",
+      "role": "Visual planning"
     },
     {
-      "quote": "Perfect for quick iterations. Change one need, regenerate, done. Feels like a real product.",
-      "name": "Sam P.",
-      "role": "Indie builder"
+      "quote": "NEXROOM is evolving through a public demo with continuous product improvements.",
+      "name": "Preview note",
+      "role": "Product beta"
     }
   ],
   "demo": {
-    "title": "Interactive AI demo",
-    "subtitle": "A guided, 3-step flow—like a real product. Get an itemized setup with prices and budget tracking.",
+    "title": "Interactive product demo",
+    "subtitle": "A guided, 3-step preview for exploring room ideas, itemized recommendations and budget tracking.",
     "badge": "Product preview",
     "steps": {
       "1": {
@@ -158,7 +168,7 @@
         "withinBudget": "Within budget",
         "roomPreview": "Room preview",
         "furnitureRecommendations": "Furniture recommendations",
-        "aiRecommendation": "AI recommendation",
+        "aiRecommendation": "Smart recommendation",
         "optimizedFor": "Optimized for",
         "roomForUpgrades": "room for small upgrades",
         "tryRemovingNeed": "Try removing one need or lowering item tiers",
@@ -200,7 +210,7 @@
       "readyLabel": "Ready to scan",
       "errorTitle": "We could not analyze the image",
       "errorBadge": "Check image",
-      "progressLabel": "AI analysis progress",
+      "progressLabel": "Analysis progress",
       "noPhoto": "Add a room photo to unlock intelligent recommendations.",
       "previewAlt": "Room preview image",
       "resultTitle": "Room insight",
@@ -264,7 +274,7 @@
       },
       "summary": "Your photo shows a {{roomType}} with {{lighting}} and {{style}}. The space feels {{clutter}} and would benefit from {{missing}}.",
       "summaryDefault": "Room scan completed with default analysis.",
-      "scanFlowLabel": "AI room scan flow",
+      "scanFlowLabel": "Room scan flow",
       "scanSteps": {
         "upload": "Upload image",
         "analyzing": "Analyzing room",
@@ -298,7 +308,7 @@
       "priceLabel": "Price"
     },
     "visual": {
-      "kicker": "AI demo visual",
+      "kicker": "Visual demo",
       "title": "{{room}} layout preview",
       "before": "Before",
       "after": "After",
@@ -307,7 +317,7 @@
         "warmLighting": "Warm Lighting",
         "recommendedLayout": "Recommended Layout"
       },
-      "analysisState": "AI state",
+      "analysisState": "Preview state",
       "stateGenerating": "Generating full room",
       "stateReady": "Analysis complete",
       "stateMock": "Scan preview ready",
@@ -326,12 +336,30 @@
       }
     },
     "styleTone": {
-      "modern": { "adjective": "Modern", "vibe": "bold accents and sleek forms" },
-      "scandinavian": { "adjective": "Scandinavian", "vibe": "light woods and functional warmth" },
-      "japandi": { "adjective": "Japandi", "vibe": "natural materials and calm balance" },
-      "minimalist": { "adjective": "Minimal", "vibe": "clean lines and an open palette" },
-      "luxury": { "adjective": "Luxury", "vibe": "premium materials and elegant details" },
-      "cozy": { "adjective": "Cozy", "vibe": "warm textures and soft light" }
+      "modern": {
+        "adjective": "Modern",
+        "vibe": "bold accents and sleek forms"
+      },
+      "scandinavian": {
+        "adjective": "Scandinavian",
+        "vibe": "light woods and functional warmth"
+      },
+      "japandi": {
+        "adjective": "Japandi",
+        "vibe": "natural materials and calm balance"
+      },
+      "minimalist": {
+        "adjective": "Minimal",
+        "vibe": "clean lines and an open palette"
+      },
+      "luxury": {
+        "adjective": "Luxury",
+        "vibe": "premium materials and elegant details"
+      },
+      "cozy": {
+        "adjective": "Cozy",
+        "vibe": "warm textures and soft light"
+      }
     },
     "catalog": {
       "analysisFallback": {
@@ -343,24 +371,72 @@
         "reason": "{{missing}}, optimized for {{lighting}} and {{colors}}."
       },
       "bed": {
-        "low": ["{{style}} platform bed", "{{style}} slatted frame bed", "{{style}} compact bed frame"],
-        "mid": ["{{style}} upholstered bed", "{{style}} oak-look bed frame", "{{style}} storage bed base"],
-        "high": ["{{style}} premium bed with headboard", "{{style}} solid-wood statement bed", "{{style}} hotel-style bed frame"]
+        "low": [
+          "{{style}} platform bed",
+          "{{style}} slatted frame bed",
+          "{{style}} compact bed frame"
+        ],
+        "mid": [
+          "{{style}} upholstered bed",
+          "{{style}} oak-look bed frame",
+          "{{style}} storage bed base"
+        ],
+        "high": [
+          "{{style}} premium bed with headboard",
+          "{{style}} solid-wood statement bed",
+          "{{style}} hotel-style bed frame"
+        ]
       },
       "desk": {
-        "low": ["{{style}} writing desk", "{{style}} compact workstation", "{{style}} foldable desk"],
-        "mid": ["{{style}} desk with cable management", "{{style}} standing-ready desk", "{{style}} desk with drawer unit"],
-        "high": ["{{style}} premium desk with solid top", "{{style}} designer workstation", "{{style}} executive desk"]
+        "low": [
+          "{{style}} writing desk",
+          "{{style}} compact workstation",
+          "{{style}} foldable desk"
+        ],
+        "mid": [
+          "{{style}} desk with cable management",
+          "{{style}} standing-ready desk",
+          "{{style}} desk with drawer unit"
+        ],
+        "high": [
+          "{{style}} premium desk with solid top",
+          "{{style}} designer workstation",
+          "{{style}} executive desk"
+        ]
       },
       "lamp": {
-        "low": ["{{style}} bedside lamp", "{{style}} task lamp", "{{style}} dimmable table lamp"],
-        "mid": ["{{style}} dimmable LED lamp", "{{style}} ambient bedside lamp", "{{style}} glare-free reading lamp"],
-        "high": ["{{style}} smart lamp with scene presets", "{{style}} premium ambient lamp", "{{style}} designer lamp"]
+        "low": [
+          "{{style}} bedside lamp",
+          "{{style}} task lamp",
+          "{{style}} dimmable table lamp"
+        ],
+        "mid": [
+          "{{style}} dimmable LED lamp",
+          "{{style}} ambient bedside lamp",
+          "{{style}} glare-free reading lamp"
+        ],
+        "high": [
+          "{{style}} smart lamp with scene presets",
+          "{{style}} premium ambient lamp",
+          "{{style}} designer lamp"
+        ]
       },
       "storage": {
-        "low": ["{{style}} open shelving", "{{style}} under-bed boxes", "{{style}} simple wardrobe rail"],
-        "mid": ["{{style}} dresser with 3-4 drawers", "{{style}} wardrobe with shelves", "{{style}} closed storage cabinet"],
-        "high": ["{{style}} premium wardrobe system", "{{style}} large dresser with organizer", "{{style}} built-in style storage"]
+        "low": [
+          "{{style}} open shelving",
+          "{{style}} under-bed boxes",
+          "{{style}} simple wardrobe rail"
+        ],
+        "mid": [
+          "{{style}} dresser with 3-4 drawers",
+          "{{style}} wardrobe with shelves",
+          "{{style}} closed storage cabinet"
+        ],
+        "high": [
+          "{{style}} premium wardrobe system",
+          "{{style}} large dresser with organizer",
+          "{{style}} built-in style storage"
+        ]
       },
       "notes": {
         "value": "Simple frame, great value",
@@ -492,35 +568,35 @@
         "label": "Initial foundation",
         "changes": [
           "Initial premium landing",
-          "Interactive AI demo",
+          "Interactive product demo",
           "Value proposition focused on shoppable rooms"
         ]
       }
     ]
   },
   "why": {
-    "title": "Why NEXROOM",
-    "subtitle": "Built for speed, taste, and budget reality—without the overwhelm.",
+    "title": "Why trust NEXROOM",
+    "subtitle": "A public demo built to make room decisions clearer before you buy.",
     "features": [
       {
-        "title": "Budget-aware by default",
-        "body": "Every recommendation is price-tagged, with trade-offs explained."
+        "title": "Clear budget before buying",
+        "body": "Each proposal keeps budget visible so decisions feel easier to compare."
       },
       {
-        "title": "Style that stays consistent",
-        "body": "We keep materials, colors, and shapes coherent across the setup."
+        "title": "Visual proposals that make sense",
+        "body": "Room ideas are presented as simple, coherent packs rather than isolated pieces."
       },
       {
-        "title": "Fast iteration",
-        "body": "Adjust needs and regenerate instantly until it feels right."
+        "title": "Built for real spaces",
+        "body": "NEXROOM helps you think through layout, light, storage and usefulness before shopping."
       }
     ]
   },
   "about": {
     "title": "About us",
     "subtitle": "NEXROOM was created to make designing a beautiful, functional and budget-aware room much easier.",
-    "mainText": "NEXROOM is a project created by Denis Rudenko with a clear idea: helping people and companies turn rooms into complete, visual and ready-to-shop proposals.",
-    "trustText": "Instead of leaving users lost between hundreds of furniture options, NEXROOM organizes the process: it understands the space, style and budget, then turns the decision into a clearer and more actionable room pack.",
+    "mainText": "NEXROOM is a project created by Denis Rudenko with a clear idea: helping people turn rooms into complete, visual and ready-to-shop proposals.",
+    "trustText": "Instead of leaving users lost between hundreds of furniture options, NEXROOM organizes the decision: space, style, budget and priorities become a clearer room pack.",
     "cards": [
       {
         "title": "Clear vision",
@@ -531,8 +607,8 @@
         "body": "Designed for people who want to improve their space without spending hours comparing options."
       },
       {
-        "title": "Commercial focus",
-        "body": "Prepared to help companies turn inspiration into purchase decisions."
+        "title": "Ready-to-shop focus",
+        "body": "Built to turn inspiration into clearer purchase decisions when the product opens publicly."
       }
     ]
   },
@@ -555,28 +631,38 @@
     ]
   },
   "pricing": {
-    "title": "Pricing",
-    "subtitle": "Start free. Upgrade when you want saved setups and deeper planning.",
+    "title": "Join the beta",
+    "subtitle": "Be among the first to try NEXROOM when the public demo opens.",
     "plans": [
       {
-        "name": "Free",
+        "name": "Demo preview",
         "price": "0",
-        "features": ["Interactive demo", "Itemized pricing", "Unlimited regenerations"],
-        "cta": "Start free demo"
+        "features": [
+          "Visual room preview",
+          "Budget-aware suggestions",
+          "Ready-to-shop proposal"
+        ],
+        "cta": "Try demo"
       },
       {
-        "name": "Pro",
-        "price": "9",
-        "unit": "/mo",
-        "features": ["Save & compare setups", "Room layout suggestions", "Smarter budget optimization"],
-        "cta": "Try Pro flow"
+        "name": "Beta access",
+        "price": "0",
+        "features": [
+          "Early product access",
+          "Continuous improvements",
+          "Feedback welcome"
+        ],
+        "cta": "Beta soon"
       },
       {
-        "name": "Premium",
-        "price": "19",
-        "unit": "/mo",
-        "features": ["Multiple rooms & saved history", "Shareable links", "Priority presets"],
-        "cta": "Start with Premium"
+        "name": "Future plans",
+        "price": "0",
+        "features": [
+          "Saved room versions",
+          "More comparison tools",
+          "Deeper planning options"
+        ],
+        "cta": "Coming soon"
       }
     ]
   },
@@ -654,22 +740,37 @@
         "id": "pack-basic",
         "title": "Functional basic pack",
         "summary": "Solves light and storage with minimal spend.",
-        "pros": ["Lowest cost", "Easy to buy"],
-        "cons": ["Limited visual transformation"]
+        "pros": [
+          "Lowest cost",
+          "Easy to buy"
+        ],
+        "cons": [
+          "Limited visual transformation"
+        ]
       },
       "recommended": {
         "id": "pack-recommended",
         "title": "Ready-room pack",
         "summary": "Balances design, utility, and budget.",
-        "pros": ["Best balance", "Complete purchase"],
-        "cons": ["Requires real measurement validation"]
+        "pros": [
+          "Best balance",
+          "Complete purchase"
+        ],
+        "cons": [
+          "Requires real measurement validation"
+        ]
       },
       "premium": {
         "id": "pack-premium",
         "title": "Elevated premium pack",
         "summary": "Upgrades materials, visual presence, and durability.",
-        "pros": ["Higher visual impact", "Better finishes"],
-        "cons": ["May exceed target budget"]
+        "pros": [
+          "Higher visual impact",
+          "Better finishes"
+        ],
+        "cons": [
+          "May exceed target budget"
+        ]
       }
     },
     "room": {
@@ -678,9 +779,19 @@
       "fallbackSize": "Medium",
       "lighting": "Soft natural light",
       "styleCues": "{{style}} base with clean lines",
-      "colors": ["soft beige", "charcoal", "muted green"],
-      "spaceProblems": ["Lighting needs a second layer", "Exact measurements are missing for fit validation"],
-      "missingFurniture": ["storage", "a lamp"],
+      "colors": [
+        "soft beige",
+        "charcoal",
+        "muted green"
+      ],
+      "spaceProblems": [
+        "Lighting needs a second layer",
+        "Exact measurements are missing for fit validation"
+      ],
+      "missingFurniture": [
+        "storage",
+        "a lamp"
+      ],
       "clutterLevel": "Moderate",
       "budgetFitTight": "Tight but practical",
       "budgetFitBalanced": "Well-balanced",

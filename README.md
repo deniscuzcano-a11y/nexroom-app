@@ -10,4 +10,4 @@ The public product focuses on:
 - Spanish and English support
 - A safe demo experience for product validation
 
-Private configuration belongs in server-side environment variables only. Do not place real credentials in public files.
+Private configuration belongs in environment variables only. Do not place real credentials in public files.

@@ -550,14 +550,14 @@ function App() {
                 {t('trust.subtitle')}
               </p>
             </div>
-            <div className="nr-badges" aria-label="Trust badges">
+            <div className="nr-badges" aria-label="Trust signals">
               {trustBadges.map((badge) => (
                 <span key={badge} className="nr-badge">{badge}</span>
               ))}
             </div>
           </div>
 
-          <div className="nr-logoRow" aria-label="Customer logos">
+          <div className="nr-logoRow" aria-label="Use cases">
             {trustLogos.map(
               (name) => (
                 <motion.div
@@ -573,7 +573,7 @@ function App() {
             )}
           </div>
 
-          <div className="nr-testimonialGrid" aria-label="Testimonials">
+          <div className="nr-testimonialGrid" aria-label="Preview notes">
             {testimonialItems.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
