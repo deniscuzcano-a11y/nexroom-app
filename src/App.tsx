@@ -3,6 +3,7 @@ import './App.css'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
+import { BadgeEuro, Boxes, Clapperboard, Sparkles } from 'lucide-react'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { ImagePlaceholder } from './components/ImagePlaceholder'
 import { RoomAnalyzer } from './components/RoomAnalyzer'
@@ -15,6 +16,7 @@ import { MoodSelector } from './components/MoodSelector'
 import { RoomSizeSelector } from './components/RoomSizeSelector'
 import { UpdatesSection } from './components/UpdatesSection'
 import { AboutSection } from './components/AboutSection'
+import { ExperiencePage } from './components/ExperiencePage'
 import type { RoomAnalysisResult } from './types/roomAnalysis'
 import type {
   ColorPaletteKey,
@@ -74,10 +76,18 @@ type PricingPlan = {
   cta: string
 }
 
+type ExploreCard = {
+  title: string
+  body: string
+  cta: string
+  href: string
+  kind: 'demo' | 'experience' | 'beta' | 'updates'
+}
+
 type ConfigPanelStep = 'space' | 'style' | 'budget'
 
-function eur(value: number) {
-  return new Intl.NumberFormat('de-DE', {
+function eur(value: number, language = 'en') {
+  return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-IE', {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0,
@@ -104,8 +114,8 @@ function createRng(seed: number) {
 }
 
 function tierForBudget(budget: number) {
-  if (budget < 650) return 'low' as const
-  if (budget < 1500) return 'mid' as const
+  if (budget < 500) return 'low' as const
+  if (budget < 800) return 'mid' as const
   return 'high' as const
 }
 
@@ -193,8 +203,8 @@ function generateSetup(params: {
           params.t('demo.catalog.bed.low.1', { style: tone.adjective }),
           params.t('demo.catalog.bed.low.2', { style: tone.adjective }),
         ],
-        min: 220,
-        max: 420,
+        min: 180,
+        max: 260,
         notes: [params.t('demo.catalog.notes.value'), params.t('demo.catalog.notes.sturdy')],
       },
       mid: {
@@ -203,8 +213,8 @@ function generateSetup(params: {
           params.t('demo.catalog.bed.mid.1', { style: tone.adjective }),
           params.t('demo.catalog.bed.mid.2', { style: tone.adjective }),
         ],
-        min: 520,
-        max: 900,
+        min: 250,
+        max: 380,
         notes: [params.t('demo.catalog.notes.materials'), params.t('demo.catalog.notes.comfort')],
       },
       high: {
@@ -213,8 +223,8 @@ function generateSetup(params: {
           params.t('demo.catalog.bed.high.1', { style: tone.adjective }),
           params.t('demo.catalog.bed.high.2', { style: tone.adjective }),
         ],
-        min: 980,
-        max: 1600,
+        min: 390,
+        max: 620,
         notes: [params.t('demo.catalog.notes.premium'), params.t('demo.catalog.notes.longTerm')],
       },
     },
@@ -225,8 +235,8 @@ function generateSetup(params: {
           params.t('demo.catalog.desk.low.1', { style: tone.adjective }),
           params.t('demo.catalog.desk.low.2', { style: tone.adjective }),
         ],
-        min: 80,
-        max: 160,
+        min: 69,
+        max: 120,
         notes: [params.t('demo.catalog.notes.spaceSaving'), params.t('demo.catalog.notes.functional')],
       },
       mid: {
@@ -235,8 +245,8 @@ function generateSetup(params: {
           params.t('demo.catalog.desk.mid.1', { style: tone.adjective }),
           params.t('demo.catalog.desk.mid.2', { style: tone.adjective }),
         ],
-        min: 220,
-        max: 420,
+        min: 109,
+        max: 190,
         notes: [params.t('demo.catalog.notes.ergonomics'), params.t('demo.catalog.notes.tidy')],
       },
       high: {
@@ -245,8 +255,8 @@ function generateSetup(params: {
           params.t('demo.catalog.desk.high.1', { style: tone.adjective }),
           params.t('demo.catalog.desk.high.2', { style: tone.adjective }),
         ],
-        min: 520,
-        max: 990,
+        min: 170,
+        max: 280,
         notes: [params.t('demo.catalog.notes.finish'), params.t('demo.catalog.notes.durable')],
       },
     },
@@ -257,8 +267,8 @@ function generateSetup(params: {
           params.t('demo.catalog.lamp.low.1', { style: tone.adjective }),
           params.t('demo.catalog.lamp.low.2', { style: tone.adjective }),
         ],
-        min: 25,
-        max: 60,
+        min: 24,
+        max: 55,
         notes: [params.t('demo.catalog.notes.warmLight'), params.t('demo.catalog.notes.valueLighting')],
       },
       mid: {
@@ -267,8 +277,8 @@ function generateSetup(params: {
           params.t('demo.catalog.lamp.mid.1', { style: tone.adjective }),
           params.t('demo.catalog.lamp.mid.2', { style: tone.adjective }),
         ],
-        min: 70,
-        max: 140,
+        min: 45,
+        max: 85,
         notes: [params.t('demo.catalog.notes.lightQuality'), params.t('demo.catalog.notes.premiumLook')],
       },
       high: {
@@ -277,8 +287,8 @@ function generateSetup(params: {
           params.t('demo.catalog.lamp.high.1', { style: tone.adjective }),
           params.t('demo.catalog.lamp.high.2', { style: tone.adjective }),
         ],
-        min: 160,
-        max: 320,
+        min: 70,
+        max: 130,
         notes: [params.t('demo.catalog.notes.scenes'), params.t('demo.catalog.notes.statementLight')],
       },
     },
@@ -289,8 +299,8 @@ function generateSetup(params: {
           params.t('demo.catalog.storage.low.1', { style: tone.adjective }),
           params.t('demo.catalog.storage.low.2', { style: tone.adjective }),
         ],
-        min: 60,
-        max: 140,
+        min: 69,
+        max: 120,
         notes: [params.t('demo.catalog.notes.organization'), params.t('demo.catalog.notes.quickSetup')],
       },
       mid: {
@@ -299,8 +309,8 @@ function generateSetup(params: {
           params.t('demo.catalog.storage.mid.1', { style: tone.adjective }),
           params.t('demo.catalog.storage.mid.2', { style: tone.adjective }),
         ],
-        min: 220,
-        max: 520,
+        min: 110,
+        max: 190,
         notes: [params.t('demo.catalog.notes.cleaner'), params.t('demo.catalog.notes.capacity')],
       },
       high: {
@@ -309,8 +319,8 @@ function generateSetup(params: {
           params.t('demo.catalog.storage.high.1', { style: tone.adjective }),
           params.t('demo.catalog.storage.high.2', { style: tone.adjective }),
         ],
-        min: 620,
-        max: 1250,
+        min: 180,
+        max: 320,
         notes: [params.t('demo.catalog.notes.premiumCapacity'), params.t('demo.catalog.notes.builtIn')],
       },
     },
@@ -325,10 +335,10 @@ function generateSetup(params: {
       need === 'bed'
         ? params.t('demo.steps.3.furnitureCategories.bed')
         : need === 'desk'
-          ? params.t('demo.steps.3.furnitureCategories.desk')
+          ? params.t('demo.visual.productCategories.studyZone')
           : need === 'lamp'
             ? params.t('demo.steps.3.furnitureCategories.lamp')
-            : params.t('demo.steps.3.furnitureCategories.storage')
+            : params.t('demo.visual.productCategories.visualOrder')
     const note = analysis ? analysisReason(need) : entry.notes ? pick(entry.notes, r) : undefined
     return { key: need, name, category, price, note }
   })
@@ -356,11 +366,11 @@ function generateSetup(params: {
   }
 }
 
-function App() {
-  const { t } = useTranslation()
+function LandingPage() {
+  const { t, i18n } = useTranslation()
   const [configPanelStep, setConfigPanelStep] = useState<ConfigPanelStep>('space')
   const [roomType, setRoomType] = useState<RoomTypeKey>('bedroom')
-  const [budget, setBudget] = useState<number>(1200)
+  const [budget, setBudget] = useState<number>(650)
   const [style, setStyle] = useState<StyleKey>('modern')
   const [roomSize, setRoomSize] = useState<RoomSizeKey>('medium')
   const [colorPalette, setColorPalette] = useState<ColorPaletteKey>('neutral')
@@ -371,6 +381,7 @@ function App() {
     storage: false,
   })
   const [moods, setMoods] = useState<MoodKey[]>(['relaxing'])
+  const [areTestimonialsExpanded, setAreTestimonialsExpanded] = useState(false)
 
   const selectedNeeds = useMemo(
     () => (Object.keys(needs) as NeedKey[]).filter((k) => needs[k]),
@@ -399,6 +410,10 @@ function App() {
     () => t('pricing.plans', { returnObjects: true }) as PricingPlan[],
     [t],
   )
+  const exploreCards = useMemo(
+    () => t('explore.cards', { returnObjects: true }) as ExploreCard[],
+    [t],
+  )
   const trustBadges = useMemo(
     () => t('trust.badges', { returnObjects: true }) as string[],
     [t],
@@ -411,13 +426,22 @@ function App() {
     () => t('testimonials', { returnObjects: true }) as TestimonialItem[],
     [t],
   )
+  const visibleTestimonials = areTestimonialsExpanded
+    ? testimonialItems
+    : testimonialItems.slice(0, 3)
+  const exploreIcons = {
+    demo: Sparkles,
+    experience: Clapperboard,
+    beta: BadgeEuro,
+    updates: Boxes,
+  } satisfies Record<ExploreCard['kind'], typeof Sparkles>
   const configSummaries = useMemo(
     () => ({
       space: `${t(`demo.steps.1.roomTypes.${roomType}`)} / ${t(`demo.steps.1.roomSizeDimensions.${roomSize}`)}`,
       style: `${t(`demo.steps.1.styles.${style}`)} / ${t(`demo.steps.1.colorPalettes.${colorPalette}`)}`,
-      budget: eur(budget),
+      budget: eur(budget, i18n.language),
     }),
-    [budget, colorPalette, roomSize, roomType, style, t],
+    [budget, colorPalette, i18n.language, roomSize, roomType, style, t],
   )
   const configSteps = useMemo(
     () =>
@@ -493,6 +517,9 @@ function App() {
           </a>
           <a className="nr-navLink" href="#how-it-works">
             {t('nav.howItWorks')}
+          </a>
+          <a className="nr-navLink" href="/experience">
+            {t('nav.experience')}
           </a>
           <a className="nr-navLink" href="#pricing">
             {t('nav.pricing')}
@@ -574,7 +601,7 @@ function App() {
           </div>
 
           <div className="nr-testimonialGrid" aria-label="Preview notes">
-            {testimonialItems.map((testimonial, index) => (
+            {visibleTestimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
                 className="nr-testimonialCard"
@@ -601,6 +628,52 @@ function App() {
                 </div>
               </motion.div>
             ))}
+          </div>
+
+          {testimonialItems.length > 3 && (
+            <div className="nr-testimonialActions">
+              <button
+                type="button"
+                className="nr-secondaryBtn nr-testimonialToggle"
+                onClick={() => setAreTestimonialsExpanded((value) => !value)}
+                aria-expanded={areTestimonialsExpanded}
+              >
+                {areTestimonialsExpanded ? t('trust.showLessNotes') : t('trust.showMoreNotes')}
+              </button>
+            </div>
+          )}
+        </section>
+
+        <section className="nr-explore" aria-labelledby="explore-title">
+          <div className="nr-sectionHead">
+            <h2 id="explore-title">{t('explore.title')}</h2>
+            <p className="nr-sectionSub">{t('explore.subtitle')}</p>
+          </div>
+
+          <div className="nr-exploreGrid">
+            {exploreCards.map((card, index) => {
+              const Icon = exploreIcons[card.kind]
+
+              return (
+                <motion.a
+                  key={card.title}
+                  className={`nr-exploreCard nr-exploreCard--${card.kind}`}
+                  href={card.href}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.24 }}
+                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                  whileHover={{ y: -4 }}
+                >
+                  <span className="nr-exploreIcon" aria-hidden="true">
+                    <Icon size={18} strokeWidth={2.1} />
+                  </span>
+                  <span className="nr-exploreTitle">{card.title}</span>
+                  <span className="nr-exploreBody">{card.body}</span>
+                  <span className="nr-exploreCta">{card.cta}</span>
+                </motion.a>
+              )
+            })}
           </div>
         </section>
 
@@ -848,7 +921,7 @@ function App() {
                                 className="nr-secondaryBtn"
                                 onClick={() => {
                                   setRoomType('bedroom')
-                                  setBudget(1200)
+                                  setBudget(650)
                                   setStyle('modern')
                                   setRoomSize('medium')
                                   setColorPalette('neutral')
@@ -958,7 +1031,7 @@ function App() {
                                 <p className="nr-suggestionReason">{suggestion.reason}</p>
                                 <div className="nr-suggestionMeta">
                                   <span>{t('demo.analysis.match', { percent: suggestion.match })}</span>
-                                  <span>{t('demo.analysis.priceLabel')}: {eur(suggestion.price)}</span>
+                                  <span>{t('demo.analysis.priceLabel')}: {eur(suggestion.price, i18n.language)}</span>
                                 </div>
                               </div>
                             ))}
@@ -990,7 +1063,7 @@ function App() {
                                 <div className="nr-itemNote">{it.note}</div>
                               )}
                             </div>
-                            <div className="nr-itemPrice">{eur(it.price)}</div>
+                            <div className="nr-itemPrice">{t('demo.visual.fromPrice', { price: eur(it.price, i18n.language) })}</div>
                           </div>
                         ))}
 
@@ -1011,11 +1084,11 @@ function App() {
                           <div className="nr-totals">
                             <div className="nr-totalRow">
                               <span>{t('demo.steps.3.budgetLabel')}</span>
-                              <strong>{eur(setup.budget)}</strong>
+                              <strong>{eur(setup.budget, i18n.language)}</strong>
                             </div>
                             <div className="nr-totalRow">
                               <span>{t('demo.steps.3.totalSpent')}</span>
-                              <strong>{eur(setup.total)}</strong>
+                              <strong>{eur(setup.total, i18n.language)}</strong>
                             </div>
 
                             <div className="nr-meter" aria-hidden="true">
@@ -1038,8 +1111,8 @@ function App() {
                                 </span>
                                 <span>
                                   {setup.total <= setup.budget
-                                    ? t('demo.steps.3.remainingAmount', { amount: eur(setup.budget - setup.total) })
-                                    : t('demo.steps.3.overAmount', { amount: eur(setup.total - setup.budget) })}
+                                    ? t('demo.steps.3.remainingAmount', { amount: eur(setup.budget - setup.total, i18n.language) })
+                                    : t('demo.steps.3.overAmount', { amount: eur(setup.total - setup.budget, i18n.language) })}
                                 </span>
                               </div>
                             </div>
@@ -1153,7 +1226,7 @@ function App() {
                 <div className="nr-priceTop">
                   <div className="nr-priceName">{plan.name}</div>
                   <div className="nr-priceValue">
-                    {Number(plan.price) === 0 ? eur(0) : eur(Number(plan.price))}
+                    {Number(plan.price) === 0 ? eur(0, i18n.language) : eur(Number(plan.price), i18n.language)}
                     {plan.unit && <span className="nr-priceUnit">{plan.unit}</span>}
                   </div>
                 </div>
@@ -1190,6 +1263,17 @@ function App() {
       </footer>
     </div>
   )
+}
+
+function App() {
+  const routePath =
+    typeof window === 'undefined' ? '/' : window.location.pathname.replace(/\/+$/, '') || '/'
+
+  if (routePath === '/experience') {
+    return <ExperiencePage />
+  }
+
+  return <LandingPage />
 }
 
 export default App

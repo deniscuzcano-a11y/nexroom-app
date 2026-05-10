@@ -334,10 +334,10 @@ export function RoomAnalyzer({
 
       {analysisError && (
         <div className="nr-analysisSummaryCard">
-          <div className="nr-summaryTop">
-            <div className="nr-summaryTitle">{errorTitle}</div>
-            <span className="nr-status bad">AI</span>
-          </div>
+            <div className="nr-summaryTop">
+              <div className="nr-summaryTitle">{errorTitle}</div>
+            <span className="nr-status bad">{t('demo.badge')}</span>
+            </div>
           <p>{analysisError}</p>
         </div>
       )}

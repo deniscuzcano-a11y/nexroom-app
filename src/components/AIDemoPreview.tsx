@@ -7,6 +7,7 @@ type PreviewItem = {
   name: string
   category: string
   price: number
+  note?: string
 }
 
 interface AIDemoPreviewProps {
@@ -24,8 +25,8 @@ interface AIDemoPreviewProps {
   onGenerate?: () => void
 }
 
-function eur(value: number) {
-  return new Intl.NumberFormat('de-DE', {
+function eur(value: number, language = 'en') {
+  return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-IE', {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0,
@@ -46,7 +47,7 @@ export function AIDemoPreview({
   items = [],
   onGenerate,
 }: AIDemoPreviewProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const estimate = total ?? Math.round(budget * 0.92)
   const usedPercent = Math.min(100, Math.round((estimate / budget) * 100))
   const previewItems = items.length > 0
@@ -55,20 +56,23 @@ export function AIDemoPreview({
         {
           key: 'desk',
           name: t('demo.visual.mockProducts.desk'),
-          category: t('demo.steps.3.furnitureCategories.desk'),
-          price: Math.round(budget * 0.22 / 5) * 5,
+          category: t('demo.visual.productCategories.studyZone'),
+          price: Math.max(69, Math.round(budget * 0.16 / 5) * 5),
+          note: t('demo.visual.productDescriptions.desk'),
         },
         {
           key: 'lamp',
           name: t('demo.visual.mockProducts.lamp'),
           category: t('demo.steps.3.furnitureCategories.lamp'),
-          price: Math.round(budget * 0.08 / 5) * 5,
+          price: Math.max(24, Math.round(budget * 0.07 / 5) * 5),
+          note: t('demo.visual.productDescriptions.lamp'),
         },
         {
           key: 'storage',
           name: t('demo.visual.mockProducts.storage'),
           category: t('demo.steps.3.furnitureCategories.storage'),
-          price: Math.round(budget * 0.18 / 5) * 5,
+          price: Math.max(69, Math.round(budget * 0.15 / 5) * 5),
+          note: t('demo.visual.productDescriptions.storage'),
         },
       ]
   const insightCards = [
@@ -120,7 +124,7 @@ export function AIDemoPreview({
         </div>
         <div>
           <BadgeEuro size={16} />
-          <span>{eur(estimate)} / {eur(budget)}</span>
+          <span>{eur(estimate, i18n.language)} / {eur(budget, i18n.language)}</span>
         </div>
       </div>
 
@@ -166,15 +170,15 @@ export function AIDemoPreview({
           <div className="nr-aiBudgetRows">
             <div>
               <span>{t('demo.steps.3.budgetLabel')}</span>
-              <strong>{eur(budget)}</strong>
+              <strong>{eur(budget, i18n.language)}</strong>
             </div>
             <div>
               <span>{t('demo.visual.estimatedSpend')}</span>
-              <strong>{eur(estimate)}</strong>
+              <strong>{eur(estimate, i18n.language)}</strong>
             </div>
             <div>
               <span>{t('demo.steps.3.remaining')}</span>
-              <strong>{eur(Math.max(0, budget - estimate))}</strong>
+              <strong>{eur(Math.max(0, budget - estimate), i18n.language)}</strong>
             </div>
           </div>
         </div>
@@ -190,8 +194,12 @@ export function AIDemoPreview({
               <div>
                 <span>{item.category}</span>
                 <strong>{item.name}</strong>
+                <small>{item.note ?? t(`demo.visual.productDescriptions.${item.key}`, { defaultValue: t('demo.visual.productDescriptions.default') })}</small>
               </div>
-              <b>{eur(item.price)}</b>
+              <div className="nr-aiProductMeta">
+                <em>{status === 'within' ? t('demo.steps.3.withinBudget') : t('demo.visual.previewTag')}</em>
+                <b>{t('demo.visual.fromPrice', { price: eur(item.price, i18n.language) })}</b>
+              </div>
             </div>
           ))}
         </div>

@@ -44,7 +44,7 @@ export function UpdatesSection() {
   const visibleItems = isExpanded ? items : items.slice(0, 3)
 
   return (
-    <section className="nr-updates" aria-labelledby="updates-title">
+    <section className="nr-updates" id="updates" aria-labelledby="updates-title">
       <div className="nr-sectionHead">
         <h2 id="updates-title">{t('updates.title')}</h2>
         <p className="nr-sectionSub">{t('updates.subtitle')}</p>

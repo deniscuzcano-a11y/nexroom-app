@@ -9,19 +9,20 @@
   "nav": {
     "demo": "Demo",
     "howItWorks": "Cómo funciona",
+    "experience": "Experiencia",
     "pricing": "Beta"
   },
   "hero": {
     "eyebrow": "Planificación visual de interiores, simplificada",
     "title": "Planifica una habitación lista para comprar.",
-    "subtitle": "Elige presupuesto, estilo y una foto para explorar una propuesta visual orientada a compra. NEXROOM es una demo en desarrollo, por lo que los resultados pueden variar mientras el producto mejora.",
+    "subtitle": "Dise?a con claridad antes de gastar dinero. NEXROOM convierte presupuesto, estilo y necesidades en una propuesta visual comprensible, con packs comprables y una demo en desarrollo honesta.",
     "cta": "Probar vista demo",
     "ctaHint": "Sin registro. Toma ~60 segundos.",
     "visual": {
       "liveLabel": "Vista previa del producto",
       "confidence": "94% de match",
       "title": "Vista inteligente de habitación",
-      "subtitle": "El análisis inteligente lee estilo, luz, zonas vacías y presupuesto antes de generar una distribución comprable.",
+      "subtitle": "El an?lisis inteligente lee estilo, luz, zonas ?tiles y presupuesto antes de generar una propuesta comprable.",
       "budget": "Presupuesto",
       "match": "Coincidencia de estilo",
       "estimate": "Estimación"
@@ -50,34 +51,80 @@
       "Zonas de trabajo",
       "Alquileres",
       "Estudios"
-    ]
+    ],
+    "showMoreNotes": "Ver m?s notas",
+    "showLessNotes": "Ver menos"
   },
   "testimonials": [
     {
-      "quote": "Una forma más clara de comparar ideas de habitación antes de decidir una compra.",
-      "name": "Nota de preview",
-      "role": "Planificación de presupuesto"
+      "quote": "Menos dudas antes de comprar: esa es la direcci?n que estamos construyendo.",
+      "name": "Nota de avance",
+      "role": "Vista previa del producto"
     },
     {
-      "quote": "El objetivo es simple: convertir inspiración en una propuesta de habitación fácil de entender.",
+      "quote": "Una propuesta visual antes de llenar el carrito ayuda a decidir con m?s calma.",
       "name": "Nota de preview",
-      "role": "Planificación visual"
+      "role": "Presupuesto estimado"
     },
     {
-      "quote": "NEXROOM evoluciona como demo pública con mejoras continuas del producto.",
+      "quote": "La demo en desarrollo busca convertir inspiraci?n en un pack f?cil de entender.",
+      "name": "Nota de avance",
+      "role": "Packs comprables"
+    },
+    {
+      "quote": "Dise?ar una habitaci?n deber?a sentirse claro incluso con presupuesto ajustado.",
       "name": "Nota de preview",
-      "role": "Beta de producto"
+      "role": "Demo en desarrollo"
+    },
+    {
+      "quote": "NEXROOM evoluciona para ordenar estilo, necesidades y compra en una sola experiencia.",
+      "name": "Nota de avance",
+      "role": "Beta p?blica"
     }
   ],
+  "explore": {
+    "title": "Explora NEXROOM",
+    "subtitle": "Muévete por la vista previa pública del producto desde un hub claro.",
+    "cards": [
+      {
+        "title": "Demo visual",
+        "body": "Prueba la vista previa del producto y descubre cómo NEXROOM organiza una habitación por estilo, presupuesto y necesidades.",
+        "cta": "Ver demo",
+        "href": "#demo",
+        "kind": "demo"
+      },
+      {
+        "title": "Experience",
+        "body": "Mira la experiencia cinematográfica de NEXROOM, pensada para entender la visión del producto en segundos.",
+        "cta": "Ver experience",
+        "href": "/experience",
+        "kind": "experience"
+      },
+      {
+        "title": "Beta",
+        "body": "Únete a la beta y sigue los avances de la demo pública.",
+        "cta": "Unirme a la beta",
+        "href": "#pricing",
+        "kind": "beta"
+      },
+      {
+        "title": "Novedades",
+        "body": "Consulta las mejoras recientes de NEXROOM y cómo está evolucionando la vista previa del producto.",
+        "cta": "Ver novedades",
+        "href": "#updates",
+        "kind": "updates"
+      }
+    ]
+  },
   "demo": {
     "title": "Demo interactiva del producto",
-    "subtitle": "Una vista guiada de 3 pasos para explorar ideas de habitación, recomendaciones detalladas y control de presupuesto.",
+    "subtitle": "Una vista guiada para explorar una propuesta visual, productos sugeridos y presupuesto estimado antes de llenar el carrito.",
     "badge": "Vista previa del producto",
     "steps": {
       "1": {
         "title": "Presupuesto y estilo",
         "budgetLabel": "Presupuesto (€)",
-        "budgetHelp": "Consejo: prueba €600 vs €2500 para ver cambios de nivel.",
+        "budgetHelp": "Consejo: prueba 350 €, 650 € o 950 € para ver cambios de presupuesto.",
         "styleLabel": "Estilo",
         "roomType": "Tipo de habitación",
         "roomSize": "Tamaño de habitación",
@@ -295,13 +342,13 @@
         "upload": "Subir imagen",
         "analyzing": "Analizar habitación",
         "style": "Detectar estilo",
-        "lighting": "Detectar iluminación",
-        "emptySpaces": "Detectar zonas vacías",
-        "recommendations": "Generar recomendaciones",
-        "transformation": "Transformación final"
+        "lighting": "Detectar luz",
+        "emptySpaces": "Detectar zonas útiles",
+        "recommendations": "Generar propuesta visual",
+        "transformation": "Preparar packs comprables"
       },
       "transformationKicker": "Vista antes / después",
-      "transformationTitle": "Transformación recomendada",
+      "transformationTitle": "Transformación conceptual",
       "recommendationTitles": {
         "deskSetup": "Configuración de escritorio",
         "storageSolution": "Solución de almacenamiento",
@@ -329,26 +376,39 @@
       "before": "Antes",
       "after": "Después",
       "tags": {
-        "modernStyle": "Estilo moderno",
-        "warmLighting": "Iluminación cálida",
-        "recommendedLayout": "Distribución recomendada"
+        "modernStyle": "Dirección de estilo",
+        "warmLighting": "Mejor luz",
+        "recommendedLayout": "Zonas útiles"
       },
       "analysisState": "Estado de vista previa",
-      "stateGenerating": "Generando habitación completa",
-      "stateReady": "Análisis completado",
-      "stateMock": "Vista de escaneo lista",
+      "stateGenerating": "Preparando propuesta visual",
+      "stateReady": "Vista previa lista",
+      "stateMock": "Vista de habitación lista",
       "estimatedSpend": "Gasto estimado",
       "suggestedProducts": "Productos sugeridos",
       "generateFullRoom": "Generar habitación completa",
+      "fromPrice": "desde {{price}}",
+      "previewTag": "Vista previa",
+      "productCategories": {
+        "studyZone": "Zona de estudio",
+        "visualOrder": "Orden visual"
+      },
       "mockProducts": {
-        "desk": "Escritorio flotante",
-        "lamp": "Lámpara de pie cálida",
+        "desk": "Escritorio compacto",
+        "lamp": "Lámpara cálida",
         "storage": "Mueble bajo de almacenaje"
       },
+      "productDescriptions": {
+        "desk": "Añade una superficie útil sin bloquear el paso.",
+        "lamp": "Crea una atmósfera más cálida con poco espacio.",
+        "storage": "Reduce ruido visual y mantiene lo diario a mano.",
+        "bed": "Ancla la habitación y mantiene la propuesta práctica.",
+        "default": "Elegido para mantener una propuesta coherente y ajustable."
+      },
       "insights": {
-        "layout": "Zonas de distribución mapeadas",
-        "lighting": "Temperatura de luz detectada",
-        "budget": "Ajuste de presupuesto estimado"
+        "layout": "Zonas útiles mapeadas",
+        "lighting": "Dirección de luz aclarada",
+        "budget": "Presupuesto estimado preparado"
       }
     },
     "styleTone": {
@@ -388,70 +448,70 @@
       },
       "bed": {
         "low": [
-          "Cama plataforma {{style}}",
-          "Cama de lamas {{style}}",
-          "Estructura compacta {{style}}"
+          "Pack esencial dormitorio",
+          "Estructura compacta {{style}}",
+          "Cama con almacenaje"
         ],
         "mid": [
-          "Cama tapizada {{style}}",
+          "Pack dormitorio flexible",
           "Cama efecto roble {{style}}",
           "Cama con almacenaje {{style}}"
         ],
         "high": [
-          "Cama premium con cabecero {{style}}",
-          "Cama protagonista de madera {{style}}",
-          "Cama estilo hotel {{style}}"
+          "Pack completo flexible",
+          "Cama con cabecero {{style}}",
+          "Cama con almacenaje mejorado {{style}}"
         ]
       },
       "desk": {
         "low": [
-          "Escritorio de trabajo {{style}}",
-          "Estación compacta {{style}}",
+          "Escritorio compacto",
+          "Pack estudio compacto",
           "Escritorio plegable {{style}}"
         ],
         "mid": [
-          "Escritorio con gestión de cables {{style}}",
-          "Escritorio adaptable {{style}}",
+          "Pack estudio compacto",
+          "Escritorio con bandeja de cables {{style}}",
           "Escritorio con cajonera {{style}}"
         ],
         "high": [
-          "Escritorio premium con sobre sólido {{style}}",
-          "Workstation de diseño {{style}}",
-          "Escritorio ejecutivo {{style}}"
+          "Escritorio flexible",
+          "Escritorio compacto amplio {{style}}",
+          "Escritorio con cajonera {{style}}"
         ]
       },
       "lamp": {
         "low": [
-          "Lámpara de noche {{style}}",
-          "Lámpara de tarea {{style}}",
-          "Lámpara de mesa regulable {{style}}"
+          "Lámpara cálida",
+          "Pack orden y luz",
+          "Luz de lectura {{style}}"
         ],
         "mid": [
-          "Lámpara LED regulable {{style}}",
-          "Lámpara ambiental {{style}}",
-          "Lámpara de lectura sin reflejos {{style}}"
+          "Lámpara cálida",
+          "Lámpara de trabajo {{style}}",
+          "Lámpara de lectura sin deslumbrar {{style}}"
         ],
         "high": [
-          "Lámpara inteligente con escenas {{style}}",
-          "Lámpara ambiental premium {{style}}",
-          "Lámpara de diseño {{style}}"
+          "Pack orden y luz",
+          "Lámpara de pie {{style}}",
+          "Lámpara ambiental {{style}}"
         ]
       },
       "storage": {
         "low": [
-          "Estantería abierta {{style}}",
-          "Cajas bajo cama {{style}}",
-          "Burro de armario simple {{style}}"
+          "Mueble bajo de almacenaje",
+          "Organizador vertical",
+          "Cajonera compacta {{style}}"
         ],
         "mid": [
-          "Cómoda de 3-4 cajones {{style}}",
-          "Armario con baldas {{style}}",
-          "Mueble cerrado de almacenaje {{style}}"
+          "Estantería modular",
+          "Mueble bajo de almacenaje",
+          "Banco con almacenaje {{style}}"
         ],
         "high": [
-          "Sistema de armario premium {{style}}",
-          "Cómoda grande con organizador {{style}}",
-          "Almacenaje estilo empotrado {{style}}"
+          "Pack completo flexible",
+          "Estantería modular {{style}}",
+          "Organizador vertical {{style}}"
         ]
       },
       "notes": {
@@ -554,23 +614,23 @@
     "items": [
       {
         "badge": "Mejorado",
-        "title": "Smart Room Scan mejorado",
-        "body": "Ahora la experiencia de análisis de habitación es más clara, rápida y visual, ayudando al usuario a entender mejor el potencial de su espacio."
+        "title": "Vista previa de habitaciones mejorada",
+        "body": "La demo visual presenta el espacio, el presupuesto y las prioridades con m?s claridad."
+      },
+      {
+        "badge": "Nuevo",
+        "title": "Nuevas tarjetas de presupuesto",
+        "body": "Las propuestas muestran importes estimados, restante y estado del pack de forma m?s f?cil de leer."
       },
       {
         "badge": "Mejorado",
-        "title": "Recomendaciones más estructuradas",
-        "body": "Las sugerencias se presentan de forma más ordenada, con prioridad, estilo, presupuesto y utilidad para facilitar la toma de decisiones."
+        "title": "Mejor experiencia en m?vil",
+        "body": "La interfaz se adapta mejor a pantallas peque?as, tablets y grabaciones en formato vertical."
       },
       {
         "badge": "Nuevo",
-        "title": "Packs de habitación más completos",
-        "body": "NEXROOM está evolucionando hacia propuestas completas de muebles combinados por estilo, espacio y presupuesto."
-      },
-      {
-        "badge": "Nuevo",
-        "title": "Experiencia bilingüe",
-        "body": "La plataforma ya está preparada para funcionar en español e inglés, manteniendo una experiencia coherente en ambos idiomas."
+        "title": "Contenido biling?e ES/EN",
+        "body": "La vista previa p?blica mantiene una comunicaci?n coherente en espa?ol e ingl?s."
       },
       {
         "badge": "Próximamente",
@@ -735,17 +795,17 @@
       "premiumSuffix": "opcion premium",
       "smallSpaceSuffix": "opcion compacta",
       "otherStoreSuffix": "opcion en otra tienda",
-      "cheaperReason": "Espacio preparado para una alternativa mas barata cuando conectemos catalogo.",
-      "premiumReason": "Espacio preparado para una alternativa premium y comparacion de upgrade.",
+      "cheaperReason": "Alternativa econ?mica preparada para mantener la propuesta ajustada al presupuesto.",
+      "premiumReason": "Alternativa de mejora preparada para comparar un acabado superior.",
       "smallSpaceReason": "Espacio preparado para una alternativa compacta si falta paso libre.",
-      "otherStoreReason": "Espacio preparado para enrutar la compra a otra tienda futura."
+      "otherStoreReason": "Alternativa preparada para comparar opciones de compra en el futuro."
     },
     "products": [
       {
         "id": "storage-low-001",
         "name": "Mueble bajo de almacenaje",
-        "category": "Almacenamiento",
-        "reason": "Aprovecha una pared vacia y reduce ruido visual sin consumir demasiado presupuesto.",
+        "category": "Orden visual",
+        "reason": "Reduce ruido visual sin consumir demasiado presupuesto.",
         "color": "roble claro",
         "imageType": "storage",
         "status": "smartFit",
@@ -758,9 +818,9 @@
       },
       {
         "id": "lamp-warm-001",
-        "name": "Lampara ambiental calida",
-        "category": "Iluminacion",
-        "reason": "Anade una segunda capa de luz para que la habitacion se sienta mas terminada.",
+        "name": "L?mpara c?lida",
+        "category": "Luz",
+        "reason": "A?ade una segunda capa de luz para que la habitaci?n se sienta m?s terminada.",
         "color": "negro mate",
         "imageType": "lamp",
         "status": "budgetFriendly",
@@ -773,9 +833,9 @@
       },
       {
         "id": "desk-compact-001",
-        "name": "Escritorio compacto o consola",
-        "category": "Escritorio",
-        "reason": "Crea una zona util sin bloquear el paso ni romper la linea visual del espacio.",
+        "name": "Escritorio compacto",
+        "category": "Zona de estudio",
+        "reason": "Crea una zona ?til sin bloquear el paso ni romper la l?nea visual del espacio.",
         "color": "blanco roto",
         "imageType": "desk",
         "status": "styleMatch",
@@ -790,7 +850,7 @@
     "packs": {
       "basic": {
         "id": "pack-basic",
-        "title": "Pack basico funcional",
+        "title": "Pack esencial dormitorio",
         "summary": "Resuelve luz y orden con minima inversion.",
         "pros": [
           "Menor coste",
@@ -802,7 +862,7 @@
       },
       "recommended": {
         "id": "pack-recommended",
-        "title": "Pack habitacion lista",
+        "title": "Pack estudio compacto",
         "summary": "Equilibra diseno, utilidad y presupuesto.",
         "pros": [
           "Mejor equilibrio",
@@ -814,8 +874,8 @@
       },
       "premium": {
         "id": "pack-premium",
-        "title": "Pack premium elevado",
-        "summary": "Sube materiales, presencia visual y durabilidad.",
+        "title": "Pack completo flexible",
+        "summary": "Mejora materiales, presencia visual y durabilidad sin perder claridad de presupuesto.",
         "pros": [
           "Mayor impacto visual",
           "Mejores acabados"
@@ -900,6 +960,218 @@
     "regeneration": {
       "lowerBudget": "Bajar presupuesto",
       "upgradePremium": "Subir a premium"
+    }
+  },
+  "experience": {
+    "brand": "NEXROOM",
+    "nav": {
+      "homeAria": "Ir a NEXROOM",
+      "aria": "Navegación de experiencia",
+      "scan": "Escaneo",
+      "packs": "Packs",
+      "beta": "Beta"
+    },
+    "hero": {
+      "eyebrow": "Vista previa del producto",
+      "title": "Diseña tu espacio. Descubre tu pack. Compra con claridad.",
+      "subtitle": "Una vista previa del producto para transformar una habitación en una propuesta visual clara, elegante y ajustada a tu presupuesto.",
+      "primaryCta": "Ver experiencia",
+      "secondaryCta": "Unirse a la beta",
+      "visual": {
+        "aria": "Vista conceptual de una habitación analizada por NEXROOM",
+        "badge": "Demo en desarrollo",
+        "status": "Vista previa",
+        "labels": [
+          "IA visual",
+          "Presupuesto claro",
+          "Pack comprable"
+        ],
+        "panelLabel": "Propuesta visual",
+        "panelTitle": "Habitación con dirección clara",
+        "budget": "499 € estimados"
+      }
+    },
+    "problem": {
+      "kicker": "El punto de partida",
+      "title": "Comprar muebles a ciegas no debería ser normal.",
+      "body": "Demasiadas opciones. Demasiadas pestañas abiertas. Demasiadas dudas antes de saber si algo encaja.",
+      "cards": [
+        {
+          "title": "¿Combina?",
+          "body": "Estilo, color y proporción suelen decidirse tarde."
+        },
+        {
+          "title": "¿Cabe?",
+          "body": "La intención visual necesita una comprobación más clara."
+        },
+        {
+          "title": "¿Se pasa de presupuesto?",
+          "body": "El total debería entenderse antes de llenar el carrito."
+        },
+        {
+          "title": "¿Qué compro primero?",
+          "body": "La prioridad importa cuando todo parece urgente."
+        }
+      ]
+    },
+    "scan": {
+      "kicker": "Escaneo o subida",
+      "title": "Empieza con tu habitación.",
+      "body": "Sube una imagen, elige estilo y define tu presupuesto. NEXROOM convierte la indecisión en una propuesta visual clara.",
+      "visualLabel": "Análisis inteligente en curso",
+      "labels": [
+        "Estilo",
+        "Luz",
+        "Zonas clave"
+      ],
+      "stats": [
+        {
+          "label": "Estilo",
+          "value": "Moderno suave"
+        },
+        {
+          "label": "Presupuesto",
+          "value": "€1.200"
+        },
+        {
+          "label": "Prioridad",
+          "value": "Luz y orden"
+        }
+      ]
+    },
+    "analysis": {
+      "kicker": "Análisis inteligente",
+      "title": "Del espacio vacío a una dirección clara.",
+      "body": "Una vista previa inteligente detecta oportunidades, necesidades y prioridades para construir una propuesta más fácil de entender.",
+      "cards": [
+        {
+          "title": "Estilo",
+          "value": "Moderno suave",
+          "body": "Una base limpia con acentos luminosos."
+        },
+        {
+          "title": "Luz",
+          "value": "Natural suave",
+          "body": "Capas de iluminación para elevar la atmósfera."
+        },
+        {
+          "title": "Distribución",
+          "value": "Zona de paso clara",
+          "body": "Piezas agrupadas sin saturar el recorrido."
+        },
+        {
+          "title": "Presupuesto",
+          "value": "Controlado",
+          "body": "Selección pensada para decidir con menos ruido."
+        },
+        {
+          "title": "Necesidades",
+          "value": "Descanso, trabajo y almacenaje",
+          "body": "La propuesta ordena prioridades antes de comprar."
+        }
+      ]
+    },
+    "transformation": {
+      "kicker": "Transformación visual",
+      "title": "Antes de comprar, imagínalo.",
+      "body": "Visualiza una dirección estética antes de tomar decisiones. Menos dudas, más claridad.",
+      "before": {
+        "title": "Antes",
+        "body": "Una habitación con posibilidades, pero sin una dirección de compra clara.",
+        "labels": [
+          "Dudas",
+          "Opciones sueltas"
+        ]
+      },
+      "after": {
+        "title": "Dirección visual",
+        "body": "Una propuesta coherente para entender estilo, piezas y presupuesto.",
+        "labels": [
+          "Más claridad",
+          "Pack coherente"
+        ]
+      }
+    },
+    "packs": {
+      "kicker": "Packs comprables",
+      "title": "Descubre tu pack.",
+      "body": "Cama, escritorio, lámpara, almacenaje y decoración agrupados en una propuesta coherente, pensada para tu presupuesto.",
+      "cards": [
+        {
+          "title": "Pack esencial",
+          "label": "Vista previa",
+          "price": "desde 299 €",
+          "body": "Una base práctica para resolver lo importante con claridad.",
+          "items": [
+            "Cama",
+            "Lámpara",
+            "Almacenaje básico"
+          ]
+        },
+        {
+          "title": "Pack estudio",
+          "label": "Precio estimado",
+          "price": "desde 499 €",
+          "body": "Equilibra descanso, trabajo y orden en un mismo espacio.",
+          "items": [
+            "Cama",
+            "Escritorio",
+            "Luz de trabajo",
+            "Decoración"
+          ]
+        },
+        {
+          "title": "Pack completo",
+          "label": "Vista previa",
+          "price": "desde 799 €",
+          "body": "Una propuesta más envolvente para una habitación lista para decidir.",
+          "items": [
+            "Cama",
+            "Escritorio",
+            "Lámparas",
+            "Almacenaje",
+            "Textiles"
+          ]
+        }
+      ]
+    },
+    "budget": {
+      "kicker": "Presupuesto claro",
+      "title": "Compra con claridad.",
+      "body": "Cada propuesta muestra un presupuesto estimado para ayudarte a decidir sin perderte entre opciones.",
+      "visualLabel": "Presupuesto estimado",
+      "total": "499 €",
+      "rows": [
+        {
+          "label": "Presupuesto objetivo",
+          "value": "550 €"
+        },
+        {
+          "label": "Pack seleccionado",
+          "value": "499 €"
+        },
+        {
+          "label": "Restante",
+          "value": "51 €"
+        },
+        {
+          "label": "Estado",
+          "value": "Ajustable"
+        },
+        {
+          "label": "Vista previa",
+          "value": "Demo en desarrollo"
+        }
+      ],
+      "note": "Demo en desarrollo. Los importes son orientativos dentro de esta vista previa del producto."
+    },
+    "close": {
+      "kicker": "Beta",
+      "title": "NEXROOM está tomando forma.",
+      "body": "Estamos construyendo una experiencia visual para que diseñar una habitación sea más simple, más claro y más satisfactorio.",
+      "primaryCta": "Únete a la beta",
+      "secondaryCta": "Seguir avances",
+      "note": "Demo en desarrollo. Las propuestas mostradas son una vista previa del producto."
     }
   },
   "footer": {

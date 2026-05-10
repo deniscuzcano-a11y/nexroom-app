@@ -1,0 +1,930 @@
+#root:has(.nx-experience) {
+  width: 1240px;
+  max-width: 100%;
+  margin: 0 auto;
+  border-inline: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.nx-experience {
+  --nx-ink: var(--text-h);
+  --nx-text: var(--text);
+  --nx-soft: color-mix(in oklab, var(--social-bg) 78%, #ffffff);
+  --nx-card: color-mix(in oklab, var(--bg) 92%, transparent);
+  --nx-border: color-mix(in oklab, var(--border) 86%, var(--accent-bg));
+  --nx-violet: var(--accent);
+  --nx-mint: #7cd3b0;
+  --nx-cyan: #22d3ee;
+  --nx-shadow:
+    rgba(16, 16, 24, 0.09) 0 22px 54px -28px,
+    rgba(16, 16, 24, 0.08) 0 10px 26px -18px;
+  position: relative;
+  min-height: 100svh;
+  overflow-x: clip;
+  color: var(--nx-text);
+  background:
+    radial-gradient(760px 420px at 8% 4%, color-mix(in oklab, var(--accent) 15%, transparent), transparent 68%),
+    radial-gradient(720px 380px at 92% 8%, color-mix(in oklab, var(--nx-mint) 18%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 100%, transparent), color-mix(in oklab, var(--social-bg) 38%, var(--bg)) 54%, var(--bg));
+  text-align: left;
+  letter-spacing: 0;
+}
+
+.nx-experience *,
+.nx-experience *::before,
+.nx-experience *::after {
+  box-sizing: border-box;
+}
+
+.nx-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--border) 30%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in oklab, var(--border) 28%, transparent) 1px, transparent 1px);
+  background-size: 84px 84px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.52), transparent 72%);
+  opacity: 0.36;
+}
+
+.nx-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.nx-brand {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  color: var(--nx-ink);
+  text-decoration: none;
+  font-weight: 680;
+}
+
+.nx-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, var(--border));
+  border-radius: 10px;
+  background:
+    radial-gradient(60% 80% at 30% 30%, color-mix(in oklab, var(--accent) 50%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in oklab, var(--accent-bg) 80%, transparent), transparent);
+  box-shadow: var(--shadow);
+}
+
+.nx-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--social-bg) 72%, transparent);
+}
+
+.nx-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.2;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.nx-nav a:hover,
+.nx-nav a:focus-visible {
+  color: var(--nx-ink);
+  background: color-mix(in oklab, var(--accent-bg) 62%, transparent);
+}
+
+.nx-header .nr-langBtn {
+  flex: 0 0 auto;
+}
+
+.nx-hero,
+.nx-section,
+.nx-packs,
+.nx-close {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100% - 56px));
+  margin: 0 auto;
+}
+
+.nx-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 46px);
+  padding: clamp(34px, 5.5vw, 66px) 0 clamp(24px, 4vw, 42px);
+}
+
+.nx-eyebrow,
+.nx-kicker {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 14px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in oklab, var(--accent) 22%, var(--border));
+  border-radius: 999px;
+  color: color-mix(in oklab, var(--nx-ink) 76%, var(--accent));
+  background: color-mix(in oklab, var(--accent-bg) 58%, transparent);
+  font-size: 13px;
+  font-weight: 680;
+  line-height: 1.25;
+}
+
+.nx-eyebrow svg {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.nx-hero h1,
+.nx-section h2,
+.nx-sectionHead h2,
+.nx-close h2 {
+  margin: 0;
+  color: var(--nx-ink);
+  letter-spacing: 0;
+}
+
+.nx-hero h1 {
+  max-width: 11.5em;
+  font-size: clamp(2.55rem, 6.6vw, 4.9rem);
+  line-height: 0.98;
+  font-weight: 680;
+}
+
+.nx-heroText {
+  max-width: 58ch;
+  margin-top: 18px;
+  color: var(--nx-text);
+  font-size: clamp(1rem, 1.55vw, 1.18rem);
+  line-height: 1.58;
+}
+
+.nx-ctaRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.nx-primaryCta,
+.nx-secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  max-width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 720;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  transition: transform 160ms ease, border-color 160ms ease, filter 160ms ease;
+}
+
+.nx-primaryCta {
+  color: var(--nx-ink);
+  border: 1px solid color-mix(in oklab, var(--accent) 52%, var(--border));
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #ffffff 82%, var(--accent-bg)), color-mix(in oklab, var(--accent-bg) 80%, #ffffff)),
+    var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.nx-secondaryCta {
+  color: var(--nx-ink);
+  border: 1px solid color-mix(in oklab, var(--border) 86%, transparent);
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+}
+
+.nx-primaryCta:hover,
+.nx-secondaryCta:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+}
+
+.nx-productFrame,
+.nx-doubtCard,
+.nx-analysisCard,
+.nx-packCard,
+.nx-budgetPanel,
+.nx-transformStage article {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.nx-productFrame:hover,
+.nx-doubtCard:hover,
+.nx-analysisCard:hover,
+.nx-packCard:hover,
+.nx-budgetPanel:hover,
+.nx-transformStage article:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 28%, var(--nx-border));
+  box-shadow: 0 24px 58px color-mix(in oklab, var(--shadow-color) 12%, transparent);
+}
+
+.nx-heroVisual {
+  position: relative;
+  min-width: 0;
+}
+
+.nx-prism {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: clamp(76px, 10vw, 122px);
+  opacity: 0.18;
+  filter: drop-shadow(0 18px 34px color-mix(in oklab, var(--accent) 26%, transparent));
+  pointer-events: none;
+}
+
+.nx-productFrame,
+.nx-scanStudio,
+.nx-budgetPanel {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--nx-border);
+  border-radius: 24px;
+  background:
+    radial-gradient(80% 70% at 28% 12%, color-mix(in oklab, var(--accent-bg) 78%, transparent), transparent 68%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 92%, transparent), color-mix(in oklab, var(--bg) 76%, transparent));
+  box-shadow: var(--nx-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.nx-productFrame {
+  max-width: 600px;
+  margin-left: auto;
+  padding: clamp(10px, 1.7vw, 16px);
+}
+
+.nx-frameTop,
+.nx-heroPanel,
+.nx-scanTop,
+.nx-budgetHeader,
+.nx-packTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nx-frameTop {
+  padding: 2px 4px 12px;
+  color: color-mix(in oklab, var(--text) 86%, transparent);
+  font-size: 13px;
+}
+
+.nx-frameTop strong {
+  color: color-mix(in oklab, var(--nx-ink) 78%, var(--accent));
+  overflow-wrap: anywhere;
+}
+
+.nx-heroRoom.nr-roomScene,
+.nx-scanRoom.nr-roomScene {
+  min-height: clamp(240px, 31vw, 350px);
+  border-radius: 20px;
+  border-color: color-mix(in oklab, var(--border) 74%, var(--accent-bg));
+}
+
+.nx-heroPanel {
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid color-mix(in oklab, var(--border) 76%, transparent);
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--social-bg) 68%, transparent);
+}
+
+.nx-heroPanel span,
+.nx-miniBudget span,
+.nx-scanStats span,
+.nx-packTop span,
+.nx-budgetRows span,
+.nx-budgetHeader span {
+  color: color-mix(in oklab, var(--text) 86%, transparent);
+  font-size: 13px;
+}
+
+.nx-heroPanel strong,
+.nx-miniBudget,
+.nx-scanStats strong,
+.nx-packTop strong,
+.nx-budgetRows strong,
+.nx-budgetHeader strong {
+  color: var(--nx-ink);
+}
+
+.nx-heroPanel strong {
+  display: block;
+  margin-top: 2px;
+  font-size: clamp(1rem, 1.8vw, 1.12rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.nx-miniBudget {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in oklab, var(--nx-mint) 42%, var(--border));
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--nx-mint) 15%, transparent);
+  white-space: normal;
+}
+
+.nx-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 48px);
+  padding: clamp(34px, 5vw, 58px) 0;
+  border-top: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+}
+
+.nx-section.is-flipped {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+}
+
+.nx-section.is-flipped .nx-sectionCopy {
+  order: 2;
+}
+
+.nx-sectionCopy h2,
+.nx-sectionHead h2,
+.nx-close h2 {
+  max-width: 13em;
+  font-size: clamp(2rem, 4.1vw, 3.25rem);
+  line-height: 1.05;
+  font-weight: 650;
+}
+
+.nx-sectionCopy p:not(.nx-kicker),
+.nx-sectionHead p,
+.nx-close p {
+  max-width: 58ch;
+  margin-top: 14px;
+  color: var(--nx-text);
+  font-size: clamp(0.98rem, 1.35vw, 1.08rem);
+  line-height: 1.62;
+}
+
+.nx-sectionVisual {
+  min-width: 0;
+}
+
+.nx-doubtGrid,
+.nx-analysisDeck,
+.nx-transformStage {
+  display: grid;
+  gap: 14px;
+}
+
+.nx-doubtGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nx-doubtCard,
+.nx-analysisCard,
+.nx-packCard,
+.nx-transformStage article {
+  min-width: 0;
+  border: 1px solid var(--nx-border);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--bg) 92%, transparent), color-mix(in oklab, var(--social-bg) 62%, transparent));
+  box-shadow: var(--nx-shadow);
+}
+
+.nx-doubtCard {
+  min-height: 152px;
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.nx-doubtCard span {
+  display: inline-grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, var(--border));
+  border-radius: 12px;
+  color: color-mix(in oklab, var(--nx-ink) 70%, var(--accent));
+  background: color-mix(in oklab, var(--accent-bg) 62%, transparent);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.nx-doubtCard strong {
+  display: block;
+  margin-top: 18px;
+  color: var(--nx-ink);
+  font-size: clamp(1.08rem, 2vw, 1.35rem);
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.nx-doubtCard p,
+.nx-analysisCard p,
+.nx-packCard p,
+.nx-transformStage p,
+.nx-budgetPanel p {
+  margin-top: 9px;
+  color: var(--nx-text);
+  line-height: 1.52;
+}
+
+.nx-scanStudio {
+  padding: clamp(12px, 1.8vw, 16px);
+}
+
+.nx-scanTop {
+  padding: 2px 2px 12px;
+  color: var(--nx-ink);
+  font-weight: 720;
+}
+
+.nx-scanTop svg,
+.nx-analysisCard svg {
+  flex: 0 0 auto;
+  color: color-mix(in oklab, var(--nx-mint) 78%, var(--accent));
+}
+
+.nx-scanStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.nx-scanStats div {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--social-bg) 66%, transparent);
+}
+
+.nx-scanStats strong {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.24;
+  overflow-wrap: anywhere;
+}
+
+.nx-analysisDeck {
+  grid-template-columns: repeat(5, minmax(128px, 1fr));
+}
+
+.nx-analysisCard {
+  min-height: 172px;
+  padding: clamp(15px, 1.8vw, 20px);
+}
+
+.nx-analysisCard span {
+  display: block;
+  margin-top: 16px;
+  color: color-mix(in oklab, var(--text) 86%, transparent);
+  font-size: 13px;
+}
+
+.nx-analysisCard strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--nx-ink);
+  font-size: clamp(1.05rem, 1.75vw, 1.28rem);
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+
+.nx-transformStage {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nx-transformStage article {
+  padding: 12px;
+}
+
+.nx-stageLabel {
+  display: inline-flex;
+  max-width: 100%;
+  margin-bottom: 10px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in oklab, var(--border) 76%, transparent);
+  border-radius: 999px;
+  color: var(--nx-ink);
+  background: color-mix(in oklab, var(--social-bg) 68%, transparent);
+  font-size: 13px;
+  font-weight: 720;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.nx-stageRoom.nr-roomScene {
+  min-height: clamp(170px, 21vw, 230px);
+  border-radius: 18px;
+}
+
+.nx-packs {
+  padding: clamp(38px, 5.5vw, 64px) 0;
+  border-top: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+}
+
+.nx-sectionHead {
+  max-width: 760px;
+}
+
+.nx-packGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.nx-packCard {
+  display: flex;
+  min-height: 318px;
+  flex-direction: column;
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.nx-packTop span {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid color-mix(in oklab, var(--nx-mint) 36%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--nx-mint) 12%, transparent);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.nx-packTop strong {
+  flex: 0 0 auto;
+  white-space: normal;
+  text-align: right;
+  line-height: 1.2;
+}
+
+.nx-packCard h3 {
+  margin: 26px 0 0;
+  color: var(--nx-ink);
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  line-height: 1.12;
+}
+
+.nx-packCard ul {
+  display: grid;
+  gap: 8px;
+  margin: auto 0 0;
+  padding: 22px 0 0;
+  list-style: none;
+}
+
+.nx-packCard li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--nx-text);
+  line-height: 1.35;
+}
+
+.nx-packCard li::before {
+  content: '';
+  position: absolute;
+  top: 0.58em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--nx-mint), var(--accent));
+}
+
+.nx-budgetPanel {
+  padding: clamp(16px, 2.2vw, 24px);
+}
+
+.nx-budgetHeader strong {
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  line-height: 1.05;
+}
+
+.nx-budgetTrack {
+  height: 12px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.nx-budgetTrack span {
+  display: block;
+  width: 67%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--nx-mint), var(--accent));
+  box-shadow: 0 0 18px color-mix(in oklab, var(--nx-mint) 36%, transparent);
+}
+
+.nx-budgetRows {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.nx-budgetRows div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+}
+
+.nx-budgetRows span,
+.nx-budgetRows strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.nx-close {
+  display: grid;
+  place-items: center;
+  padding: clamp(44px, 6vw, 72px) 0;
+  text-align: center;
+  border-top: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+}
+
+.nx-close > div {
+  max-width: 780px;
+}
+
+.nx-close h2,
+.nx-close p {
+  margin-inline: auto;
+}
+
+.nx-close .nx-ctaRow {
+  justify-content: center;
+}
+
+.nx-close small {
+  display: block;
+  max-width: 56ch;
+  margin: 20px auto 0;
+  color: color-mix(in oklab, var(--text) 82%, transparent);
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nx-experience {
+    --nx-soft: color-mix(in oklab, var(--bg) 80%, #ffffff 4%);
+    background:
+      radial-gradient(760px 420px at 8% 4%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 68%),
+      radial-gradient(720px 380px at 92% 8%, color-mix(in oklab, var(--nx-mint) 12%, transparent), transparent 70%),
+      linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--bg) 88%, #ffffff 4%) 54%, var(--bg));
+  }
+
+  .nx-header,
+  .nx-nav,
+  .nx-productFrame,
+  .nx-scanStudio,
+  .nx-budgetPanel,
+  .nx-doubtCard,
+  .nx-analysisCard,
+  .nx-packCard,
+  .nx-transformStage article {
+    border-color: color-mix(in oklab, var(--border) 78%, #ffffff 5%);
+    background:
+      linear-gradient(145deg, color-mix(in oklab, var(--bg) 84%, #ffffff 6%), color-mix(in oklab, var(--bg) 94%, transparent));
+  }
+
+  .nx-nav a,
+  .nx-secondaryCta,
+  .nx-stageLabel,
+  .nx-packTop span,
+  .nx-miniBudget,
+  .nx-scanStats div {
+    color: var(--nx-heading);
+    border-color: color-mix(in oklab, var(--border) 78%, #ffffff 5%);
+    background: color-mix(in oklab, var(--bg) 82%, #ffffff 5%);
+  }
+
+  .nx-primaryCta {
+    color: var(--nx-heading);
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--accent-bg) 72%, #ffffff 4%), color-mix(in oklab, var(--bg) 76%, var(--accent-bg)));
+  }
+
+  .nx-heroRoom.nr-roomScene,
+  .nx-scanRoom.nr-roomScene,
+  .nx-stageRoom.nr-roomScene {
+    border-color: color-mix(in oklab, var(--border) 72%, #7cd3b0 16%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-primaryCta,
+  .nx-secondaryCta,
+  .nx-nav a {
+    transition: none;
+  }
+
+  .nx-productFrame:hover,
+  .nx-doubtCard:hover,
+  .nx-analysisCard:hover,
+  .nx-packCard:hover,
+  .nx-budgetPanel:hover,
+  .nx-transformStage article:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 1120px) {
+  .nx-hero,
+  .nx-section,
+  .nx-packs,
+  .nx-close {
+    width: min(100% - 40px, 920px);
+  }
+
+  .nx-hero,
+  .nx-section,
+  .nx-section.is-flipped {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nx-section.is-flipped .nx-sectionCopy {
+    order: 0;
+  }
+
+  .nx-productFrame {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .nx-analysisDeck {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .nx-header {
+    flex-wrap: wrap;
+    padding: 12px 16px;
+  }
+
+  .nx-brand {
+    flex: 1 1 auto;
+  }
+
+  .nx-nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nx-nav a {
+    flex: 1 1 0;
+    padding-inline: 8px;
+    font-size: 13px;
+  }
+
+  .nx-hero,
+  .nx-section,
+  .nx-packs,
+  .nx-close {
+    width: calc(100% - 28px);
+  }
+
+  .nx-hero {
+    padding-top: 34px;
+  }
+
+  .nx-doubtGrid,
+  .nx-transformStage,
+  .nx-packGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nx-analysisDeck,
+  .nx-scanStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nx-packCard {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .nx-header {
+    gap: 10px;
+  }
+
+  .nx-hero,
+  .nx-section,
+  .nx-packs,
+  .nx-close {
+    width: calc(100% - 22px);
+  }
+
+  .nx-hero,
+  .nx-section,
+  .nx-packs,
+  .nx-close {
+    padding-block: 34px;
+  }
+
+  .nx-hero h1 {
+    font-size: clamp(2.15rem, 10vw, 2.9rem);
+  }
+
+  .nx-ctaRow,
+  .nx-primaryCta,
+  .nx-secondaryCta {
+    width: 100%;
+  }
+
+  .nx-heroPanel,
+  .nx-frameTop,
+  .nx-packTop,
+  .nx-budgetHeader,
+  .nx-budgetRows div {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nx-miniBudget {
+    width: 100%;
+  }
+
+  .nx-analysisDeck,
+  .nx-scanStats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nx-heroRoom.nr-roomScene,
+  .nx-scanRoom.nr-roomScene {
+    min-height: 230px;
+  }
+
+  .nx-stageRoom.nr-roomScene {
+    min-height: 170px;
+  }
+}
+
+@media (max-width: 390px) {
+  .nx-header {
+    padding-inline: 10px;
+  }
+
+  .nx-brand span:last-child {
+    font-size: 13px;
+  }
+
+  .nx-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+
+  .nx-nav a {
+    font-size: 12px;
+  }
+
+  .nx-doubtCard,
+  .nx-analysisCard,
+  .nx-packCard,
+  .nx-budgetPanel {
+    padding: 14px;
+  }
+}

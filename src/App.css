@@ -469,6 +469,16 @@
   gap: 20px;
 }
 
+.nr-testimonialActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.nr-testimonialToggle {
+  min-width: 150px;
+}
+
 .nr-testimonialCard {
   text-align: left;
   border-radius: 20px;
@@ -4987,5 +4997,332 @@ body,
   .nr-pricing {
     padding-left: 8px;
     padding-right: 8px;
+  }
+}
+
+/* Explore hub and demo credibility polish */
+.nr-explore {
+  padding: 54px 28px 58px;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(680px 280px at 12% 8%, color-mix(in oklab, var(--accent) 11%, transparent), transparent 70%),
+    radial-gradient(620px 260px at 88% 12%, color-mix(in oklab, #7cd3b0 15%, transparent), transparent 72%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 98%, #eef7f0), color-mix(in oklab, var(--bg) 96%, #f7f1e4));
+  position: relative;
+  overflow: hidden;
+}
+
+.nr-exploreGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.nr-exploreCard {
+  min-width: 0;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--bg) 88%, transparent), color-mix(in oklab, var(--social-bg) 66%, transparent));
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 16px 42px color-mix(in oklab, var(--shadow-color) 7%, transparent);
+  backdrop-filter: blur(12px);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.nr-exploreCard:hover {
+  border-color: color-mix(in oklab, var(--accent) 30%, var(--border));
+  box-shadow: 0 22px 54px color-mix(in oklab, var(--shadow-color) 10%, transparent);
+}
+
+.nr-exploreCard:hover .nr-exploreIcon {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.nr-exploreIcon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  color: var(--text-h);
+  border: 1px solid color-mix(in oklab, var(--accent) 26%, var(--border));
+  background:
+    radial-gradient(70% 70% at 30% 24%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 72%),
+    color-mix(in oklab, var(--bg) 80%, transparent);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.nr-exploreCard--experience .nr-exploreIcon,
+.nr-exploreCard--updates .nr-exploreIcon {
+  border-color: color-mix(in oklab, #7cd3b0 38%, var(--border));
+  background: color-mix(in oklab, #7cd3b0 14%, var(--bg));
+}
+
+.nr-exploreTitle {
+  display: block;
+  color: var(--text-h);
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 760;
+  line-height: 1.15;
+}
+
+.nr-exploreBody {
+  display: block;
+  color: var(--text);
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+}
+
+.nr-exploreCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  color: color-mix(in oklab, var(--text-h) 78%, var(--accent));
+  font-weight: 760;
+}
+
+.nr-exploreCta::after {
+  content: '→';
+}
+
+.nr-aiProductRow small {
+  display: block;
+  margin-top: 3px;
+  color: color-mix(in oklab, var(--text) 86%, transparent);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.nr-aiProductMeta {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  min-width: max-content;
+}
+
+.nr-aiProductMeta em {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 760;
+  color: #15803d;
+  border: 1px solid color-mix(in oklab, #22c55e 34%, var(--border));
+  background: color-mix(in oklab, #22c55e 10%, var(--bg));
+  border-radius: 999px;
+  padding: 4px 7px;
+  white-space: nowrap;
+}
+
+.nr-aiProductMeta b,
+.nr-itemPrice {
+  font-family: var(--mono);
+}
+
+.nr-aiPreview,
+.nr-demoCard,
+.nr-exploreCard,
+.nr-testimonialCard,
+.nr-roomScene {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.nr-aiPreview:hover,
+.nr-roomScene:hover {
+  box-shadow: 0 22px 54px color-mix(in oklab, var(--shadow-color) 10%, transparent);
+}
+
+.nr-productCard {
+  grid-template-columns: 72px minmax(0, 1fr) minmax(92px, auto);
+}
+
+.nr-itemPrice {
+  white-space: normal;
+  text-align: right;
+  line-height: 1.2;
+}
+
+.nr-beforeAfterPanel > span,
+.nr-analysisLabel {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.nr-scanStep {
+  min-width: 0;
+}
+
+.nr-scanStep > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.nr-demoShell,
+.nr-demoCard,
+.nr-aiPreview,
+.nr-analyzerPanel {
+  max-width: 100%;
+}
+
+@media (max-width: 1120px) {
+  .nr-exploreGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nr-demoGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .nr-explore {
+    padding: 38px 14px 42px;
+  }
+
+  .nr-exploreGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .nr-exploreCard {
+    min-height: auto;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .nr-testimonialGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nr-aiProductRow {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .nr-aiProductMeta {
+    grid-column: 2;
+    justify-items: start;
+    min-width: 0;
+  }
+
+  .nr-productCard {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .nr-productCard .nr-itemPrice {
+    grid-column: 2;
+    justify-self: start;
+    text-align: left;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .nr-trust,
+  .nr-demo,
+  .nr-explore,
+  .nr-updates,
+  .nr-examples,
+  .nr-why,
+  .nr-about,
+  .nr-steps,
+  .nr-pricing {
+    background:
+      radial-gradient(620px 260px at 12% 0%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
+      linear-gradient(180deg, color-mix(in oklab, var(--bg) 96%, #ffffff 2%), var(--bg));
+  }
+
+  .nr-header {
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+  }
+
+  .nr-demoShell,
+  .nr-demoCard,
+  .nr-aiPreview,
+  .nr-analyzerPanel,
+  .nr-exploreCard,
+  .nr-testimonialCard,
+  .nr-updateCard,
+  .nr-updateReleaseCard,
+  .nr-priceCard,
+  .nr-exampleCard,
+  .nr-aboutCard,
+  .nr-summaryCard,
+  .nr-suggestionCard,
+  .nr-analysisSummaryCard,
+  .nr-transformationCard,
+  .nr-aiStatusCard,
+  .nr-aiBudgetCard,
+  .nr-aiProductList,
+  .nr-productCard {
+    border-color: color-mix(in oklab, var(--border) 82%, #ffffff 5%);
+    background:
+      linear-gradient(145deg, color-mix(in oklab, var(--bg) 84%, #ffffff 6%), color-mix(in oklab, var(--bg) 94%, transparent));
+    box-shadow: 0 18px 44px color-mix(in oklab, #000 28%, transparent);
+  }
+
+  .nr-logoPill,
+  .nr-badge,
+  .nr-pill,
+  .nr-secondaryBtn,
+  .nr-stepPill,
+  .nr-configSection,
+  .nr-aiProductRow,
+  .nr-scanStats div,
+  .nr-exploreIcon {
+    border-color: color-mix(in oklab, var(--border) 78%, #ffffff 5%);
+    background: color-mix(in oklab, var(--bg) 82%, #ffffff 5%);
+    color: var(--text-h);
+  }
+
+  .nr-primaryBtn,
+  .nr-nextBtn,
+  .nr-genBtn,
+  .nr-priceBtn {
+    color: var(--text-h);
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--accent-bg) 72%, #ffffff 4%), color-mix(in oklab, var(--bg) 76%, var(--accent-bg)));
+  }
+
+  .nr-roomSceneLabels span,
+  .nr-analyzerOverlay span,
+  .nr-beforeAfterPanel > span,
+  .nr-stageLabel {
+    color: #f3f4f6;
+    border-color: color-mix(in oklab, #ffffff 18%, transparent);
+    background: color-mix(in oklab, #111827 78%, transparent);
+  }
+
+  .nr-roomScene {
+    border-color: color-mix(in oklab, var(--border) 72%, #7cd3b0 16%);
+  }
+
+  .nr-aiProductMeta em,
+  .nr-miniStatus.ok,
+  .nr-status.ok {
+    color: #bbf7d0;
+    border-color: color-mix(in oklab, #22c55e 36%, var(--border));
+    background: color-mix(in oklab, #22c55e 16%, var(--bg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nr-aiPreview,
+  .nr-demoCard,
+  .nr-exploreCard,
+  .nr-testimonialCard,
+  .nr-roomScene,
+  .nr-exploreIcon {
+    transition: none;
   }
 }
