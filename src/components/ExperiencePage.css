@@ -132,10 +132,10 @@
 
 .nx-hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
   align-items: center;
   gap: clamp(22px, 4vw, 46px);
-  padding: clamp(34px, 5.5vw, 66px) 0 clamp(24px, 4vw, 42px);
+  padding: clamp(30px, 4.8vw, 56px) 0 clamp(22px, 3.4vw, 36px);
 }
 
 .nx-eyebrow,
@@ -170,9 +170,9 @@
 }
 
 .nx-hero h1 {
-  max-width: 11.5em;
-  font-size: clamp(2.55rem, 6.6vw, 4.9rem);
-  line-height: 0.98;
+  max-width: 12.5em;
+  font-size: clamp(2.25rem, 5.2vw, 4.1rem);
+  line-height: 1.03;
   font-weight: 680;
 }
 
@@ -368,7 +368,7 @@
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   align-items: center;
   gap: clamp(22px, 4vw, 48px);
-  padding: clamp(34px, 5vw, 58px) 0;
+  padding: clamp(28px, 4.3vw, 48px) 0;
   border-top: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
 }
 
@@ -427,7 +427,7 @@
 }
 
 .nx-doubtCard {
-  min-height: 152px;
+  min-height: 0;
   padding: clamp(16px, 2vw, 22px);
 }
 
@@ -502,11 +502,11 @@
 }
 
 .nx-analysisDeck {
-  grid-template-columns: repeat(5, minmax(128px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
 }
 
 .nx-analysisCard {
-  min-height: 172px;
+  min-height: 0;
   padding: clamp(15px, 1.8vw, 20px);
 }
 
@@ -555,7 +555,7 @@
 }
 
 .nx-packs {
-  padding: clamp(38px, 5.5vw, 64px) 0;
+  padding: clamp(30px, 4.8vw, 54px) 0;
   border-top: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
 }
 
@@ -565,14 +565,14 @@
 
 .nx-packGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(245px, 100%), 1fr));
   gap: 14px;
   margin-top: 28px;
 }
 
 .nx-packCard {
   display: flex;
-  min-height: 318px;
+  min-height: 0;
   flex-direction: column;
   padding: clamp(16px, 2vw, 22px);
 }
@@ -678,7 +678,7 @@
 .nx-close {
   display: grid;
   place-items: center;
-  padding: clamp(44px, 6vw, 72px) 0;
+  padding: clamp(34px, 5vw, 58px) 0;
   text-align: center;
   border-top: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
 }

@@ -15,17 +15,19 @@
   "hero": {
     "eyebrow": "Planificación visual de interiores, simplificada",
     "title": "Planifica una habitación lista para comprar.",
-    "subtitle": "Dise?a con claridad antes de gastar dinero. NEXROOM convierte presupuesto, estilo y necesidades en una propuesta visual comprensible, con packs comprables y una demo en desarrollo honesta.",
+    "subtitle": "Diseña con claridad antes de gastar dinero. NEXROOM convierte presupuesto, estilo y necesidades en una propuesta visual comprensible, con packs comprables y una demo en desarrollo honesta.",
     "cta": "Probar vista demo",
     "ctaHint": "Sin registro. Toma ~60 segundos.",
     "visual": {
       "liveLabel": "Vista previa del producto",
       "confidence": "94% de match",
       "title": "Vista inteligente de habitación",
-      "subtitle": "El an?lisis inteligente lee estilo, luz, zonas ?tiles y presupuesto antes de generar una propuesta comprable.",
+      "subtitle": "El análisis inteligente lee estilo, luz, zonas útiles y presupuesto antes de generar una propuesta comprable.",
       "budget": "Presupuesto",
       "match": "Coincidencia de estilo",
-      "estimate": "Estimación"
+      "estimate": "Estimación",
+      "budgetValue": "650 €",
+      "estimateValue": "612 €"
     }
   },
   "landing": {
@@ -52,34 +54,34 @@
       "Alquileres",
       "Estudios"
     ],
-    "showMoreNotes": "Ver m?s notas",
+    "showMoreNotes": "Ver más notas",
     "showLessNotes": "Ver menos"
   },
   "testimonials": [
     {
-      "quote": "Menos dudas antes de comprar: esa es la direcci?n que estamos construyendo.",
+      "quote": "Menos dudas antes de comprar: esa es la dirección que estamos construyendo.",
       "name": "Nota de avance",
       "role": "Vista previa del producto"
     },
     {
-      "quote": "Una propuesta visual antes de llenar el carrito ayuda a decidir con m?s calma.",
+      "quote": "Una propuesta visual antes de llenar el carrito ayuda a decidir con más calma.",
       "name": "Nota de preview",
       "role": "Presupuesto estimado"
     },
     {
-      "quote": "La demo en desarrollo busca convertir inspiraci?n en un pack f?cil de entender.",
+      "quote": "La demo en desarrollo busca convertir inspiración en un pack fácil de entender.",
       "name": "Nota de avance",
       "role": "Packs comprables"
     },
     {
-      "quote": "Dise?ar una habitaci?n deber?a sentirse claro incluso con presupuesto ajustado.",
+      "quote": "Diseñar una habitación debería sentirse claro incluso con presupuesto ajustado.",
       "name": "Nota de preview",
       "role": "Demo en desarrollo"
     },
     {
       "quote": "NEXROOM evoluciona para ordenar estilo, necesidades y compra en una sola experiencia.",
       "name": "Nota de avance",
-      "role": "Beta p?blica"
+      "role": "Beta pública"
     }
   ],
   "explore": {
@@ -336,7 +338,7 @@
         "default": "Prueba con una foto más clara y con más detalle de la habitación."
       },
       "summary": "Tu foto muestra un {{roomType}} con {{lighting}} y {{style}}. El espacio se siente {{clutter}} y se beneficiaría de {{missing}}.",
-      "summaryDefault": "Escaneo de habitación completado con análisis predeterminado.",
+      "summaryDefault": "Escaneo de habitación completado con análisis de preview.",
       "scanFlowLabel": "Flujo de escaneo de habitación",
       "scanSteps": {
         "upload": "Subir imagen",
@@ -615,22 +617,22 @@
       {
         "badge": "Mejorado",
         "title": "Vista previa de habitaciones mejorada",
-        "body": "La demo visual presenta el espacio, el presupuesto y las prioridades con m?s claridad."
+        "body": "La demo visual presenta el espacio, el presupuesto y las prioridades con más claridad."
       },
       {
         "badge": "Nuevo",
         "title": "Nuevas tarjetas de presupuesto",
-        "body": "Las propuestas muestran importes estimados, restante y estado del pack de forma m?s f?cil de leer."
+        "body": "Las propuestas muestran importes estimados, restante y estado del pack de forma más fácil de leer."
       },
       {
         "badge": "Mejorado",
-        "title": "Mejor experiencia en m?vil",
-        "body": "La interfaz se adapta mejor a pantallas peque?as, tablets y grabaciones en formato vertical."
+        "title": "Mejor experiencia en móvil",
+        "body": "La interfaz se adapta mejor a pantallas pequeñas, tablets y grabaciones en formato vertical."
       },
       {
         "badge": "Nuevo",
-        "title": "Contenido biling?e ES/EN",
-        "body": "La vista previa p?blica mantiene una comunicaci?n coherente en espa?ol e ingl?s."
+        "title": "Contenido bilingüe ES/EN",
+        "body": "La vista previa pública mantiene una comunicación coherente en español e inglés."
       },
       {
         "badge": "Próximamente",
@@ -656,10 +658,10 @@
       },
       {
         "key": "smartScanUpdate",
-        "name": "Smart Scan Update",
+        "name": "Actualización de escaneo",
         "label": "Actualización anterior",
         "changes": [
-          "Smart Room Scan mejorado",
+          "Escaneo inteligente mejorado",
           "Vista de escaneo más clara",
           "Mejoras de estabilidad y rendimiento"
         ]
@@ -743,40 +745,70 @@
     ]
   },
   "pricing": {
-    "title": "Únete a la beta",
-    "subtitle": "Sé de los primeros en probar NEXROOM cuando abramos la demo pública.",
+    "title": "Sé de los primeros en probar NEXROOM",
+    "subtitle": "Únete a la beta y recibe acceso cuando abramos nuevas plazas para la demo pública.",
     "plans": [
       {
         "name": "Vista demo",
-        "price": "0",
+        "price": "free",
         "features": [
           "Vista visual de habitación",
           "Sugerencias con presupuesto claro",
           "Propuesta orientada a compra"
         ],
-        "cta": "Probar demo"
+        "cta": "Probar demo",
+        "priceLabel": "Demo gratuita"
       },
       {
         "name": "Acceso beta",
-        "price": "0",
+        "price": "soon",
         "features": [
           "Acceso temprano al producto",
           "Mejoras continuas",
           "Feedback bienvenido"
         ],
-        "cta": "Próximamente"
+        "cta": "Próximamente",
+        "priceLabel": "Próximamente"
       },
       {
         "name": "Planes futuros",
-        "price": "0",
+        "price": "soon",
         "features": [
           "Versiones guardadas de habitación",
           "Más herramientas de comparación",
           "Opciones de planificación más profundas"
         ],
-        "cta": "Próximamente"
+        "cta": "Próximamente",
+        "priceLabel": "Próximamente"
       }
-    ]
+    ],
+    "supportText": "Estamos preparando una experiencia visual para ayudarte a diseñar tu habitación con más claridad antes de comprar.",
+    "planAria": "Estado público de la beta",
+    "waitlist": {
+      "badge": "Acceso anticipado",
+      "title": "Beta visual",
+      "fields": {
+        "name": "Nombre",
+        "email": "Email",
+        "roomType": "Tipo de habitación",
+        "budget": "Presupuesto aproximado"
+      },
+      "placeholders": {
+        "name": "Tu nombre",
+        "email": "tu@email.com",
+        "roomType": "Elige una opción",
+        "budget": "Ej. 500 €"
+      },
+      "roomOptions": [
+        "Dormitorio",
+        "Estudio",
+        "Sala de juegos",
+        "Oficina en casa",
+        "Sala de estar"
+      ],
+      "button": "Solicitar acceso beta",
+      "success": "Gracias. Estamos preparando el acceso beta. Pronto abriremos nuevas plazas."
+    }
   },
   "aiMock": {
     "labels": {
@@ -795,7 +827,7 @@
       "premiumSuffix": "opcion premium",
       "smallSpaceSuffix": "opcion compacta",
       "otherStoreSuffix": "opcion en otra tienda",
-      "cheaperReason": "Alternativa econ?mica preparada para mantener la propuesta ajustada al presupuesto.",
+      "cheaperReason": "Alternativa económica preparada para mantener la propuesta ajustada al presupuesto.",
       "premiumReason": "Alternativa de mejora preparada para comparar un acabado superior.",
       "smallSpaceReason": "Espacio preparado para una alternativa compacta si falta paso libre.",
       "otherStoreReason": "Alternativa preparada para comparar opciones de compra en el futuro."
@@ -818,9 +850,9 @@
       },
       {
         "id": "lamp-warm-001",
-        "name": "L?mpara c?lida",
+        "name": "Lámpara cálida",
         "category": "Luz",
-        "reason": "A?ade una segunda capa de luz para que la habitaci?n se sienta m?s terminada.",
+        "reason": "Añade una segunda capa de luz para que la habitación se sienta más terminada.",
         "color": "negro mate",
         "imageType": "lamp",
         "status": "budgetFriendly",
@@ -835,7 +867,7 @@
         "id": "desk-compact-001",
         "name": "Escritorio compacto",
         "category": "Zona de estudio",
-        "reason": "Crea una zona ?til sin bloquear el paso ni romper la l?nea visual del espacio.",
+        "reason": "Crea una zona útil sin bloquear el paso ni romper la línea visual del espacio.",
         "color": "blanco roto",
         "imageType": "desk",
         "status": "styleMatch",
@@ -1180,5 +1212,15 @@
   "language": {
     "switch": "Cambiar a inglés",
     "current": "Español"
+  },
+  "aria": {
+    "home": "Inicio de NEXROOM",
+    "primaryNav": "Navegación principal",
+    "trustSignals": "Señales de confianza",
+    "useCases": "Casos de uso",
+    "previewNotes": "Notas de preview",
+    "demoSteps": "Pasos de configuración de la demo",
+    "demoInputs": "Entradas de la demo",
+    "generatedSetup": "Propuesta generada"
   }
 }

@@ -2479,6 +2479,138 @@
   margin-top: 8px;
 }
 
+.nr-betaWaitlist {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(520px 260px at 82% 8%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in oklab, var(--social-bg) 62%, transparent), transparent);
+}
+
+.nr-betaWaitlistGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.03fr) minmax(320px, 0.72fr);
+  gap: clamp(18px, 3vw, 34px);
+  align-items: start;
+}
+
+.nr-betaCopy,
+.nr-betaForm {
+  min-width: 0;
+}
+
+.nr-betaSupport {
+  max-width: 62ch;
+  margin: 16px 0 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.nr-betaPlanGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.nr-betaPlan {
+  min-height: auto;
+  padding: 18px;
+  gap: 13px;
+}
+
+.nr-betaPlan .nr-priceTop {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.nr-betaPlan .nr-priceValue {
+  font-size: 20px;
+  line-height: 1.12;
+}
+
+.nr-betaForm {
+  display: grid;
+  gap: 16px;
+  padding: clamp(18px, 2.4vw, 26px);
+  border: 1.5px solid color-mix(in oklab, var(--accent) 26%, var(--border));
+  border-radius: 26px;
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--bg) 90%, transparent), color-mix(in oklab, var(--accent-bg) 56%, transparent));
+  box-shadow: 0 18px 52px color-mix(in oklab, var(--shadow-color) 12%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.nr-betaFormTop {
+  display: grid;
+  gap: 10px;
+}
+
+.nr-betaFormTop strong {
+  color: var(--text-h);
+  font-family: var(--heading);
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  line-height: 1.08;
+}
+
+.nr-betaFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.nr-betaField {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.nr-betaField span {
+  color: var(--text-h);
+  font-size: 13px;
+  font-weight: 780;
+}
+
+.nr-betaField input,
+.nr-betaField select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 84%, transparent);
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  color: var(--text-h);
+  font: inherit;
+  outline: none;
+}
+
+.nr-betaField input::placeholder {
+  color: color-mix(in oklab, var(--text) 62%, transparent);
+}
+
+.nr-betaField input:focus,
+.nr-betaField select:focus {
+  border-color: color-mix(in oklab, var(--accent) 58%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+.nr-betaSubmit {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.nr-betaSuccess {
+  margin: 0;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in oklab, #22c55e 36%, var(--border));
+  border-radius: 14px;
+  background: color-mix(in oklab, #22c55e 10%, var(--bg));
+  color: color-mix(in oklab, #166534 82%, var(--text-h));
+  font-weight: 720;
+  line-height: 1.42;
+}
+
 .nr-steps {
   padding: 52px 28px 70px;
 }
@@ -5092,7 +5224,7 @@ body,
 }
 
 .nr-exploreCta::after {
-  content: '→';
+  content: '->';
 }
 
 .nr-aiProductRow small {
@@ -5176,13 +5308,78 @@ body,
   max-width: 100%;
 }
 
+.nr-page *,
+.nr-page *::before,
+.nr-page *::after {
+  box-sizing: border-box;
+}
+
+.nr-header,
+.nr-heroGrid,
+.nr-demoGrid,
+.nr-exploreGrid,
+.nr-testimonialGrid,
+.nr-priceGrid,
+.nr-updatesGrid {
+  min-width: 0;
+}
+
+.nr-brand,
+.nr-nav,
+.nr-heroMetric,
+.nr-configHeader,
+.nr-aiProductRow,
+.nr-productCard,
+.nr-priceTop,
+.nr-updateTop,
+.nr-updateReleaseTop {
+  min-width: 0;
+}
+
+.nr-navLink,
+.nr-heroMetric strong,
+.nr-heroMetric span,
+.nr-configHeader span,
+.nr-configHeader small,
+.nr-aiProductRow strong,
+.nr-aiProductRow small,
+.nr-productTitle,
+.nr-productMeta,
+.nr-priceName,
+.nr-priceValue,
+.nr-updateCard h3,
+.nr-updateCard p,
+.nr-updateReleaseCard h3,
+.nr-updateChangeList span,
+.nr-quote {
+  overflow-wrap: anywhere;
+}
+
+.nr-testimonialGrid,
+.nr-priceGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+}
+
+.nr-exploreGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(235px, 100%), 1fr));
+}
+
+.nr-demoGrid {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+}
+
 @media (max-width: 1120px) {
   .nr-exploreGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .nr-betaWaitlistGrid,
   .nr-demoGrid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nr-betaPlanGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -5214,6 +5411,16 @@ body,
     grid-column: 2;
     justify-items: start;
     min-width: 0;
+  }
+
+  .nr-betaPlanGrid,
+  .nr-betaFields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nr-betaForm {
+    border-radius: 20px;
+    padding: 16px;
   }
 
   .nr-productCard {
@@ -5292,6 +5499,18 @@ body,
     color: var(--text-h);
     background:
       linear-gradient(180deg, color-mix(in oklab, var(--accent-bg) 72%, #ffffff 4%), color-mix(in oklab, var(--bg) 76%, var(--accent-bg)));
+  }
+
+  .nr-betaForm,
+  .nr-betaField input,
+  .nr-betaField select {
+    border-color: color-mix(in oklab, var(--border) 78%, #ffffff 5%);
+    background: color-mix(in oklab, var(--bg) 84%, #ffffff 5%);
+  }
+
+  .nr-betaSuccess {
+    color: #bbf7d0;
+    background: color-mix(in oklab, #22c55e 14%, var(--bg));
   }
 
   .nr-roomSceneLabels span,

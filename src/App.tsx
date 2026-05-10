@@ -1,6 +1,7 @@
 import './App.css'
 
 import { useMemo, useState } from 'react'
+import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { BadgeEuro, Boxes, Clapperboard, Sparkles } from 'lucide-react'
@@ -71,6 +72,7 @@ type TestimonialItem = {
 type PricingPlan = {
   name: string
   price: string
+  priceLabel?: string
   unit?: string
   features: string[]
   cta: string
@@ -368,6 +370,8 @@ function generateSetup(params: {
 
 function LandingPage() {
   const { t, i18n } = useTranslation()
+  const language = i18n.resolvedLanguage ?? i18n.language
+  const fixedT = useMemo(() => i18n.getFixedT(language), [i18n, language])
   const [configPanelStep, setConfigPanelStep] = useState<ConfigPanelStep>('space')
   const [roomType, setRoomType] = useState<RoomTypeKey>('bedroom')
   const [budget, setBudget] = useState<number>(650)
@@ -382,6 +386,13 @@ function LandingPage() {
   })
   const [moods, setMoods] = useState<MoodKey[]>(['relaxing'])
   const [areTestimonialsExpanded, setAreTestimonialsExpanded] = useState(false)
+  const [isBetaSubmitted, setIsBetaSubmitted] = useState(false)
+  const [betaForm, setBetaForm] = useState({
+    name: '',
+    email: '',
+    roomType: '',
+    budget: '',
+  })
 
   const selectedNeeds = useMemo(
     () => (Object.keys(needs) as NeedKey[]).filter((k) => needs[k]),
@@ -395,36 +406,40 @@ function LandingPage() {
   const canContinueToNeeds = useMemo(() => budget >= 150 && budget <= 12000, [budget])
   const canGenerate = useMemo(() => selectedNeeds.length > 0, [selectedNeeds.length])
   const exampleItems = useMemo(
-    () => t('examples.items', { returnObjects: true }) as ExampleItem[],
-    [t],
+    () => fixedT('examples.items', { returnObjects: true }) as ExampleItem[],
+    [fixedT],
   )
   const whyFeatures = useMemo(
-    () => t('why.features', { returnObjects: true }) as FeatureItem[],
-    [t],
+    () => fixedT('why.features', { returnObjects: true }) as FeatureItem[],
+    [fixedT],
   )
   const workflowSteps = useMemo(
-    () => t('howItWorks.steps', { returnObjects: true }) as StepItem[],
-    [t],
+    () => fixedT('howItWorks.steps', { returnObjects: true }) as StepItem[],
+    [fixedT],
   )
   const pricingPlans = useMemo(
-    () => t('pricing.plans', { returnObjects: true }) as PricingPlan[],
-    [t],
+    () => fixedT('pricing.plans', { returnObjects: true }) as PricingPlan[],
+    [fixedT],
+  )
+  const betaRoomOptions = useMemo(
+    () => fixedT('pricing.waitlist.roomOptions', { returnObjects: true }) as string[],
+    [fixedT],
   )
   const exploreCards = useMemo(
-    () => t('explore.cards', { returnObjects: true }) as ExploreCard[],
-    [t],
+    () => fixedT('explore.cards', { returnObjects: true }) as ExploreCard[],
+    [fixedT],
   )
   const trustBadges = useMemo(
-    () => t('trust.badges', { returnObjects: true }) as string[],
-    [t],
+    () => fixedT('trust.badges', { returnObjects: true }) as string[],
+    [fixedT],
   )
   const trustLogos = useMemo(
-    () => t('trust.logos', { returnObjects: true }) as string[],
-    [t],
+    () => fixedT('trust.logos', { returnObjects: true }) as string[],
+    [fixedT],
   )
   const testimonialItems = useMemo(
-    () => t('testimonials', { returnObjects: true }) as TestimonialItem[],
-    [t],
+    () => fixedT('testimonials', { returnObjects: true }) as TestimonialItem[],
+    [fixedT],
   )
   const visibleTestimonials = areTestimonialsExpanded
     ? testimonialItems
@@ -481,6 +496,19 @@ function LandingPage() {
     configSteps.findIndex((step) => step.key === configPanelStep),
   )
 
+  function updateBetaField(field: keyof typeof betaForm, value: string) {
+    setIsBetaSubmitted(false)
+    setBetaForm((current) => ({
+      ...current,
+      [field]: value,
+    }))
+  }
+
+  function handleBetaSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsBetaSubmitted(true)
+  }
+
   async function onGenerate() {
     setIsGenerating(true)
     setSetup(null)
@@ -504,14 +532,14 @@ function LandingPage() {
   return (
     <div className="nr-page">
       <header className="nr-header">
-        <div className="nr-brand" aria-label="NEXROOM home">
+        <div className="nr-brand" aria-label={t('aria.home')}>
           <span className="nr-mark" aria-hidden="true">
             N
           </span>
           <span className="nr-name">NEXROOM</span>
         </div>
 
-        <nav className="nr-nav" aria-label="Primary">
+        <nav className="nr-nav" aria-label={t('aria.primaryNav')}>
           <a className="nr-navLink" href="#demo">
             {t('nav.demo')}
           </a>
@@ -577,14 +605,14 @@ function LandingPage() {
                 {t('trust.subtitle')}
               </p>
             </div>
-            <div className="nr-badges" aria-label="Trust signals">
+            <div className="nr-badges" aria-label={t('aria.trustSignals')}>
               {trustBadges.map((badge) => (
                 <span key={badge} className="nr-badge">{badge}</span>
               ))}
             </div>
           </div>
 
-          <div className="nr-logoRow" aria-label="Use cases">
+          <div className="nr-logoRow" aria-label={t('aria.useCases')}>
             {trustLogos.map(
               (name) => (
                 <motion.div
@@ -600,10 +628,10 @@ function LandingPage() {
             )}
           </div>
 
-          <div className="nr-testimonialGrid" aria-label="Preview notes">
+          <div className="nr-testimonialGrid" aria-label={t('aria.previewNotes')}>
             {visibleTestimonials.map((testimonial, index) => (
               <motion.div
-                key={testimonial.name}
+                key={`${testimonial.name}-${testimonial.role}-${index}`}
                 className="nr-testimonialCard"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -691,7 +719,7 @@ function LandingPage() {
           </div>
 
           <div className="nr-demoShell">
-            <div className="nr-stepper" role="tablist" aria-label="Demo configuration steps">
+            <div className="nr-stepper" role="tablist" aria-label={t('aria.demoSteps')}>
               {configSteps.map((step, index) => (
                 <button
                   key={step.key}
@@ -717,7 +745,7 @@ function LandingPage() {
             </div>
 
             <div className="nr-demoGrid">
-              <div className="nr-demoCard nr-demoForm" aria-label="Demo inputs">
+              <div className="nr-demoCard nr-demoForm" aria-label={t('aria.demoInputs')}>
                 <motion.div
                   className="nr-stepPanel nr-stepPanel--compactConfig"
                   initial={{ opacity: 0, x: -20 }}
@@ -946,7 +974,7 @@ function LandingPage() {
                   </motion.div>
               </div>
 
-              <div className="nr-demoCard nr-demoResults" aria-label="Generated setup">
+              <div className="nr-demoCard nr-demoResults" aria-label={t('aria.generatedSetup')}>
                 <div className={`nr-resultsInner ${setup ? 'is-ready' : ''}`}>
                   <AIDemoPreview
                     budget={budget}
@@ -1212,54 +1240,101 @@ function LandingPage() {
           </ol>
         </section>
 
-        <section className="nr-pricing" id="pricing" aria-labelledby="pricing-title">
-          <div className="nr-sectionHead">
-            <h2 id="pricing-title">{t('pricing.title')}</h2>
-            <p className="nr-sectionSub">
-              {t('pricing.subtitle')}
-            </p>
-          </div>
-
-          <div className="nr-priceGrid">
-            {pricingPlans.map((plan, index) => (
-              <div key={plan.name} className={`nr-priceCard ${index === 1 ? 'is-featured' : ''}`}>
-                <div className="nr-priceTop">
-                  <div className="nr-priceName">{plan.name}</div>
-                  <div className="nr-priceValue">
-                    {Number(plan.price) === 0 ? eur(0, i18n.language) : eur(Number(plan.price), i18n.language)}
-                    {plan.unit && <span className="nr-priceUnit">{plan.unit}</span>}
-                  </div>
-                </div>
-                <ul className="nr-bullets">
-                  {plan.features.map((feature: string) => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-                {index === 1 ? (
-                  <button
-                    type="button"
-                    className="nr-genBtn nr-priceBtn"
-                    onClick={() => {
-                      setConfigPanelStep('space')
-                      const el = document.getElementById('demo')
-                      el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    }}
-                  >
-                    {plan.cta}
-                  </button>
-                ) : (
-                  <a className="nr-genBtn nr-priceBtn" href="#demo">
-                    {plan.cta}
-                  </a>
-                )}
+        <section className="nr-pricing nr-betaWaitlist" id="pricing" aria-labelledby="pricing-title">
+          <div className="nr-betaWaitlistGrid">
+            <div className="nr-betaCopy">
+              <div className="nr-sectionHead">
+                <h2 id="pricing-title">{t('pricing.title')}</h2>
+                <p className="nr-sectionSub">
+                  {t('pricing.subtitle')}
+                </p>
               </div>
-            ))}
+              <p className="nr-betaSupport">{t('pricing.supportText')}</p>
+
+              <div className="nr-betaPlanGrid" aria-label={t('pricing.planAria')}>
+                {pricingPlans.map((plan, index) => (
+                  <div key={`beta-plan-${index}`} className={`nr-priceCard nr-betaPlan ${index === 1 ? 'is-featured' : ''}`}>
+                    <div className="nr-priceTop">
+                      <div className="nr-priceName">{plan.name}</div>
+                      <div className="nr-priceValue">
+                        {plan.priceLabel ?? eur(Number(plan.price), i18n.language)}
+                        {plan.unit && <span className="nr-priceUnit">{plan.unit}</span>}
+                      </div>
+                    </div>
+                    <ul className="nr-bullets">
+                      {plan.features.map((feature: string, featureIndex) => (
+                        <li key={`beta-plan-${index}-feature-${featureIndex}`}>{feature}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <form className="nr-betaForm" onSubmit={handleBetaSubmit}>
+              <div className="nr-betaFormTop">
+                <span className="nr-demoBadge">{t('pricing.waitlist.badge')}</span>
+                <strong>{t('pricing.waitlist.title')}</strong>
+              </div>
+
+              <div className="nr-betaFields">
+                <label className="nr-betaField">
+                  <span>{t('pricing.waitlist.fields.name')}</span>
+                  <input
+                    value={betaForm.name}
+                    onChange={(event) => updateBetaField('name', event.target.value)}
+                    placeholder={t('pricing.waitlist.placeholders.name')}
+                  />
+                </label>
+                <label className="nr-betaField">
+                  <span>{t('pricing.waitlist.fields.email')}</span>
+                  <input
+                    type="email"
+                    value={betaForm.email}
+                    onChange={(event) => updateBetaField('email', event.target.value)}
+                    placeholder={t('pricing.waitlist.placeholders.email')}
+                  />
+                </label>
+                <label className="nr-betaField">
+                  <span>{t('pricing.waitlist.fields.roomType')}</span>
+                  <select
+                    value={betaForm.roomType}
+                    onChange={(event) => updateBetaField('roomType', event.target.value)}
+                  >
+                    <option value="">{t('pricing.waitlist.placeholders.roomType')}</option>
+                    {betaRoomOptions.map((option, index) => (
+                      <option key={`beta-room-${index}`} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="nr-betaField">
+                  <span>{t('pricing.waitlist.fields.budget')}</span>
+                  <input
+                    value={betaForm.budget}
+                    onChange={(event) => updateBetaField('budget', event.target.value)}
+                    placeholder={t('pricing.waitlist.placeholders.budget')}
+                  />
+                </label>
+              </div>
+
+              <button type="submit" className="nr-genBtn nr-betaSubmit">
+                {t('pricing.waitlist.button')}
+              </button>
+
+              {isBetaSubmitted && (
+                <p className="nr-betaSuccess" aria-live="polite">
+                  {t('pricing.waitlist.success')}
+                </p>
+              )}
+            </form>
           </div>
         </section>
       </main>
 
       <footer className="nr-footer">
-        <p>© {new Date().getFullYear()} NEXROOM</p>
+        <p>&copy; {new Date().getFullYear()} NEXROOM</p>
       </footer>
     </div>
   )

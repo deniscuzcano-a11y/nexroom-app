@@ -40,7 +40,7 @@ export function HeroShowcase() {
           <div className="nr-heroMetric">
             <BadgeEuro size={16} />
             <span>{t('hero.visual.budget')}</span>
-            <strong>€650</strong>
+            <strong>{t('hero.visual.budgetValue')}</strong>
           </div>
           <div className="nr-heroMetric">
             <ScanSearch size={16} />
@@ -50,7 +50,7 @@ export function HeroShowcase() {
           <div className="nr-heroMetric">
             <WandSparkles size={16} />
             <span>{t('hero.visual.estimate')}</span>
-            <strong>€612</strong>
+            <strong>{t('hero.visual.estimateValue')}</strong>
           </div>
         </div>
       </div>

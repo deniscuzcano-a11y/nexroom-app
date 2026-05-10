@@ -8,17 +8,19 @@
   "hero": {
     "eyebrow": "Visual room planning, simplified",
     "title": "Plan a room that feels ready to buy.",
-    "subtitle": "Dise?a con claridad antes de gastar dinero. NEXROOM convierte presupuesto, estilo y necesidades en una propuesta visual comprensible, con packs comprables y una demo en desarrollo honesta.",
+    "subtitle": "Design with clarity before spending money. NEXROOM turns budget, style, and needs into a clear visual proposal with shoppable packs and an honest demo in development.",
     "cta": "Try the demo preview",
     "ctaHint": "No signup. Takes ~60 seconds.",
     "visual": {
       "liveLabel": "Product preview",
       "confidence": "94% match",
       "title": "Smart room preview",
-      "subtitle": "El an?lisis inteligente lee estilo, luz, zonas ?tiles y presupuesto antes de generar una propuesta comprable.",
+      "subtitle": "Smart analysis reads style, light, useful zones, and budget before preparing a shoppable proposal.",
       "budget": "Budget",
       "match": "Style match",
-      "estimate": "Estimate"
+      "estimate": "Estimate",
+      "budgetValue": "€650",
+      "estimateValue": "€612"
     }
   },
   "trust": {
@@ -36,34 +38,34 @@
       "Rentals",
       "Studios"
     ],
-    "showMoreNotes": "Ver m?s notas",
-    "showLessNotes": "Ver menos"
+    "showMoreNotes": "View more notes",
+    "showLessNotes": "View less"
   },
   "testimonials": [
     {
-      "quote": "Menos dudas antes de comprar: esa es la direcci?n que estamos construyendo.",
-      "name": "Nota de avance",
-      "role": "Vista previa del producto"
+      "quote": "Fewer doubts before buying: that is the direction we are building.",
+      "name": "Progress note",
+      "role": "Product preview"
     },
     {
-      "quote": "Una propuesta visual antes de llenar el carrito ayuda a decidir con m?s calma.",
-      "name": "Nota de preview",
-      "role": "Presupuesto estimado"
+      "quote": "A visual proposal before filling your cart helps you decide with more confidence.",
+      "name": "Preview note",
+      "role": "Estimated budget"
     },
     {
-      "quote": "La demo en desarrollo busca convertir inspiraci?n en un pack f?cil de entender.",
-      "name": "Nota de avance",
-      "role": "Packs comprables"
+      "quote": "The demo in development is designed to turn inspiration into an easy-to-understand pack.",
+      "name": "Progress note",
+      "role": "Shoppable packs"
     },
     {
-      "quote": "Dise?ar una habitaci?n deber?a sentirse claro incluso con presupuesto ajustado.",
-      "name": "Nota de preview",
-      "role": "Demo en desarrollo"
+      "quote": "Designing a room should feel clear even with a tight budget.",
+      "name": "Preview note",
+      "role": "Demo in development"
     },
     {
-      "quote": "NEXROOM evoluciona para ordenar estilo, necesidades y compra en una sola experiencia.",
-      "name": "Nota de avance",
-      "role": "Beta p?blica"
+      "quote": "NEXROOM is evolving to organize style, needs, and purchase decisions in one experience.",
+      "name": "Progress note",
+      "role": "Public beta"
     }
   ],
   "explore": {
@@ -102,13 +104,13 @@
   },
   "demo": {
     "title": "Interactive product demo",
-    "subtitle": "Una vista guiada para explorar una propuesta visual, productos sugeridos y presupuesto estimado antes de llenar el carrito.",
+    "subtitle": "A guided preview for exploring a visual proposal, suggested products, and estimated budget before filling your cart.",
     "badge": "Product preview",
     "steps": {
       "1": {
         "title": "Budget & style",
         "budgetLabel": "Budget (€)",
-        "budgetHelp": "Consejo: prueba 350 €, 650 € o 950 € para ver cambios de presupuesto.",
+        "budgetHelp": "Tip: try €350, €650, or €950 to see budget changes.",
         "styleLabel": "Style",
         "roomType": "Room type",
         "roomSize": "Room size",
@@ -320,7 +322,7 @@
         "default": "Try a clearer photo with more room detail."
       },
       "summary": "Your photo shows a {{roomType}} with {{lighting}} and {{style}}. The space feels {{clutter}} and would benefit from {{missing}}.",
-      "summaryDefault": "Room scan completed with default analysis.",
+      "summaryDefault": "Room scan completed with preview analysis.",
       "scanFlowLabel": "Room scan flow",
       "scanSteps": {
         "upload": "Upload image",
@@ -432,70 +434,70 @@
       },
       "bed": {
         "low": [
-          "Pack esencial dormitorio",
-          "Estructura compacta {{style}}",
-          "Cama con almacenaje"
+          "Essential bedroom pack",
+          "Compact {{style}} frame",
+          "Storage bed"
         ],
         "mid": [
-          "Pack dormitorio flexible",
-          "Cama efecto roble {{style}}",
-          "Cama con almacenaje {{style}}"
+          "Flexible bedroom pack",
+          "Oak-effect {{style}} bed",
+          "{{style}} storage bed"
         ],
         "high": [
-          "Pack completo flexible",
-          "Cama con cabecero {{style}}",
-          "Cama con almacenaje mejorado {{style}}"
+          "Flexible complete pack",
+          "{{style}} headboard bed",
+          "Improved {{style}} storage bed"
         ]
       },
       "desk": {
         "low": [
-          "Escritorio compacto",
-          "Pack estudio compacto",
-          "Escritorio plegable {{style}}"
+          "Compact desk",
+          "Compact study pack",
+          "Folding {{style}} desk"
         ],
         "mid": [
-          "Pack estudio compacto",
-          "Escritorio con bandeja de cables {{style}}",
-          "Escritorio con cajonera {{style}}"
+          "Compact study pack",
+          "{{style}} cable-tray desk",
+          "{{style}} desk with drawers"
         ],
         "high": [
-          "Escritorio flexible",
-          "Escritorio compacto amplio {{style}}",
-          "Escritorio con cajonera {{style}}"
+          "Flexible desk",
+          "Wide compact {{style}} desk",
+          "{{style}} desk with drawers"
         ]
       },
       "lamp": {
         "low": [
-          "Lámpara cálida",
-          "Pack orden y luz",
-          "Luz de lectura {{style}}"
+          "Warm lamp",
+          "Light and order pack",
+          "{{style}} reading light"
         ],
         "mid": [
-          "Lámpara cálida",
-          "Lámpara de trabajo {{style}}",
-          "Lámpara de lectura sin deslumbrar {{style}}"
+          "Warm lamp",
+          "{{style}} task lamp",
+          "Glare-free {{style}} reading lamp"
         ],
         "high": [
-          "Pack orden y luz",
-          "Lámpara de pie {{style}}",
-          "Lámpara ambiental {{style}}"
+          "Light and order pack",
+          "{{style}} floor lamp",
+          "{{style}} ambient lamp"
         ]
       },
       "storage": {
         "low": [
-          "Mueble bajo de almacenaje",
-          "Organizador vertical",
-          "Cajonera compacta {{style}}"
+          "Low storage unit",
+          "Vertical organizer",
+          "Compact {{style}} drawer unit"
         ],
         "mid": [
-          "Estantería modular",
-          "Mueble bajo de almacenaje",
-          "Banco con almacenaje {{style}}"
+          "Modular shelf",
+          "Low storage unit",
+          "{{style}} storage bench"
         ],
         "high": [
-          "Pack completo flexible",
-          "Estantería modular {{style}}",
-          "Organizador vertical {{style}}"
+          "Flexible complete pack",
+          "{{style}} modular shelf",
+          "{{style}} vertical organizer"
         ]
       },
       "notes": {
@@ -561,24 +563,24 @@
     "selectLabel": "Select update",
     "items": [
       {
-        "badge": "Mejorado",
-        "title": "Vista previa de habitaciones mejorada",
-        "body": "La demo visual presenta el espacio, el presupuesto y las prioridades con m?s claridad."
+        "badge": "Improved",
+        "title": "Improved room preview",
+        "body": "The visual demo presents space, budget, and priorities with more clarity."
       },
       {
-        "badge": "Nuevo",
-        "title": "Nuevas tarjetas de presupuesto",
-        "body": "Las propuestas muestran importes estimados, restante y estado del pack de forma m?s f?cil de leer."
+        "badge": "New",
+        "title": "New budget cards",
+        "body": "Proposals show estimated amounts, remaining budget, and pack status in a clearer way."
       },
       {
-        "badge": "Mejorado",
-        "title": "Mejor experiencia en m?vil",
-        "body": "La interfaz se adapta mejor a pantallas peque?as, tablets y grabaciones en formato vertical."
+        "badge": "Improved",
+        "title": "Better mobile experience",
+        "body": "The interface adapts better to small screens, tablets, and vertical recordings."
       },
       {
-        "badge": "Nuevo",
-        "title": "Contenido biling?e ES/EN",
-        "body": "La vista previa p?blica mantiene una comunicaci?n coherente en espa?ol e ingl?s."
+        "badge": "New",
+        "title": "Bilingual ES/EN content",
+        "body": "The public preview keeps communication consistent in Spanish and English."
       },
       {
         "badge": "Coming soon",
@@ -691,40 +693,70 @@
     ]
   },
   "pricing": {
-    "title": "Join the beta",
-    "subtitle": "Be among the first to try NEXROOM when the public demo opens.",
+    "title": "Be among the first to try NEXROOM",
+    "subtitle": "Join the beta and get access when new spots open for the public demo.",
     "plans": [
       {
         "name": "Demo preview",
-        "price": "0",
+        "price": "free",
         "features": [
           "Visual room preview",
           "Budget-aware suggestions",
           "Ready-to-shop proposal"
         ],
-        "cta": "Try demo"
+        "cta": "Try demo",
+        "priceLabel": "Free demo"
       },
       {
         "name": "Beta access",
-        "price": "0",
+        "price": "soon",
         "features": [
           "Early product access",
           "Continuous improvements",
           "Feedback welcome"
         ],
-        "cta": "Beta soon"
+        "cta": "Soon",
+        "priceLabel": "Soon"
       },
       {
         "name": "Future plans",
-        "price": "0",
+        "price": "soon",
         "features": [
           "Saved room versions",
           "More comparison tools",
           "Deeper planning options"
         ],
-        "cta": "Coming soon"
+        "cta": "Soon",
+        "priceLabel": "Soon"
       }
-    ]
+    ],
+    "supportText": "We are building a visual experience to help you design your room with more clarity before buying.",
+    "planAria": "Public beta status",
+    "waitlist": {
+      "badge": "Early access",
+      "title": "Visual beta",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "roomType": "Room type",
+        "budget": "Approximate budget"
+      },
+      "placeholders": {
+        "name": "Your name",
+        "email": "you@email.com",
+        "roomType": "Choose an option",
+        "budget": "e.g. €500"
+      },
+      "roomOptions": [
+        "Bedroom",
+        "Studio",
+        "Gaming room",
+        "Home office",
+        "Living room"
+      ],
+      "button": "Request beta access",
+      "success": "Thanks. We are preparing beta access. New spots will open soon."
+    }
   },
   "aiMock": {
     "labels": {
@@ -743,17 +775,17 @@
       "premiumSuffix": "premium option",
       "smallSpaceSuffix": "compact option",
       "otherStoreSuffix": "other store option",
-      "cheaperReason": "Alternativa econ?mica preparada para mantener la propuesta ajustada al presupuesto.",
-      "premiumReason": "Alternativa de mejora preparada para comparar un acabado superior.",
+      "cheaperReason": "Budget-friendly alternative prepared to keep the proposal aligned with the selected budget.",
+      "premiumReason": "Upgrade alternative prepared to compare a higher-quality finish.",
       "smallSpaceReason": "Prepared compact alternative if clearance is limited.",
-      "otherStoreReason": "Alternativa preparada para comparar opciones de compra en el futuro."
+      "otherStoreReason": "Alternative prepared to compare future buying options."
     },
     "products": [
       {
         "id": "storage-low-001",
-        "name": "Mueble bajo de almacenaje",
-        "category": "Orden visual",
-        "reason": "Reduce ruido visual sin consumir demasiado presupuesto.",
+        "name": "Low storage unit",
+        "category": "Visual order",
+        "reason": "Reduces visual noise without using too much budget.",
         "color": "light oak",
         "imageType": "storage",
         "status": "smartFit",
@@ -766,9 +798,9 @@
       },
       {
         "id": "lamp-warm-001",
-        "name": "L?mpara c?lida",
-        "category": "Luz",
-        "reason": "A?ade una segunda capa de luz para que la habitaci?n se sienta m?s terminada.",
+        "name": "Warm lamp",
+        "category": "Light",
+        "reason": "Adds a second layer of light so the room feels more complete.",
         "color": "matte black",
         "imageType": "lamp",
         "status": "budgetFriendly",
@@ -781,9 +813,9 @@
       },
       {
         "id": "desk-compact-001",
-        "name": "Escritorio compacto",
-        "category": "Zona de estudio",
-        "reason": "Crea una zona ?til sin bloquear el paso ni romper la l?nea visual del espacio.",
+        "name": "Compact desk",
+        "category": "Study zone",
+        "reason": "Creates a useful zone without blocking circulation or breaking the visual line of the space.",
         "color": "warm white",
         "imageType": "desk",
         "status": "styleMatch",
@@ -798,7 +830,7 @@
     "packs": {
       "basic": {
         "id": "pack-basic",
-        "title": "Pack esencial dormitorio",
+        "title": "Essential bedroom pack",
         "summary": "Solves light and storage with minimal spend.",
         "pros": [
           "Lowest cost",
@@ -810,7 +842,7 @@
       },
       "recommended": {
         "id": "pack-recommended",
-        "title": "Pack estudio compacto",
+        "title": "Compact study pack",
         "summary": "Balances design, utility, and budget.",
         "pros": [
           "Best balance",
@@ -822,8 +854,8 @@
       },
       "premium": {
         "id": "pack-premium",
-        "title": "Pack completo flexible",
-        "summary": "Mejora materiales, presencia visual y durabilidad sin perder claridad de presupuesto.",
+        "title": "Flexible complete pack",
+        "summary": "Improves materials, visual presence, and durability while keeping budget clarity.",
         "pros": [
           "Higher visual impact",
           "Better finishes"
@@ -1180,5 +1212,15 @@
       "over_budget": "Over budget",
       "within_budget": "Within budget"
     }
+  },
+  "aria": {
+    "home": "NEXROOM home",
+    "primaryNav": "Primary navigation",
+    "trustSignals": "Trust signals",
+    "useCases": "Use cases",
+    "previewNotes": "Preview notes",
+    "demoSteps": "Demo configuration steps",
+    "demoInputs": "Demo inputs",
+    "generatedSetup": "Generated setup"
   }
 }

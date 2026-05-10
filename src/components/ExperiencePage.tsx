@@ -11,7 +11,7 @@ import {
   ScanSearch,
   Sparkles,
 } from 'lucide-react'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import heroPrism from '../assets/hero.png'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -99,39 +99,50 @@ function ExperienceSection({
 }
 
 export function ExperiencePage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const language = i18n.resolvedLanguage ?? i18n.language
+  const fixedT = useMemo(() => i18n.getFixedT(language), [i18n, language])
+
+  const translatedArray = useCallback(<T,>(key: string) => {
+    const value = fixedT(key, { returnObjects: true })
+    return Array.isArray(value) ? (value as T[]) : []
+  }, [fixedT])
 
   const problemCards = useMemo(
-    () => t('experience.problem.cards', { returnObjects: true }) as DoubtCard[],
-    [t],
+    () => translatedArray<DoubtCard>('experience.problem.cards'),
+    [translatedArray],
   )
   const scanStats = useMemo(
-    () => t('experience.scan.stats', { returnObjects: true }) as ScanStat[],
-    [t],
+    () => translatedArray<ScanStat>('experience.scan.stats'),
+    [translatedArray],
   )
   const analysisCards = useMemo(
-    () => t('experience.analysis.cards', { returnObjects: true }) as AnalysisCard[],
-    [t],
+    () => translatedArray<AnalysisCard>('experience.analysis.cards'),
+    [translatedArray],
   )
   const packs = useMemo(
-    () => t('experience.packs.cards', { returnObjects: true }) as PackCard[],
-    [t],
+    () => translatedArray<PackCard>('experience.packs.cards'),
+    [translatedArray],
   )
   const budgetRows = useMemo(
-    () => t('experience.budget.rows', { returnObjects: true }) as BudgetRow[],
-    [t],
+    () => translatedArray<BudgetRow>('experience.budget.rows'),
+    [translatedArray],
   )
   const heroLabels = useMemo(
-    () => t('experience.hero.visual.labels', { returnObjects: true }) as string[],
-    [t],
+    () => translatedArray<string>('experience.hero.visual.labels'),
+    [translatedArray],
+  )
+  const scanLabels = useMemo(
+    () => translatedArray<string>('experience.scan.labels'),
+    [translatedArray],
   )
   const transformBeforeLabels = useMemo(
-    () => t('experience.transformation.before.labels', { returnObjects: true }) as string[],
-    [t],
+    () => translatedArray<string>('experience.transformation.before.labels'),
+    [translatedArray],
   )
   const transformAfterLabels = useMemo(
-    () => t('experience.transformation.after.labels', { returnObjects: true }) as string[],
-    [t],
+    () => translatedArray<string>('experience.transformation.after.labels'),
+    [translatedArray],
   )
 
   return (
@@ -222,7 +233,7 @@ export function ExperiencePage() {
               {problemCards.map((card, index) => (
                 <motion.article
                   className="nx-doubtCard"
-                  key={card.title}
+                  key={`problem-${index}`}
                   variants={fadeUp}
                   custom={index}
                 >
@@ -251,13 +262,13 @@ export function ExperiencePage() {
               </div>
               <RoomSceneMockup
                 mode="scan"
-                labels={t('experience.scan.labels', { returnObjects: true }) as string[]}
+                labels={scanLabels}
                 showScan
                 className="nx-scanRoom"
               />
               <div className="nx-scanStats">
-                {scanStats.map((stat) => (
-                  <div key={stat.label}>
+                {scanStats.map((stat, index) => (
+                  <div key={`scan-stat-${index}`}>
                     <span>{stat.label}</span>
                     <strong>{stat.value}</strong>
                   </div>
@@ -281,7 +292,7 @@ export function ExperiencePage() {
                 const Icon = icons[index % icons.length]
 
                 return (
-                  <motion.article className="nx-analysisCard" key={card.title} variants={fadeUp}>
+                  <motion.article className="nx-analysisCard" key={`analysis-${index}`} variants={fadeUp}>
                     <Icon size={18} aria-hidden="true" />
                     <span>{card.title}</span>
                     <strong>{card.value}</strong>
@@ -351,8 +362,8 @@ export function ExperiencePage() {
             viewport={{ once: true, amount: 0.12 }}
             variants={stagger}
           >
-            {packs.map((pack) => (
-              <motion.article className="nx-packCard" key={pack.title} variants={fadeUp}>
+            {packs.map((pack, index) => (
+              <motion.article className="nx-packCard" key={`pack-${index}`} variants={fadeUp}>
                 <div className="nx-packTop">
                   <span>{pack.label}</span>
                   <strong>{pack.price}</strong>
@@ -360,8 +371,8 @@ export function ExperiencePage() {
                 <h3>{pack.title}</h3>
                 <p>{pack.body}</p>
                 <ul>
-                  {pack.items.map((item) => (
-                    <li key={item}>{item}</li>
+                  {pack.items.map((item, itemIndex) => (
+                    <li key={`pack-${index}-item-${itemIndex}`}>{item}</li>
                   ))}
                 </ul>
               </motion.article>
@@ -386,8 +397,8 @@ export function ExperiencePage() {
                 <span />
               </div>
               <div className="nx-budgetRows">
-                {budgetRows.map((row) => (
-                  <div key={row.label}>
+                {budgetRows.map((row, index) => (
+                  <div key={`budget-row-${index}`}>
                     <span>{row.label}</span>
                     <strong>{row.value}</strong>
                   </div>
