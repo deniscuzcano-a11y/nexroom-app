@@ -1158,6 +1158,7 @@ function LandingPage() {
                 <ImagePlaceholder
                   type={item.style}
                   className="nr-exampleImg"
+                  alt={item.title}
                 />
                 <div className="nr-exampleBody">
                   <div className="nr-exampleTitle">{item.title}</div>

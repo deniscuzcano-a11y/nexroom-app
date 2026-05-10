@@ -1405,33 +1405,6 @@
 .nr-productCard:hover::before {
   opacity: 1;
 }
-  backdrop-filter: blur(8px);
-  position: relative;
-  overflow: hidden;
-}
-
-.nr-productCard::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--accent) 4%, transparent),
-    color-mix(in oklab, var(--accent) 2%, transparent)
-  );
-  opacity: 0;
-  transition: opacity 200ms ease;
-}
-
-.nr-productCard:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
-  box-shadow: 0 12px 32px color-mix(in oklab, var(--shadow-color) 15%, transparent);
-}
-
-.nr-productCard:hover::before {
-  opacity: 1;
-}
 
 .nr-catRow {
   display: flex;
@@ -2745,6 +2718,342 @@
   justify-content: center;
   font-size: 20px;
   color: color-mix(in oklab, var(--text) 60%, transparent);
+}
+
+.nr-roomPreview {
+  isolation: isolate;
+  min-height: 190px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background:
+    radial-gradient(56% 42% at 78% 18%, color-mix(in oklab, #ffffff 56%, transparent), transparent 72%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 58%, #dce5ed 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 76%, transparent),
+    0 18px 40px color-mix(in oklab, var(--shadow-color) 10%, transparent);
+}
+
+.nr-roomPreview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(115deg, color-mix(in oklab, #ffffff 0%, transparent) 0 30%, color-mix(in oklab, #ffffff 34%, transparent) 30% 31%, transparent 31% 100%),
+    radial-gradient(70% 46% at 36% 18%, color-mix(in oklab, #ffffff 32%, transparent), transparent 72%);
+  opacity: 0.78;
+  pointer-events: none;
+}
+
+.nr-roomPreviewWall,
+.nr-roomPreviewFloor,
+.nr-roomPreviewFurniture,
+.nr-roomPreviewWall span,
+.nr-roomPreviewFloor span,
+.nr-roomPreviewFurniture span {
+  position: absolute;
+}
+
+.nr-roomPreviewWall {
+  inset: 0 0 32%;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, color-mix(in oklab, #ffffff 30%, transparent), transparent 24% 76%, color-mix(in oklab, #94a3b8 10%, transparent)),
+    linear-gradient(180deg, color-mix(in oklab, #ffffff 58%, transparent), transparent);
+}
+
+.nr-roomPreviewFloor {
+  inset: 62% 0 0;
+  z-index: 1;
+  background:
+    linear-gradient(165deg, color-mix(in oklab, #ffffff 38%, transparent), transparent 44%),
+    linear-gradient(180deg, color-mix(in oklab, #d6c7b3 84%, #ffffff), color-mix(in oklab, #b99f82 78%, #ffffff));
+  clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
+}
+
+.nr-roomPreviewWindow {
+  top: 18px;
+  left: 18px;
+  width: 58px;
+  height: 54px;
+  border-radius: 14px;
+  border: 4px solid color-mix(in oklab, #ffffff 86%, #dbeafe);
+  background:
+    linear-gradient(90deg, transparent 48%, color-mix(in oklab, #ffffff 86%, transparent) 49% 53%, transparent 54%),
+    linear-gradient(180deg, #dff5ff, #fff8dc 68%, #d9f99d);
+  box-shadow: 0 12px 26px color-mix(in oklab, #38bdf8 12%, transparent);
+}
+
+.nr-roomPreviewLight {
+  top: 46px;
+  left: 58px;
+  width: 150px;
+  height: 112px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, #fff7c2 46%, transparent), transparent 72%);
+  transform: rotate(-16deg);
+  opacity: 0.74;
+}
+
+.nr-roomPreviewArt {
+  top: 24px;
+  right: 34px;
+  width: 34px;
+  height: 42px;
+  border-radius: 10px;
+  border: 3px solid color-mix(in oklab, #ffffff 82%, #e2e8f0);
+  background: linear-gradient(145deg, color-mix(in oklab, var(--accent) 16%, #ffffff), color-mix(in oklab, #7cd3b0 16%, #ffffff));
+  box-shadow: 0 10px 18px color-mix(in oklab, var(--shadow-color) 9%, transparent);
+}
+
+.nr-roomPreviewArt--two {
+  top: 42px;
+  right: 78px;
+  width: 24px;
+  height: 30px;
+  opacity: 0.72;
+}
+
+.nr-roomPreviewRug {
+  left: 20%;
+  right: 18%;
+  bottom: 12px;
+  height: 42px;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, color-mix(in oklab, var(--accent) 8%, #ffffff), color-mix(in oklab, #f8fafc 88%, transparent) 72%, transparent 73%);
+  box-shadow: 0 12px 26px color-mix(in oklab, var(--shadow-color) 8%, transparent);
+}
+
+.nr-roomPreviewFurniture {
+  inset: 0;
+  z-index: 2;
+}
+
+.nr-roomPreviewBed {
+  left: 18px;
+  bottom: 31px;
+  width: 134px;
+  height: 52px;
+  border-radius: 18px 18px 16px 16px;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #ffffff 80%, #dbeafe), color-mix(in oklab, #e2e8f0 68%, #ffffff));
+  box-shadow: 0 18px 26px color-mix(in oklab, var(--shadow-color) 16%, transparent);
+}
+
+.nr-roomPreviewBed::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: -16px;
+  width: 46px;
+  height: 26px;
+  border-radius: 13px 13px 10px 10px;
+  background: color-mix(in oklab, #ffffff 86%, #e0f2fe);
+  box-shadow: 52px 3px 0 color-mix(in oklab, #f8fafc 88%, #e2e8f0);
+}
+
+.nr-roomPreviewBed i {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  height: 100%;
+  border-radius: 18px 18px 16px 26px;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, #ffffff), color-mix(in oklab, #7cd3b0 12%, #ffffff));
+}
+
+.nr-roomPreviewDesk {
+  right: 28px;
+  bottom: 54px;
+  width: 112px;
+  height: 14px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f8fafc, #cbd5e1);
+  box-shadow: 0 15px 22px color-mix(in oklab, var(--shadow-color) 15%, transparent);
+}
+
+.nr-roomPreviewDesk::before,
+.nr-roomPreviewDesk::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  width: 8px;
+  height: 42px;
+  border-radius: 5px;
+  background: color-mix(in oklab, #64748b 45%, #ffffff);
+}
+
+.nr-roomPreviewDesk::before {
+  left: 12px;
+}
+
+.nr-roomPreviewDesk::after {
+  right: 12px;
+}
+
+.nr-roomPreviewDesk i {
+  position: absolute;
+  left: 32px;
+  bottom: 16px;
+  width: 42px;
+  height: 28px;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(180deg, #1f2937, #475569);
+  box-shadow: inset 0 0 0 4px color-mix(in oklab, #ffffff 10%, transparent);
+}
+
+.nr-roomPreviewChair {
+  right: 72px;
+  bottom: 28px;
+  width: 34px;
+  height: 42px;
+  border-radius: 16px 16px 8px 8px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 28%, #ffffff), color-mix(in oklab, var(--accent) 48%, #475569));
+  box-shadow: 0 12px 18px color-mix(in oklab, var(--shadow-color) 14%, transparent);
+}
+
+.nr-roomPreviewLamp {
+  right: 18px;
+  bottom: 32px;
+  width: 16px;
+  height: 74px;
+  border-radius: 999px;
+  background: color-mix(in oklab, #334155 50%, #ffffff);
+}
+
+.nr-roomPreviewLamp::before {
+  content: '';
+  position: absolute;
+  left: -17px;
+  top: -18px;
+  width: 50px;
+  height: 30px;
+  border-radius: 22px 22px 12px 12px;
+  background: linear-gradient(180deg, #fff7d6, #facc15);
+  box-shadow: 0 0 28px color-mix(in oklab, #facc15 42%, transparent);
+}
+
+.nr-roomPreviewSide {
+  left: 150px;
+  bottom: 32px;
+  width: 34px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f8fafc, #cbd5e1);
+  box-shadow: 0 12px 20px color-mix(in oklab, var(--shadow-color) 10%, transparent);
+}
+
+.nr-roomPreviewPlant {
+  left: 190px;
+  bottom: 36px;
+  width: 20px;
+  height: 34px;
+  border-radius: 0 0 8px 8px;
+  background: color-mix(in oklab, #a16207 42%, #ffffff);
+}
+
+.nr-roomPreviewPlant::before {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: -23px;
+  width: 44px;
+  height: 32px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 52%, #86efac 0 24%, transparent 25%),
+    radial-gradient(circle at 54% 30%, #4ade80 0 28%, transparent 29%),
+    radial-gradient(circle at 72% 62%, #22c55e 0 24%, transparent 25%);
+}
+
+.nr-roomPreview--minimal {
+  background:
+    radial-gradient(60% 48% at 76% 20%, color-mix(in oklab, #ffffff 72%, transparent), transparent 72%),
+    linear-gradient(180deg, #fbfdff 0%, #f1f5f9 58%, #e5e7eb 100%);
+}
+
+.nr-roomPreview--minimal .nr-roomPreviewDesk,
+.nr-roomPreview--minimal .nr-roomPreviewChair {
+  display: none;
+}
+
+.nr-roomPreview--minimal .nr-roomPreviewBed {
+  width: 158px;
+  background: linear-gradient(180deg, #ffffff, #e5e7eb);
+}
+
+.nr-roomPreview--modern {
+  background:
+    radial-gradient(58% 44% at 78% 18%, color-mix(in oklab, #dbeafe 62%, transparent), transparent 72%),
+    linear-gradient(180deg, #f8fafc 0%, #e7eef8 58%, #d6dee9 100%);
+}
+
+.nr-roomPreview--modern .nr-roomPreviewBed,
+.nr-roomPreview--modern .nr-roomPreviewSide {
+  display: none;
+}
+
+.nr-roomPreview--modern .nr-roomPreviewDesk {
+  right: 42px;
+  bottom: 64px;
+  width: 150px;
+}
+
+.nr-roomPreview--modern .nr-roomPreviewChair {
+  right: 96px;
+}
+
+.nr-roomPreview--cozy {
+  background:
+    radial-gradient(58% 44% at 78% 18%, color-mix(in oklab, #fed7aa 46%, transparent), transparent 72%),
+    linear-gradient(180deg, #fff7ed 0%, #f2dfca 58%, #d7b894 100%);
+}
+
+.nr-roomPreview--cozy .nr-roomPreviewDesk,
+.nr-roomPreview--cozy .nr-roomPreviewChair {
+  display: none;
+}
+
+.nr-roomPreview--cozy .nr-roomPreviewBed {
+  width: 160px;
+  background: linear-gradient(180deg, #fff7ed, #fed7aa);
+}
+
+.nr-roomPreview--cozy .nr-roomPreviewBed i {
+  background: linear-gradient(135deg, #f97316, #facc15);
+}
+
+.nr-roomPreview--cozy .nr-roomPreviewLamp::before {
+  background: linear-gradient(180deg, #ffedd5, #fb923c);
+  box-shadow: 0 0 30px color-mix(in oklab, #fb923c 46%, transparent);
+}
+
+.nr-imagePlaceholder--soft {
+  background:
+    radial-gradient(60% 60% at 20% 30%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 70%),
+    radial-gradient(60% 60% at 80% 50%, color-mix(in oklab, #2dd4bf 14%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in oklab, var(--social-bg) 75%, transparent), color-mix(in oklab, var(--bg) 92%, transparent));
+}
+
+.nr-imagePlaceholderMark {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--accent) 24%, var(--border));
+  background: color-mix(in oklab, var(--accent-bg) 56%, transparent);
+}
+
+.nr-exampleCard .nr-roomPreview {
+  width: 100%;
+  height: clamp(190px, 18vw, 230px);
+  min-height: 190px;
+  border-width: 0 0 1px;
+  border-radius: 18px 18px 0 0;
+}
+
+.nr-exampleCard:hover .nr-roomPreview {
+  transform: scale(1.01);
 }
 
 @media (max-width: 1024px) {
@@ -5560,5 +5869,229 @@ body,
   .nr-roomScene,
   .nr-exploreIcon {
     transition: none;
+  }
+}
+
+/* Premium local room visuals */
+.nr-roomScene,
+.nr-roomPreview {
+  isolation: isolate;
+  background: #111827;
+}
+
+.nr-roomSceneImage,
+.nr-roomPreviewImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+}
+
+.nr-roomSceneImage {
+  z-index: 0;
+  transform: scale(1.015);
+}
+
+.nr-roomScene--before .nr-roomSceneImage {
+  filter: saturate(0.78) brightness(0.86) contrast(0.96);
+}
+
+.nr-roomScene--after .nr-roomSceneImage,
+.nr-roomScene--scan .nr-roomSceneImage {
+  filter: saturate(1.05) contrast(1.03);
+}
+
+.nr-roomSceneShade,
+.nr-roomPreview::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #06111f 8%, transparent), transparent 42%, color-mix(in oklab, #06111f 32%, transparent)),
+    radial-gradient(70% 46% at 28% 18%, color-mix(in oklab, #ffffff 18%, transparent), transparent 70%);
+}
+
+.nr-roomScene--before .nr-roomSceneShade {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, #06111f 14%, transparent), transparent 38%, color-mix(in oklab, #06111f 45%, transparent)),
+    color-mix(in oklab, #64748b 16%, transparent);
+}
+
+.nr-roomSceneOutline {
+  z-index: 2;
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--accent) 72%, #22d3ee);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, #ffffff 20%, transparent),
+    0 0 28px color-mix(in oklab, #22d3ee 22%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.nr-roomSceneGrid,
+.nr-roomScanBeam,
+.nr-roomScanPoint,
+.nr-roomSceneLabels,
+.nr-liveScanLayer,
+.nr-analyzerOverlay {
+  z-index: 3;
+}
+
+.nr-roomSceneLabels span,
+.nr-analyzerOverlay span,
+.nr-aiPreviewFooter div {
+  border-color: color-mix(in oklab, #ffffff 52%, transparent);
+  background: color-mix(in oklab, #ffffff 72%, transparent);
+  color: #14201b;
+  box-shadow:
+    0 12px 28px color-mix(in oklab, #0f172a 13%, transparent),
+    inset 0 1px 0 color-mix(in oklab, #ffffff 50%, transparent);
+}
+
+.nr-roomScanBeam,
+.nr-liveScanLine,
+.nr-roomPreviewScanLine {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee 18%, var(--accent), #7cd3b0 82%, transparent);
+  box-shadow:
+    0 0 18px color-mix(in oklab, #22d3ee 58%, transparent),
+    0 0 34px color-mix(in oklab, var(--accent) 36%, transparent);
+}
+
+.nr-roomPreview {
+  min-height: 190px;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 28%, transparent),
+    0 18px 40px color-mix(in oklab, var(--shadow-color) 10%, transparent);
+}
+
+.nr-roomPreviewImage {
+  z-index: 0;
+  transform: scale(1.012);
+}
+
+.nr-roomPreviewScan {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(color-mix(in oklab, #ffffff 16%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, #ffffff 13%, transparent) 1px, transparent 1px);
+  background-size: 38px 38px;
+  opacity: 0.78;
+}
+
+.nr-roomPreviewScanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 14%;
+  animation: nr-scan-sweep 3.6s ease-in-out infinite;
+}
+
+.nr-roomPreviewScanPoint {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 2px solid #7cd3b0;
+  border-radius: 999px;
+  background: color-mix(in oklab, #ffffff 88%, transparent);
+  box-shadow:
+    0 0 0 7px color-mix(in oklab, #22d3ee 13%, transparent),
+    0 0 22px color-mix(in oklab, #22d3ee 35%, transparent);
+}
+
+.nr-roomPreviewScanPoint--one {
+  left: 23%;
+  top: 35%;
+}
+
+.nr-roomPreviewScanPoint--two {
+  right: 22%;
+  top: 48%;
+}
+
+.nr-roomPreviewScanPoint--three {
+  left: 54%;
+  bottom: 22%;
+}
+
+.nr-styleImage {
+  isolation: isolate;
+  background-size: cover;
+  background-position: center;
+}
+
+.nr-styleImage::before,
+.nr-styleImage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nr-styleImage::before {
+  background: linear-gradient(180deg, transparent 40%, color-mix(in oklab, #06111f 38%, transparent));
+}
+
+.nr-styleImage::after {
+  top: 12%;
+  bottom: auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee, var(--accent), transparent);
+  box-shadow: 0 0 18px color-mix(in oklab, #22d3ee 46%, transparent);
+  animation: nr-scan-sweep 3.8s ease-in-out infinite;
+}
+
+.nr-styleImage span {
+  display: none;
+}
+
+.nr-styleCard[data-style='modern'] .nr-styleImage,
+.nr-styleCard[data-style='japandi'] .nr-styleImage {
+  background-image: url('/assets/room-preview-modern.webp');
+}
+
+.nr-styleCard[data-style='scandinavian'] .nr-styleImage,
+.nr-styleCard[data-style='minimalist'] .nr-styleImage {
+  background-image: url('/assets/room-preview-minimal.webp');
+}
+
+.nr-styleCard[data-style='luxury'] .nr-styleImage {
+  background-image: url('/assets/room-preview-living.webp');
+}
+
+.nr-styleCard[data-style='cozy'] .nr-styleImage {
+  background-image: url('/assets/room-preview-cozy.webp');
+}
+
+.nr-analyzerPlaceholder p,
+.nr-analyzerOverlay,
+.nr-liveScanLayer {
+  z-index: 4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nr-roomSceneLabels span,
+  .nr-analyzerOverlay span,
+  .nr-aiPreviewFooter div {
+    border-color: color-mix(in oklab, #ffffff 18%, transparent);
+    background: color-mix(in oklab, #0f172a 70%, transparent);
+    color: #f8fafc;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nr-roomScanBeam,
+  .nr-liveScanLine,
+  .nr-roomPreviewScanLine,
+  .nr-styleImage::after {
+    animation: none;
+    opacity: 0.58;
   }
 }

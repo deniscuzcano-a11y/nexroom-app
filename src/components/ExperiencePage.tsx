@@ -212,7 +212,13 @@ export function ExperiencePage() {
                 <strong>{t('experience.hero.visual.status')}</strong>
               </div>
 
-              <RoomSceneMockup mode="scan" labels={heroLabels} showScan className="nx-heroRoom" />
+              <RoomSceneMockup
+                mode="scan"
+                labels={heroLabels}
+                showScan
+                className="nx-heroRoom"
+                ariaLabel={t('experience.hero.visual.aria')}
+              />
 
               <div className="nx-heroPanel">
                 <div>
@@ -272,6 +278,7 @@ export function ExperiencePage() {
                 labels={scanLabels}
                 showScan
                 className="nx-scanRoom"
+                ariaLabel={t('experience.scan.visualLabel')}
               />
               <div className="nx-scanStats">
                 {scanStats.map((stat, index) => (
@@ -328,6 +335,7 @@ export function ExperiencePage() {
                   labels={transformBeforeLabels}
                   compact
                   className="nx-stageRoom"
+                  ariaLabel={t('experience.transformation.before.title')}
                 />
                 <p>{t('experience.transformation.before.body')}</p>
               </article>
@@ -338,6 +346,7 @@ export function ExperiencePage() {
                   labels={transformAfterLabels}
                   compact
                   className="nx-stageRoom"
+                  ariaLabel={t('experience.transformation.after.title')}
                 />
                 <p>{t('experience.transformation.after.body')}</p>
               </article>
@@ -375,6 +384,7 @@ export function ExperiencePage() {
                   <span>{pack.label}</span>
                   <strong>{pack.price}</strong>
                 </div>
+                <div className={`nx-packVisual nx-packVisual--${index % 3}`} aria-hidden="true" />
                 <h3>{pack.title}</h3>
                 <p>{pack.body}</p>
                 <ul>

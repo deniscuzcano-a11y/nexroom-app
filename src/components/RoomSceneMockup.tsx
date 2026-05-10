@@ -4,7 +4,14 @@ interface RoomSceneMockupProps {
   labels?: string[]
   showScan?: boolean
   compact?: boolean
+  ariaLabel?: string
 }
+
+const roomSceneImages = {
+  before: '/assets/room-preview-bedroom.webp',
+  after: '/assets/room-preview-living.webp',
+  scan: '/assets/room-preview-modern.webp',
+} as const
 
 export function RoomSceneMockup({
   mode = 'after',
@@ -12,24 +19,25 @@ export function RoomSceneMockup({
   labels = [],
   showScan = false,
   compact = false,
+  ariaLabel,
 }: RoomSceneMockupProps) {
+  const accessibilityProps = ariaLabel
+    ? { role: 'img', 'aria-label': ariaLabel }
+    : { 'aria-hidden': true }
+
   return (
     <div
       className={`nr-roomScene nr-roomScene--${mode} ${compact ? 'is-compact' : ''} ${className}`}
-      aria-hidden="true"
+      {...accessibilityProps}
     >
-      <div className="nr-roomSceneWindow">
-        <span />
-        <span />
-      </div>
-      <div className="nr-roomSceneLight" />
-      <div className="nr-roomSceneFloor" />
-      <div className="nr-roomSceneRug" />
-      <div className="nr-roomSceneSofa" />
-      <div className="nr-roomSceneTable" />
-      <div className="nr-roomScenePlant" />
-      <div className="nr-roomSceneShelf" />
-      <div className="nr-roomSceneLamp" />
+      <img
+        className="nr-roomSceneImage"
+        src={roomSceneImages[mode]}
+        alt=""
+        loading="lazy"
+        draggable={false}
+      />
+      <div className="nr-roomSceneShade" aria-hidden="true" />
       <div className="nr-roomSceneOutline nr-roomSceneOutline--desk" />
       <div className="nr-roomSceneOutline nr-roomSceneOutline--storage" />
       {(showScan || mode === 'scan') && (

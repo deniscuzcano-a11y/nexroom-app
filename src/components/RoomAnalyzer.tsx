@@ -247,7 +247,12 @@ export function RoomAnalyzer({
             <img src={imageSrc} alt={t('demo.analysis.previewAlt')} className="nr-analyzerImage" />
           ) : (
             <div className="nr-analyzerPlaceholder">
-              <RoomSceneMockup mode="before" showScan compact />
+              <RoomSceneMockup
+                mode="before"
+                showScan
+                compact
+                ariaLabel={t('demo.analysis.previewAlt')}
+              />
               <p>{t('demo.analysis.noPhoto')}</p>
             </div>
           )}
@@ -355,11 +360,11 @@ export function RoomAnalyzer({
             <div className="nr-transformationGrid">
               <div>
                 <span className="nr-analysisLabel">{t('demo.visual.before')}</span>
-                <RoomSceneMockup mode="before" compact />
+                <RoomSceneMockup mode="before" compact ariaLabel={t('demo.visual.before')} />
               </div>
               <div>
                 <span className="nr-analysisLabel">{t('demo.visual.after')}</span>
-                <RoomSceneMockup mode="after" compact labels={previewLabels} />
+                <RoomSceneMockup mode="after" compact labels={previewLabels} ariaLabel={t('demo.visual.after')} />
               </div>
             </div>
           </div>

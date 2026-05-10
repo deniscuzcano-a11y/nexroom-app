@@ -101,11 +101,11 @@ export function AIDemoPreview({
       <div className="nr-beforeAfter">
         <div className="nr-beforeAfterPanel">
           <span>{t('demo.visual.before')}</span>
-          <RoomSceneMockup mode="before" compact />
+          <RoomSceneMockup mode="before" compact ariaLabel={t('demo.visual.before')} />
         </div>
         <div className="nr-beforeAfterPanel is-after">
           <span>{t('demo.visual.after')}</span>
-          <RoomSceneMockup mode="after" compact labels={labels} />
+          <RoomSceneMockup mode="after" compact labels={labels} ariaLabel={t('demo.visual.after')} />
         </div>
       </div>
 

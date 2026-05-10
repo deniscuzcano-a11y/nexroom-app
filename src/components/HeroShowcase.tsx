@@ -27,7 +27,12 @@ export function HeroShowcase() {
         <span>{t('hero.visual.confidence')}</span>
       </div>
 
-      <RoomSceneMockup mode="scan" labels={roomLabels} showScan />
+      <RoomSceneMockup
+        mode="scan"
+        labels={roomLabels}
+        showScan
+        ariaLabel={t('hero.visual.title')}
+      />
 
       <div className="nr-heroInsightPanel">
         <div className="nr-heroInsightTitle">
