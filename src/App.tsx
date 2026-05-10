@@ -1,7 +1,6 @@
 import './App.css'
 
 import { useMemo, useState } from 'react'
-import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { BadgeEuro, Boxes, Clapperboard, Sparkles } from 'lucide-react'
@@ -27,6 +26,8 @@ import type {
   RoomTypeKey,
   StyleKey,
 } from './types'
+
+const BETA_FORM_URL = 'https://tally.so/r/rjGd1v'
 
 type SetupItem = {
   key: NeedKey
@@ -386,13 +387,6 @@ function LandingPage() {
   })
   const [moods, setMoods] = useState<MoodKey[]>(['relaxing'])
   const [areTestimonialsExpanded, setAreTestimonialsExpanded] = useState(false)
-  const [isBetaSubmitted, setIsBetaSubmitted] = useState(false)
-  const [betaForm, setBetaForm] = useState({
-    name: '',
-    email: '',
-    roomType: '',
-    budget: '',
-  })
 
   const selectedNeeds = useMemo(
     () => (Object.keys(needs) as NeedKey[]).filter((k) => needs[k]),
@@ -419,10 +413,6 @@ function LandingPage() {
   )
   const pricingPlans = useMemo(
     () => fixedT('pricing.plans', { returnObjects: true }) as PricingPlan[],
-    [fixedT],
-  )
-  const betaRoomOptions = useMemo(
-    () => fixedT('pricing.waitlist.roomOptions', { returnObjects: true }) as string[],
     [fixedT],
   )
   const exploreCards = useMemo(
@@ -495,19 +485,6 @@ function LandingPage() {
     0,
     configSteps.findIndex((step) => step.key === configPanelStep),
   )
-
-  function updateBetaField(field: keyof typeof betaForm, value: string) {
-    setIsBetaSubmitted(false)
-    setBetaForm((current) => ({
-      ...current,
-      [field]: value,
-    }))
-  }
-
-  function handleBetaSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsBetaSubmitted(true)
-  }
 
   async function onGenerate() {
     setIsGenerating(true)
@@ -686,7 +663,9 @@ function LandingPage() {
                 <motion.a
                   key={card.title}
                   className={`nr-exploreCard nr-exploreCard--${card.kind}`}
-                  href={card.href}
+                  href={card.kind === 'beta' ? BETA_FORM_URL : card.href}
+                  target={card.kind === 'beta' ? '_blank' : undefined}
+                  rel={card.kind === 'beta' ? 'noopener noreferrer' : undefined}
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.24 }}
@@ -1271,64 +1250,23 @@ function LandingPage() {
               </div>
             </div>
 
-            <form className="nr-betaForm" onSubmit={handleBetaSubmit}>
+            <div className="nr-betaForm">
               <div className="nr-betaFormTop">
                 <span className="nr-demoBadge">{t('pricing.waitlist.badge')}</span>
                 <strong>{t('pricing.waitlist.title')}</strong>
               </div>
 
-              <div className="nr-betaFields">
-                <label className="nr-betaField">
-                  <span>{t('pricing.waitlist.fields.name')}</span>
-                  <input
-                    value={betaForm.name}
-                    onChange={(event) => updateBetaField('name', event.target.value)}
-                    placeholder={t('pricing.waitlist.placeholders.name')}
-                  />
-                </label>
-                <label className="nr-betaField">
-                  <span>{t('pricing.waitlist.fields.email')}</span>
-                  <input
-                    type="email"
-                    value={betaForm.email}
-                    onChange={(event) => updateBetaField('email', event.target.value)}
-                    placeholder={t('pricing.waitlist.placeholders.email')}
-                  />
-                </label>
-                <label className="nr-betaField">
-                  <span>{t('pricing.waitlist.fields.roomType')}</span>
-                  <select
-                    value={betaForm.roomType}
-                    onChange={(event) => updateBetaField('roomType', event.target.value)}
-                  >
-                    <option value="">{t('pricing.waitlist.placeholders.roomType')}</option>
-                    {betaRoomOptions.map((option, index) => (
-                      <option key={`beta-room-${index}`} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="nr-betaField">
-                  <span>{t('pricing.waitlist.fields.budget')}</span>
-                  <input
-                    value={betaForm.budget}
-                    onChange={(event) => updateBetaField('budget', event.target.value)}
-                    placeholder={t('pricing.waitlist.placeholders.budget')}
-                  />
-                </label>
-              </div>
-
-              <button type="submit" className="nr-genBtn nr-betaSubmit">
+              <p className="nr-betaFormText">{t('pricing.supportText')}</p>
+              <a
+                className="nr-genBtn nr-betaSubmit"
+                href={BETA_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {t('pricing.waitlist.button')}
-              </button>
-
-              {isBetaSubmitted && (
-                <p className="nr-betaSuccess" aria-live="polite">
-                  {t('pricing.waitlist.success')}
-                </p>
-              )}
-            </form>
+              </a>
+              <p className="nr-betaSmall">{t('pricing.waitlist.smallText')}</p>
+            </div>
           </div>
         </section>
       </main>

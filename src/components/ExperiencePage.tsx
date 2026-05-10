@@ -17,6 +17,8 @@ import heroPrism from '../assets/hero.png'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { RoomSceneMockup } from './RoomSceneMockup'
 
+const BETA_FORM_URL = 'https://tally.so/r/rjGd1v'
+
 type DoubtCard = {
   title: string
   body: string
@@ -184,7 +186,12 @@ export function ExperiencePage() {
                 <span>{t('experience.hero.primaryCta')}</span>
                 <ArrowDown size={18} aria-hidden="true" />
               </a>
-              <a className="nx-secondaryCta" href="/#pricing">
+              <a
+                className="nx-secondaryCta"
+                href={BETA_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span>{t('experience.hero.secondaryCta')}</span>
                 <ArrowRight size={18} aria-hidden="true" />
               </a>
@@ -420,7 +427,12 @@ export function ExperiencePage() {
             <h2 id="beta-title">{t('experience.close.title')}</h2>
             <p>{t('experience.close.body')}</p>
             <div className="nx-ctaRow">
-              <a className="nx-primaryCta" href="/#pricing">
+              <a
+                className="nx-primaryCta"
+                href={BETA_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span>{t('experience.close.primaryCta')}</span>
                 <ArrowRight size={18} aria-hidden="true" />
               </a>

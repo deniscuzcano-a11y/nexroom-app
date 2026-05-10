@@ -730,11 +730,11 @@
         "priceLabel": "Soon"
       }
     ],
-    "supportText": "We are building a visual experience to help you design your room with more clarity before buying.",
+    "supportText": "Leave your details in the beta form and we’ll notify you when new spots open.",
     "planAria": "Public beta status",
     "waitlist": {
       "badge": "Early access",
-      "title": "Visual beta",
+      "title": "Beta access",
       "fields": {
         "name": "Name",
         "email": "Email",
@@ -755,7 +755,8 @@
         "Living room"
       ],
       "button": "Request beta access",
-      "success": "Thanks. We are preparing beta access. New spots will open soon."
+      "success": "Thanks. We are preparing beta access. New spots will open soon.",
+      "smallText": "Demo in development. Access will open gradually."
     }
   },
   "aiMock": {

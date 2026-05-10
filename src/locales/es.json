@@ -782,11 +782,11 @@
         "priceLabel": "Próximamente"
       }
     ],
-    "supportText": "Estamos preparando una experiencia visual para ayudarte a diseñar tu habitación con más claridad antes de comprar.",
+    "supportText": "Déjanos tus datos en el formulario beta y te avisaremos cuando abramos nuevas plazas.",
     "planAria": "Estado público de la beta",
     "waitlist": {
       "badge": "Acceso anticipado",
-      "title": "Beta visual",
+      "title": "Acceso beta",
       "fields": {
         "name": "Nombre",
         "email": "Email",
@@ -807,7 +807,8 @@
         "Sala de estar"
       ],
       "button": "Solicitar acceso beta",
-      "success": "Gracias. Estamos preparando el acceso beta. Pronto abriremos nuevas plazas."
+      "success": "Gracias. Estamos preparando el acceso beta. Pronto abriremos nuevas plazas.",
+      "smallText": "Demo en desarrollo. El acceso se abrirá progresivamente."
     }
   },
   "aiMock": {
